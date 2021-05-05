@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1300.0" style="-fx-background-color: #eeeef3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bibliotech.TelaPrincipalController">
+   <children>
+      <MenuBar style="-fx-background-color: #fefefe;">
+        <menus>
+          <Menu mnemonicParsing="false" text="_GERENCIAR">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#evtManipularTitulo" text="Títulos" />
+                  <MenuItem mnemonicParsing="false" onAction="#evtManipularAssunto" text="Assuntos" />
+                  <MenuItem mnemonicParsing="false" onAction="#evtManipularEditora" text="Editoras" />
+                  <MenuItem mnemonicParsing="false" onAction="#evtManipularAutor" text="Autores" />
+                  <MenuItem mnemonicParsing="false" onAction="#evtManipularGenero" text="Gêneros" />
+                  <MenuItem mnemonicParsing="false" onAction="#evtManipularCliente" text="Clientes" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="_CONTROLE">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Efetuar empréstimo de livros" />
+                  <MenuItem mnemonicParsing="false" text="Retirar livro do acervo da biblioteca" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="RELATÓRIOS">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Histórico usuário" />
+                  <MenuItem mnemonicParsing="false" text="Livros mais emprestados" />
+                  <MenuItem mnemonicParsing="false" text="Livros atrasados" />
+                  <MenuItem mnemonicParsing="false" text="Consulta exemplares" />
+                  <MenuItem mnemonicParsing="false" text="Consulta títulos" />
+                  <MenuItem mnemonicParsing="false" text="Consulta autores" />
+                  <MenuItem mnemonicParsing="false" text="Consulta reservas" />
+                  <MenuItem mnemonicParsing="false" text="Consulta reservas cliente" />
+                  <MenuItem mnemonicParsing="false" text="Consulta assunto" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="_SOBRE">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Sobre o sistema" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="_AJUDA">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Manual de uso" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
+         <children>
+            <ImageView fitHeight="269.0" fitWidth="371.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/icone.png" />
+               </image>
+            </ImageView>
+            <Label text="BIBLIOTECH" textAlignment="CENTER" textFill="#1e93ff">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #fefefe;" />
+   </children>
+</VBox>
