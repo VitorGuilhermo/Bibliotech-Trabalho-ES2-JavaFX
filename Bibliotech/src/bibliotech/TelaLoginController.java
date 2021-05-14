@@ -1,5 +1,6 @@
 package bibliotech;
 
+import bd.entidades.Bibliotecario;
 import bd.util.Banco;
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +33,7 @@ public class TelaLoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-
+    
     @FXML
     private void evtSair(ActionEvent event) {
         txDocumento.getScene().getWindow().hide();
@@ -40,8 +41,14 @@ public class TelaLoginController implements Initializable {
 
     @FXML
     private void evtEntrar(ActionEvent event) throws IOException {
-        if(txDocumento.getText().equals("444.444.444-44") && txSenha.getText().equals("1Sist2Biblio3Tech4")){
-            Parent root = FXMLLoader.load(getClass().getResource("TelaPrincipal.fxml"));
+        Bibliotecario bib = new Bibliotecario(txDocumento.getText(), txSenha.getText());
+        Bibliotecario aux = bib.verificaLogin();
+        
+        if(aux != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaPrincipal.fxml"));
+            Parent root = (Parent) loader.load();
+            TelaPrincipalController ctr = loader.getController();
+            ctr.setDados(bib.getNomeBibliotecario());
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();

@@ -1,14 +1,13 @@
 package bd.entidades;
 
+import bd.dal.TituloDAL;
 import java.time.LocalDate;
 
 
 public class Titulo {
     private int codigo;
     private String nome;
-    private Autor autor;
     private Genero genero;
-    private Assunto assunto;
     private Editora editora;
     private int qtdeExemplares;
     private LocalDate dataPubli;
@@ -16,17 +15,15 @@ public class Titulo {
 
     
     public Titulo() {
-        this(0, "", new Autor(), new Genero(), new Assunto(), new Editora(), 0, LocalDate.now(), LocalDate.now());
+        this(0, "", new Genero(), new Editora(), 0, LocalDate.now(), LocalDate.now());
     }
-    public Titulo(String nome, Autor autor, Genero genero, Assunto assunto, Editora editora, int qtde, LocalDate dataPubli, LocalDate dataReg) {
-        this(0, nome, autor, genero, assunto, editora, qtde, dataPubli, dataReg);
+    public Titulo(String nome, Genero genero, Editora editora, int qtde, LocalDate dataPubli, LocalDate dataReg) {
+        this(0, nome, genero, editora, qtde, dataPubli, dataReg);
     }
-    public Titulo(int codigo, String nome, Autor autor, Genero genero, Assunto assunto, Editora editora, int qtde, LocalDate dataPubli, LocalDate dataReg) {
+    public Titulo(int codigo, String nome, Genero genero, Editora editora, int qtde, LocalDate dataPubli, LocalDate dataReg) {
         this.codigo = codigo;
         this.nome = nome;
-        this.autor = autor;
         this.genero = genero;
-        this.assunto = assunto;
         this.editora = editora;
         this.qtdeExemplares = qtde;
         this.dataPubli = dataPubli;
@@ -46,23 +43,11 @@ public class Titulo {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public Autor getAutor() {
-        return autor;
-    }
-    public void setAutor(Autor autor) {
-        this.autor = autor;
-    }
     public Genero getGenero() {
         return genero;
     }
     public void setGenero(Genero genero) {
         this.genero = genero;
-    }
-    public Assunto getAssunto() {
-        return assunto;
-    }
-    public void setAssunto(Assunto assunto) {
-        this.assunto = assunto;
     }
     public Editora getEditora() {
         return editora;
@@ -89,6 +74,10 @@ public class Titulo {
         this.dataReg = dataReg;
     }
 
+    public boolean gravar(){
+        return new TituloDAL().gravar(this);
+    }
+    
     @Override
     public String toString() {
         return nome;

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #eeeef3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bibliotech.TelaGerenciarTituloController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #eeeef3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bibliotech.TelaGerenciarTituloController">
    <top>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
@@ -56,8 +56,8 @@
       <TableView fx:id="tabela" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="colCodigo" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Código" />
-          <TableColumn fx:id="colTitulo" prefWidth="75.0" text="Título" />
-            <TableColumn fx:id="colAutor" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Autor" />
+          <TableColumn fx:id="colTitulo" minWidth="300.0" prefWidth="300.0" text="Título" />
+            <TableColumn fx:id="colGenero" minWidth="200.0" prefWidth="200.0" text="Gênero" />
             <TableColumn fx:id="colEditora" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Editora" />
             <TableColumn fx:id="colDataImp" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Data impressão" />
             <TableColumn fx:id="colQtdeExe" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" text="Qtde. exemplares" />

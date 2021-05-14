@@ -6,7 +6,9 @@ import bd.dal.EditoraDAL;
 import bd.dal.GeneroDAL;
 import bd.dal.TituloDAL;
 import bd.entidades.Assunto;
+import bd.entidades.Assunto_Titulo;
 import bd.entidades.Autor;
+import bd.entidades.Autor_Titulo;
 import bd.entidades.Editora;
 import bd.entidades.Genero;
 import bd.entidades.Titulo;
@@ -14,6 +16,7 @@ import bd.util.Banco;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -38,11 +41,7 @@ public class TelaCadastrarTituloController implements Initializable {
     @FXML
     private TextField txTitulo;
     @FXML
-    private ComboBox<Autor> cbAutor;
-    @FXML
     private ComboBox<Genero> cbGenero;
-    @FXML
-    private ComboBox<Assunto> cbAssunto;
     @FXML
     private ComboBox<Editora> cbEditora;
     @FXML
@@ -51,22 +50,56 @@ public class TelaCadastrarTituloController implements Initializable {
     private DatePicker dtDataPubl;
     @FXML
     private DatePicker dtDataRegistro;
+    @FXML
+    private ComboBox<Autor> cbAutor1;
+    @FXML
+    private ComboBox<Autor> cbAutor2;
+    @FXML
+    private ComboBox<Autor> cbAutor3;
+    @FXML
+    private ComboBox<Assunto> cbAssunto1;
+    @FXML
+    private ComboBox<Assunto> cbAssunto2;
+    @FXML
+    private ComboBox<Assunto> cbAssunto3;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cbAutor.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+        cbAutor1.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+        cbAutor2.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+        cbAutor3.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
         cbGenero.setItems(FXCollections.observableArrayList(new GeneroDAL().get("")));
-        cbAssunto.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+        cbAssunto1.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+        cbAssunto2.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+        cbAssunto3.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
         cbEditora.setItems(FXCollections.observableArrayList(new EditoraDAL().get("")));
         spQtdeExem.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000000, 1));
     }    
 
-    public void setDados(int cod, String nome, Autor autor, Genero gen, Assunto assunto, Editora editora, int qtde, LocalDate dataP, LocalDate dataR){
+    public void setDados(int cod, String nome, List<Autor>autores, Genero gen, List<Assunto>assuntos, Editora editora, int qtde, LocalDate dataP, LocalDate dataR){
         txCodigo.setText(""+cod);
         txTitulo.setText(nome);
-        cbAutor.getSelectionModel().select(autor);
+        int i=0;
+        for(Autor a: autores){
+            if(i==0)
+                cbAutor1.getSelectionModel().select(a);
+            else if(i==1)
+                cbAutor2.getSelectionModel().select(a);
+            else if(i==2)
+                cbAutor3.getSelectionModel().select(a);
+            i++;    
+        }
         cbGenero.getSelectionModel().select(gen);
-        cbAssunto.getSelectionModel().select(assunto);
+        i=0;
+        for(Assunto a: assuntos){
+            if(i==0)
+                cbAssunto1.getSelectionModel().select(a);
+            else if(i==1)
+                cbAssunto2.getSelectionModel().select(a);
+            else if(i==2)
+                cbAssunto3.getSelectionModel().select(a);
+            i++;    
+        }
         cbEditora.getSelectionModel().select(editora);
         spQtdeExem.getEditor().textProperty().set(""+qtde);
         spQtdeExem.setDisable(true);
@@ -81,10 +114,42 @@ public class TelaCadastrarTituloController implements Initializable {
 
     @FXML
     private void evtCadastrar(ActionEvent event) {
-        Titulo t = new Titulo(txTitulo.getText(), cbAutor.getValue(), cbGenero.getValue(), cbAssunto.getValue(), cbEditora.getValue(), spQtdeExem.getValue(), dtDataPubl.getValue(), dtDataRegistro.getValue());
+        boolean gravouT=false;
+        Titulo t = new Titulo(txTitulo.getText(), cbGenero.getValue(), cbEditora.getValue(), spQtdeExem.getValue(), dtDataPubl.getValue(), dtDataRegistro.getValue());
+        Autor_Titulo at1=null, at2=null, at3=null;
+        Assunto_Titulo ast1=null, ast2=null, ast3=null;
         
         if(txCodigo.getText().isEmpty()){
-            if(!new TituloDAL().gravar(t)){
+            gravouT = t.gravar();
+            if (gravouT) {
+                //grava autores
+                if (!cbAutor1.getSelectionModel().isEmpty()) {
+                    at1 = new Autor_Titulo(cbAutor1.getValue(), t);
+                    at1.gravar();
+                }
+                if (!cbAutor2.getSelectionModel().isEmpty()) {
+                    at2 = new Autor_Titulo(cbAutor2.getValue(), t);
+                    at2.gravar();
+                }
+                if (!cbAutor3.getSelectionModel().isEmpty()) {
+                    at3 = new Autor_Titulo(cbAutor3.getValue(), t);
+                    at3.gravar();
+                }
+                //grava assuntos
+                if (!cbAssunto1.getSelectionModel().isEmpty()) {
+                    ast1 = new Assunto_Titulo(cbAssunto1.getValue(), t);
+                    ast1.gravar();
+                }
+                if (!cbAssunto2.getSelectionModel().isEmpty()) {
+                    ast2 = new Assunto_Titulo(cbAssunto2.getValue(), t);
+                    ast2.gravar();
+                }
+                if (!cbAssunto3.getSelectionModel().isEmpty()) {
+                    ast3 = new Assunto_Titulo(cbAssunto3.getValue(), t);
+                    ast3.gravar();
+                }
+            }
+            else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -113,7 +178,9 @@ public class TelaCadastrarTituloController implements Initializable {
         stage.setTitle("Cadastrar Autor");
         stage.showAndWait();
         
-        cbAutor.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+        cbAutor1.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+        cbAutor2.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+        cbAutor3.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
     }
 
     @FXML
@@ -143,7 +210,9 @@ public class TelaCadastrarTituloController implements Initializable {
         stage.setTitle("Cadastrar Assunto");
         stage.showAndWait();
         
-        cbAssunto.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+        cbAssunto1.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+        cbAssunto2.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+        cbAssunto3.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
     }
     
 }

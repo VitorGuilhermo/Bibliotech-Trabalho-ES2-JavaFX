@@ -1,5 +1,8 @@
 package bd.entidades;
 
+import bd.dal.EditoraDAL;
+import java.util.List;
+
 
 public class Editora {
     private int codigo;
@@ -38,7 +41,18 @@ public class Editora {
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
-
+    public boolean gravar() {
+        return new EditoraDAL().gravar(this);
+    }
+    public boolean alterar() {
+        return new EditoraDAL().alterar(this);
+    }
+    public boolean excluir() {
+        return new EditoraDAL().apagar(codigo);
+    }
+    public List<Editora> buscar(String filtro) {
+        return new EditoraDAL().get(filtro);
+    }
     @Override
     public String toString() {
         return nome;

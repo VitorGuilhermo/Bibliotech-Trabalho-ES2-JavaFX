@@ -38,7 +38,7 @@ public class TelaCadastrarGeneroController implements Initializable {
         Genero g = new Genero(txNome.getText());
         
         if(txCodigo.getText().isEmpty()){
-            if(!new GeneroDAL().gravar(g)){
+            if(!g.gravar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -46,7 +46,7 @@ public class TelaCadastrarGeneroController implements Initializable {
         }
         else{  //alterar
             g.setCodigo(Integer.parseInt(txCodigo.getText()));
-            if(!new GeneroDAL().alterar(g)){
+            if(!g.alterar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();

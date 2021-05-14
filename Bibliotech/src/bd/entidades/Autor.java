@@ -1,5 +1,8 @@
 package bd.entidades;
 
+import bd.dal.AutorDAL;
+import java.util.List;
+
 
 public class Autor {
     private int codigo;
@@ -31,6 +34,18 @@ public class Autor {
         this.nome = nome;
     }
     
+    public boolean gravar(){
+        return new AutorDAL().gravar(this);
+    }
+    public boolean alterar(){
+        return new AutorDAL().alterar(this);
+    }
+    public boolean excluir(){
+        return new AutorDAL().apagar(codigo);
+    }
+    public List<Autor> buscar(String filtro){
+        return new AutorDAL().get(filtro);
+    }
     @Override
     public String toString() {
         return nome;

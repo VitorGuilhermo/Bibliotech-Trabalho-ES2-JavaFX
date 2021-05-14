@@ -57,9 +57,9 @@ public class TelaGerenciarClienteController implements Initializable {
     }    
 
     private void carregarTabela(String filtro){
-        ClienteDAL dal = new ClienteDAL();
+        Cliente c = new Cliente();
         
-        List<Cliente> clientes = dal.get(filtro);
+        List<Cliente> clientes = c.buscar(filtro);
         tabela.setItems(FXCollections.observableArrayList(clientes));
     }
     
@@ -91,7 +91,7 @@ public class TelaGerenciarClienteController implements Initializable {
         
         if(result.get() == ButtonType.OK){
             Cliente c = tabela.getSelectionModel().getSelectedItem();
-            new ClienteDAL().apagar(c.getCodigo());
+            c.excluir();
             carregarTabela("");
         }
     }

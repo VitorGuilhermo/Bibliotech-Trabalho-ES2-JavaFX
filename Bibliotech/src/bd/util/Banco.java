@@ -16,8 +16,11 @@ public class Banco
     }    
     
     public static boolean conectarBanco(){
-        con = new Conexao();
-        return con.conectar("jdbc:postgresql://tuffi.db.elephantsql.com:5432/", "ajhapggm", "ajhapggm", "yLsEiAh_feizZSBPBuHaCe64l-G5nA5S");
+        if(con == null){
+            con = new Conexao();
+            return con.conectar("jdbc:postgresql://tuffi.db.elephantsql.com:5432/", "ajhapggm", "ajhapggm", "yLsEiAh_feizZSBPBuHaCe64l-G5nA5S");
+        }
+        return false;
     }
     public static Conexao getCon(){
         return con;

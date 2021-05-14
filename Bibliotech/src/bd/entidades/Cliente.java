@@ -1,21 +1,24 @@
 package bd.entidades;
 
+import bd.dal.ClienteDAL;
 import java.time.LocalDate;
-
+import java.util.List;
 
 public class Cliente {
+
     private int codigo;
     private String nome, documento, endereco, telefone;
     private String sexo;
     private LocalDate dataNasc;
 
-    
     public Cliente() {
         this(0, "", "", "", "", "", LocalDate.now());
     }
+
     public Cliente(String nome, String documento, String endereco, String telefone, String sexo, LocalDate dataNasc) {
         this(0, nome, documento, endereco, telefone, sexo, dataNasc);
     }
+
     public Cliente(int codigo, String nome, String documento, String endereco, String telefone, String sexo, LocalDate dataNasc) {
         this.codigo = codigo;
         this.nome = nome;
@@ -26,7 +29,6 @@ public class Cliente {
         this.dataNasc = dataNasc;
     }
 
-    
     public int getCodigo() {
         return codigo;
     }
@@ -70,10 +72,22 @@ public class Cliente {
         this.dataNasc = dataNasc;
     }
 
+    public boolean gravar() {
+        return new ClienteDAL().gravar(this);
+    }
+    public boolean alterar() {
+        return new ClienteDAL().alterar(this);
+    }
+    public boolean excluir() {
+        return new ClienteDAL().apagar(codigo);
+    }
+    public List<Cliente> buscar(String filtro) {
+        return new ClienteDAL().get(filtro);
+    }
+
     @Override
     public String toString() {
         return nome;
     }
-   
-    
+
 }

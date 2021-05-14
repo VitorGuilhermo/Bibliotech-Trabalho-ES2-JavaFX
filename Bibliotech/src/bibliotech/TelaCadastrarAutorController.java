@@ -39,7 +39,7 @@ public class TelaCadastrarAutorController implements Initializable {
         Autor a = new Autor(txNome.getText());
         
         if(txCodigo.getText().isEmpty()){
-            if(!new AutorDAL().gravar(a)){
+            if(!a.gravar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -47,7 +47,7 @@ public class TelaCadastrarAutorController implements Initializable {
         }
         else{  //alterar
             a.setCodigo(Integer.parseInt(txCodigo.getText()));
-            if(!new AutorDAL().alterar(a)){
+            if(!a.alterar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();

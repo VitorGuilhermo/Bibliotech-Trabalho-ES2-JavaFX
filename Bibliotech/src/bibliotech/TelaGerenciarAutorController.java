@@ -1,8 +1,6 @@
 package bibliotech;
 
-import bd.dal.AssuntoDAL;
 import bd.dal.AutorDAL;
-import bd.entidades.Assunto;
 import bd.entidades.Autor;
 import java.io.IOException;
 import java.net.URL;
@@ -46,9 +44,9 @@ public class TelaGerenciarAutorController implements Initializable {
     }    
 
      private void carregarTabela(String filtro){
-        AutorDAL dal = new AutorDAL();
+        Autor a = new Autor();
         
-        List<Autor> autores = dal.get(filtro);
+        List<Autor> autores = a.buscar(filtro);
         tabela.setItems(FXCollections.observableArrayList(autores));
     }
      
@@ -79,7 +77,7 @@ public class TelaGerenciarAutorController implements Initializable {
         
         if(result.get() == ButtonType.OK){
             Autor a = tabela.getSelectionModel().getSelectedItem();
-            new AutorDAL().apagar(a.getCodigo());
+            a.excluir();
             carregarTabela("");
         }
     }

@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -18,11 +20,18 @@ import javafx.stage.Stage;
  */
 public class TelaPrincipalController implements Initializable {
 
+    @FXML
+    private Label lblNomeUser;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
 
+    public void setDados(String nome){
+        lblNomeUser.setText(nome);
+    }
+    
     @FXML
     private void evtManipularTitulo(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("TelaGerenciarTitulo.fxml"));

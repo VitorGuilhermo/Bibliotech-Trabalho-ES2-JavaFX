@@ -1,8 +1,10 @@
 package bibliotech;
 
+import bd.dal.Assunto_TituloDAL;
+import bd.dal.Autor_TituloDAL;
 import bd.dal.TituloDAL;
-import bd.entidades.Autor;
 import bd.entidades.Editora;
+import bd.entidades.Genero;
 import bd.entidades.Titulo;
 import java.io.IOException;
 import java.net.URL;
@@ -34,20 +36,20 @@ public class TelaGerenciarTituloController implements Initializable {
     @FXML
     private TableColumn<Titulo, String> colTitulo;
     @FXML
-    private TableColumn<Titulo, Autor> colAutor;
-    @FXML
     private TableColumn<Titulo, Editora> colEditora;
     @FXML
     private TableColumn<Titulo, LocalDate> colDataImp;
     @FXML
     private TableColumn<Titulo, Integer> colQtdeExe;
+    @FXML
+    private TableColumn<Titulo, Genero> colGenero;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colTitulo.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
+        colGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
         colEditora.setCellValueFactory(new PropertyValueFactory<>("editora"));
         colDataImp.setCellValueFactory(new PropertyValueFactory<>("dataPubli"));
         colQtdeExe.setCellValueFactory(new PropertyValueFactory<>("qtdeExemplares"));
@@ -99,8 +101,9 @@ public class TelaGerenciarTituloController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarTitulo.fxml"));
         Parent root = (Parent) loader.load();
         TelaCadastrarTituloController ctr = loader.getController();
-        ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(), tabela.getSelectionModel().getSelectedItem().getAutor(),
-            tabela.getSelectionModel().getSelectedItem().getGenero(), tabela.getSelectionModel().getSelectedItem().getAssunto(), tabela.getSelectionModel().getSelectedItem().getEditora(),
+        
+        ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(), new Autor_TituloDAL().get("titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()),
+            tabela.getSelectionModel().getSelectedItem().getGenero(), new Assunto_TituloDAL().get("titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()), tabela.getSelectionModel().getSelectedItem().getEditora(),
             tabela.getSelectionModel().getSelectedItem().getQtdeExemplares(), tabela.getSelectionModel().getSelectedItem().getDataPubli(), tabela.getSelectionModel().getSelectedItem().getDataReg());
         
         Scene scene = new Scene(root);

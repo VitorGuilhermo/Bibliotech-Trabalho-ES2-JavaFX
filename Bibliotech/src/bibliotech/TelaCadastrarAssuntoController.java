@@ -38,7 +38,7 @@ public class TelaCadastrarAssuntoController implements Initializable {
         Assunto a = new Assunto(txNome.getText());
         
         if(txCod.getText().isEmpty()){
-            if(!new AssuntoDAL().gravar(a)){
+            if(!a.gravar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -46,7 +46,7 @@ public class TelaCadastrarAssuntoController implements Initializable {
         }
         else{  //alterar
             a.setCodigo(Integer.parseInt(txCod.getText()));
-            if(!new AssuntoDAL().alterar(a)){
+            if(!a.alterar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();

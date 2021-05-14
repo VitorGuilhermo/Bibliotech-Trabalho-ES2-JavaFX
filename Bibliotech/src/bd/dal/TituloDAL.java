@@ -11,15 +11,13 @@ import java.util.List;
 public class TituloDAL {
     public boolean gravar(Titulo t){
         boolean aux;
-        String sql = "insert into titulo values (default, '#1', #2, #3, #4, #5, #6, '#7', '#8')";
+        String sql = "insert into titulo values (default, '#1', #2, #3, #4, '#5', '#6')";
         sql = sql.replace("#1", t.getNome());
-        sql = sql.replace("#2", ""+t.getAutor().getCodigo());
-        sql = sql.replace("#3", ""+t.getGenero().getCodigo());
-        sql = sql.replace("#4", ""+t.getAssunto().getCodigo());
-        sql = sql.replace("#5", ""+t.getEditora().getCodigo());
-        sql = sql.replace("#6", ""+t.getQtdeExemplares());
-        sql = sql.replace("#7", ""+t.getDataPubli());
-        sql = sql.replace("#8", ""+t.getDataReg());
+        sql = sql.replace("#2", ""+t.getGenero().getCodigo());
+        sql = sql.replace("#3", ""+t.getEditora().getCodigo());
+        sql = sql.replace("#4", ""+t.getQtdeExemplares());
+        sql = sql.replace("#5", ""+t.getDataPubli());
+        sql = sql.replace("#6", ""+t.getDataReg());
         aux = Banco.getCon().manipular(sql);
         //insere os exemplares do titulo
         if(aux){
@@ -34,15 +32,13 @@ public class TituloDAL {
         return aux;
     }
     public boolean alterar(Titulo t){
-        String sql = "update titulo set tit_nome='#1', aut_cod=#2, gen_cod=#3, ast_cod=#4, edt_cod=#5, tit_qtdeexe=#6, tit_datapublic='#7', tit_datareg='#8' where tit_cod="+t.getCodigo();
+        String sql = "update titulo set tit_nome='#1', gen_cod=#2, edt_cod=#3, tit_qtdeexe=#4, tit_datapublic='#5', tit_datareg='#6' where tit_cod="+t.getCodigo();
         sql = sql.replace("#1", t.getNome());
-        sql = sql.replace("#2", ""+t.getAutor().getCodigo());
-        sql = sql.replace("#3", ""+t.getGenero().getCodigo());
-        sql = sql.replace("#4", ""+t.getAssunto().getCodigo());
-        sql = sql.replace("#5", ""+t.getEditora().getCodigo());
-        sql = sql.replace("#6", ""+t.getQtdeExemplares());
-        sql = sql.replace("#7", ""+t.getDataPubli());
-        sql = sql.replace("#8", ""+t.getDataReg());
+        sql = sql.replace("#2", ""+t.getGenero().getCodigo());
+        sql = sql.replace("#3", ""+t.getEditora().getCodigo());
+        sql = sql.replace("#4", ""+t.getQtdeExemplares());
+        sql = sql.replace("#5", ""+t.getDataPubli());
+        sql = sql.replace("#6", ""+t.getDataReg());
         return Banco.getCon().manipular(sql);
     }
     public boolean apagar(int id){
@@ -55,8 +51,8 @@ public class TituloDAL {
         ResultSet rs = Banco.getCon().consultar(sql);
         try{
             if(rs.next())
-                aux = new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new AutorDAL().get(rs.getInt("aut_cod")), new GeneroDAL().get(rs.getInt("gen_cod")), 
-                        new AssuntoDAL().get(rs.getInt("ast_cod")), new EditoraDAL().get(rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
+                aux = new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAL().get(rs.getInt("gen_cod")), 
+                        new EditoraDAL().get(rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
                         rs.getDate("tit_datapublic").toLocalDate(), rs.getDate("tit_datareg").toLocalDate());
         }
         catch(Exception e){
@@ -72,8 +68,8 @@ public class TituloDAL {
         ResultSet rs = Banco.getCon().consultar(sql);
         try{
             while(rs.next())
-                titulos.add( new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new AutorDAL().get(rs.getInt("aut_cod")), new GeneroDAL().get(rs.getInt("gen_cod")), 
-                        new AssuntoDAL().get(rs.getInt("ast_cod")), new EditoraDAL().get(rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
+                titulos.add( new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAL().get(rs.getInt("gen_cod")), 
+                        new EditoraDAL().get(rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
                         rs.getDate("tit_datapublic").toLocalDate(), rs.getDate("tit_datareg").toLocalDate()) );
         }
         catch(Exception e){

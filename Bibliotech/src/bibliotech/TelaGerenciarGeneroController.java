@@ -45,9 +45,9 @@ public class TelaGerenciarGeneroController implements Initializable {
     }    
 
     private void carregarTabela(String filtro){
-        GeneroDAL dal = new GeneroDAL();
+        Genero g = new Genero();
         
-        List<Genero> generos = dal.get(filtro);
+        List<Genero> generos = g.buscar(filtro);
         tabela.setItems(FXCollections.observableArrayList(generos));
     }
     
@@ -78,7 +78,7 @@ public class TelaGerenciarGeneroController implements Initializable {
         
         if(result.get() == ButtonType.OK){
             Genero g = tabela.getSelectionModel().getSelectedItem();
-            new GeneroDAL().apagar(g.getCodigo());
+            g.excluir();
             carregarTabela("");
         }
     }

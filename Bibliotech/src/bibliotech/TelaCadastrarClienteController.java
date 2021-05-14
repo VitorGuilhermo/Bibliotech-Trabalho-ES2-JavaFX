@@ -56,7 +56,7 @@ public class TelaCadastrarClienteController implements Initializable {
         Cliente c = new Cliente(txNome.getText(), txDocumento.getText(), txEndereco.getText(), txTelefone.getText(), txSexo.getText(), dpDataNasc.getValue());
         
         if(txCodigo.getText().isEmpty()){
-            if(!new ClienteDAL().gravar(c)){
+            if(!c.gravar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -64,7 +64,7 @@ public class TelaCadastrarClienteController implements Initializable {
         }
         else{  //alterar
             c.setCodigo(Integer.parseInt(txCodigo.getText()));
-            if(!new ClienteDAL().alterar(c)){
+            if(!c.alterar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();

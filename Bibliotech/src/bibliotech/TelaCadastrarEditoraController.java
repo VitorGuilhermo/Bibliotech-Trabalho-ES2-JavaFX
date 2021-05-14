@@ -43,7 +43,7 @@ public class TelaCadastrarEditoraController implements Initializable {
         Editora e = new Editora(txNome.getText(), txCnpj.getText());
         
         if(txCodigo.getText().isEmpty()){
-            if(!new EditoraDAL().gravar(e)){
+            if(!e.gravar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -51,7 +51,7 @@ public class TelaCadastrarEditoraController implements Initializable {
         }
         else{  //alterar
             e.setCodigo(Integer.parseInt(txCodigo.getText()));
-            if(!new EditoraDAL().alterar(e)){
+            if(!e.alterar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();

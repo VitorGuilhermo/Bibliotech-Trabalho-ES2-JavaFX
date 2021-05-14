@@ -43,9 +43,9 @@ public class GerenciarAssuntoController implements Initializable {
     }    
 
     private void carregarTabela(String filtro){
-        AssuntoDAL dal = new AssuntoDAL();
+        Assunto a = new Assunto();
         
-        List<Assunto> assuntos = dal.get(filtro);
+        List<Assunto> assuntos = a.buscar(filtro);
         tabela.setItems(FXCollections.observableArrayList(assuntos));
     }
     
@@ -76,7 +76,7 @@ public class GerenciarAssuntoController implements Initializable {
         
         if(result.get() == ButtonType.OK){
             Assunto a = tabela.getSelectionModel().getSelectedItem();
-            new AssuntoDAL().apagar(a.getCodigo());
+            a.excluir();
             carregarTabela("");
         }
     }

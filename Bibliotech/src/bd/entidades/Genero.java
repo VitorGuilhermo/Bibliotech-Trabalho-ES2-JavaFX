@@ -1,5 +1,8 @@
 package bd.entidades;
 
+import bd.dal.GeneroDAL;
+import java.util.List;
+
 
 public class Genero {
     private int codigo;
@@ -30,7 +33,20 @@ public class Genero {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+    
+    public boolean gravar() {
+        return new GeneroDAL().gravar(this);
+    }
+    public boolean alterar() {
+        return new GeneroDAL().alterar(this);
+    }
+    public boolean excluir() {
+        return new GeneroDAL().apagar(codigo);
+    }
+    public List<Genero> buscar(String filtro) {
+        return new GeneroDAL().get(filtro);
+    }
+    
     @Override
     public String toString() {
         return nome;
