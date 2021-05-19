@@ -65,12 +65,84 @@
                </font>
             </Label>
             <TextField fx:id="txCodigo" disable="true" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" />
-            <TextField fx:id="txNome" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txDocumento" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" promptText="Ex: 14785236975 (Digite somente os números)" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txEndereco" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" promptText="Ex: Rua X" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="txTelefone" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" promptText="Ex: 18997148714 (Digite somente os números)" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="txSexo" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" promptText="Ex: Masculino" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <DatePicker fx:id="dpDataNasc" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="632.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <TextField fx:id="txNome" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="582.0" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <TextField fx:id="txDocumento" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="605.0" promptText="Ex: 14785236975 (Digite somente os números)" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <TextField fx:id="txEndereco" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="600.0" promptText="Ex: Rua X" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <TextField fx:id="txTelefone" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="596.0" promptText="Ex: 18997148714 (Digite somente os números)" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <TextField fx:id="txSexo" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="590.0" promptText="Ex: Masculino" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <children>
+                  <DatePicker fx:id="dpDataNasc" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="585.0" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
          </children>
          <VBox.margin>
             <Insets left="50.0" right="50.0" top="50.0" />

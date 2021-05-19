@@ -119,7 +119,13 @@ public class TelaCadastrarTituloController implements Initializable {
         Autor_Titulo at1=null, at2=null, at3=null;
         Assunto_Titulo ast1=null, ast2=null, ast3=null;
         
-        if(txCodigo.getText().isEmpty()){
+        if(txTitulo.getText().isEmpty() || cbGenero.getValue() == null || cbEditora.getValue() == null || spQtdeExem.getValue() == null || spQtdeExem.getValue() == null || dtDataPubl.getValue() == null
+                || dtDataRegistro.getValue() == null || cbAutor1.getValue() == null || cbAssunto1.getValue() == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro: Algum campo está vazio");
+            alert.showAndWait();
+        }
+        else if(txCodigo.getText().isEmpty()){
             gravouT = t.gravar();
             if (gravouT) {
                 //grava autores

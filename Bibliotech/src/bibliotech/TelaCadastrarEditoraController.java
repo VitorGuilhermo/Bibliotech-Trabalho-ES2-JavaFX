@@ -41,7 +41,12 @@ public class TelaCadastrarEditoraController implements Initializable {
     private void evtCadastrar(ActionEvent event) {
         Editora e = new Editora(txNome.getText(), txCnpj.getText());
         
-        if(txCodigo.getText().isEmpty()){
+        if(txNome.getText().isEmpty() || txCnpj.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro: Campo NOME ou CNPJ vazio");
+            alert.showAndWait();
+        }
+        else if(txCodigo.getText().isEmpty()){
             if(!e.gravar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());

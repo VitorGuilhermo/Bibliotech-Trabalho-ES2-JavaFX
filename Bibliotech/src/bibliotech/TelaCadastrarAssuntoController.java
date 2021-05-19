@@ -37,7 +37,12 @@ public class TelaCadastrarAssuntoController implements Initializable {
     private void evtCadastrar(ActionEvent event) {
         Assunto a = new Assunto(txNome.getText());
         
-        if(txCod.getText().isEmpty()){
+        if(txNome.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro: Campo NOME vazio");
+            alert.showAndWait();
+        }
+        else if(txCod.getText().isEmpty()){
             if(!a.gravar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());

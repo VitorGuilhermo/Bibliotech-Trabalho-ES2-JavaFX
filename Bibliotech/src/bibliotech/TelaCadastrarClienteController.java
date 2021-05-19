@@ -55,7 +55,12 @@ public class TelaCadastrarClienteController implements Initializable {
     private void evtCadastrar(ActionEvent event) {
         Cliente c = new Cliente(txNome.getText(), txDocumento.getText(), txEndereco.getText(), txTelefone.getText(), txSexo.getText(), dpDataNasc.getValue());
         
-        if(txCodigo.getText().isEmpty()){
+        if(txNome.getText().isEmpty() || txDocumento.getText().isEmpty() || txEndereco.getText().isEmpty() || txTelefone.getText().isEmpty() || txSexo.getText().isEmpty() || dpDataNasc.getValue()== null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro: Algum campo está vazio");
+            alert.showAndWait();
+        }
+        else if(txCodigo.getText().isEmpty()){
             if(!c.gravar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());

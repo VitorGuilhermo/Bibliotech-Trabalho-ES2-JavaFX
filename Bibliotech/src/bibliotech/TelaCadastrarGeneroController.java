@@ -37,7 +37,12 @@ public class TelaCadastrarGeneroController implements Initializable {
     private void evtCadastrar(ActionEvent event) {
         Genero g = new Genero(txNome.getText());
         
-        if(txCodigo.getText().isEmpty()){
+        if(txNome.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro: Campo NOME vazio");
+            alert.showAndWait();
+        }
+        else if(txCodigo.getText().isEmpty()){
             if(!g.gravar()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());

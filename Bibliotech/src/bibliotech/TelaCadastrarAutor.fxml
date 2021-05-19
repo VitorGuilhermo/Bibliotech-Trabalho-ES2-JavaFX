@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #eeeef3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bibliotech.TelaCadastrarAutorController">
    <center>
       <GridPane prefHeight="100.0" prefWidth="520.0" BorderPane.alignment="CENTER">
@@ -35,7 +34,20 @@
                </font>
             </Label>
             <TextField fx:id="txCodigo" disable="true" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" />
-            <TextField fx:id="txNome" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <TextField fx:id="txNome" prefHeight="30.0" prefWidth="448.0" style="-fx-background-color: #fefefe;">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
          <BorderPane.margin>
             <Insets left="40.0" right="40.0" top="80.0" />

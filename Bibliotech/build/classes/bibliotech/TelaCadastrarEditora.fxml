@@ -40,8 +40,32 @@
                </font>
             </Label>
             <TextField fx:id="txCodigo" disable="true" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" />
-            <TextField fx:id="txNome" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txCnpj" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <TextField fx:id="txNome" prefHeight="30.0" prefWidth="402.0" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <TextField fx:id="txCnpj" prefHeight="30.0" prefWidth="427.0" promptText="(Digite somente os números)" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets left="40.0" right="40.0" />

@@ -84,14 +84,17 @@
                </font>
             </Label>
             <TextField fx:id="txCodigo" disable="true" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" />
-            <TextField fx:id="txTitulo" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox fx:id="cbEditora" prefHeight="30.0" prefWidth="564.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Spinner fx:id="spQtdeExem" prefHeight="30.0" prefWidth="573.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <DatePicker fx:id="dtDataPubl" prefHeight="30.0" prefWidth="568.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <DatePicker fx:id="dtDataRegistro" prefHeight="30.0" prefWidth="580.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <ComboBox fx:id="cbAutor1" prefHeight="30.0" prefWidth="162.0" style="-fx-background-color: #fefefe;" HBox.hgrow="ALWAYS" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="-5.0" />
+                     </HBox.margin>
+                  </Label>
                   <ComboBox fx:id="cbAutor2" layoutX="10.0" layoutY="15.0" prefHeight="30.0" prefWidth="162.0" style="-fx-background-color: #fefefe;" />
                   <ComboBox fx:id="cbAutor3" layoutX="187.0" layoutY="15.0" prefHeight="30.0" prefWidth="162.0" style="-fx-background-color: #fefefe;" />
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#evtNovoAutor" style="-fx-background-color: #d4d3d8;" text="+" textAlignment="CENTER" textFill="#1e93ff" HBox.hgrow="ALWAYS">
@@ -101,9 +104,17 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <ComboBox fx:id="cbGenero" prefHeight="30.0" prefWidth="485.0" style="-fx-background-color: #fefefe;" HBox.hgrow="ALWAYS" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="-5.0" />
+                     </HBox.margin>
+                  </Label>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#evtNovoGenero" style="-fx-background-color: #d4d3d8;" text="+" textAlignment="CENTER" textFill="#1e93ff" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Arial" size="18.0" />
@@ -111,9 +122,17 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <ComboBox fx:id="cbAssunto1" prefHeight="30.0" prefWidth="162.0" style="-fx-background-color: #fefefe;" HBox.hgrow="ALWAYS" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="-5.0" />
+                     </HBox.margin>
+                  </Label>
                   <ComboBox fx:id="cbAssunto2" layoutX="10.0" layoutY="15.0" prefHeight="30.0" prefWidth="162.0" style="-fx-background-color: #fefefe;" />
                   <ComboBox fx:id="cbAssunto3" layoutX="237.0" layoutY="15.0" prefHeight="30.0" prefWidth="162.0" style="-fx-background-color: #fefefe;" />
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#evtNovoAssunto" style="-fx-background-color: #d4d3d8;" text="+" textAlignment="CENTER" textFill="#1e93ff" HBox.hgrow="ALWAYS">
@@ -121,6 +140,71 @@
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <TextField fx:id="txTitulo" prefHeight="30.0" prefWidth="570.0" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <ComboBox fx:id="cbEditora" prefHeight="30.0" prefWidth="512.0" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <children>
+                  <Spinner fx:id="spQtdeExem" prefHeight="30.0" prefWidth="542.0" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <children>
+                  <DatePicker fx:id="dtDataPubl" prefHeight="30.0" prefWidth="543.0" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+               <children>
+                  <DatePicker fx:id="dtDataRegistro" prefHeight="30.0" prefWidth="575.0" style="-fx-background-color: #fefefe;" />
+                  <Label text="*" textFill="#1e93ff">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
                </children>
             </HBox>
          </children>
