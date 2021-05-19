@@ -1,6 +1,5 @@
 package bibliotech;
 
-import bd.dal.EditoraDAL;
 import bd.entidades.Editora;
 import bd.util.Banco;
 import java.net.URL;

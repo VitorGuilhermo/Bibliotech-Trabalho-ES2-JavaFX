@@ -41,7 +41,7 @@
             </Label>
             <TextField fx:id="txCodigo" disable="true" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" />
             <TextField fx:id="txNome" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txCnpj" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txCnpj" prefHeight="30.0" promptText="(Digite somente os números)" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
          <padding>
             <Insets left="40.0" right="40.0" />

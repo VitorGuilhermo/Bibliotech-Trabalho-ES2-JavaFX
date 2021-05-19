@@ -1,8 +1,10 @@
 package bd.entidades;
 
 import bd.dal.ClienteDAL;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
+import javax.swing.text.MaskFormatter;
 
 public class Cliente {
 
@@ -22,10 +24,19 @@ public class Cliente {
     public Cliente(int codigo, String nome, String documento, String endereco, String telefone, String sexo, LocalDate dataNasc) {
         this.codigo = codigo;
         this.nome = nome;
-        this.documento = documento;
+        if(documento.equals(""))
+            this.documento = documento;
+        else
+            this.documento = formataCpf(documento.trim());
         this.endereco = endereco;
-        this.telefone = telefone;
-        this.sexo = sexo;
+        if(telefone.equals(""))
+            this.telefone = telefone;
+        else
+            this.telefone = formataTelefone(telefone.trim());
+        if(sexo.equals(""))
+            this.sexo = sexo;
+        else
+            this.sexo = formataSexo(sexo.trim());
         this.dataNasc = dataNasc;
     }
 
@@ -84,7 +95,32 @@ public class Cliente {
     public List<Cliente> buscar(String filtro) {
         return new ClienteDAL().get(filtro);
     }
-
+    //Máscaras
+    public String formataCpf(String cpf){
+        try {
+            MaskFormatter mask = new MaskFormatter("###.###.###-##");
+            mask.setValueContainsLiteralCharacters(false);
+            cpf = mask.valueToString(cpf);
+        } 
+        catch (ParseException ex) { }
+        return cpf;
+    }
+    public String formataTelefone(String numero){
+        try {
+            MaskFormatter mask = new MaskFormatter("(##) #####-####");
+            mask.setValueContainsLiteralCharacters(false);
+            numero = mask.valueToString(numero);
+        } 
+        catch (ParseException ex) { }
+        return numero;
+    }
+    public String formataSexo(String sexo){
+        if(sexo.charAt(0) == 'M' || sexo.charAt(0) == 'm')
+            return "M";
+        else if(sexo.charAt(0) == 'F' || sexo.charAt(0) == 'f')
+            return "F";
+        return "I";
+    }
     @Override
     public String toString() {
         return nome;

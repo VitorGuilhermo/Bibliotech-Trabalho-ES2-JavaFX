@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" style="-fx-background-color: #eeeef3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bibliotech.TelaCadastrarClienteController">
    <children>
       <GridPane prefHeight="256.0" prefWidth="700.0">
@@ -67,10 +66,10 @@
             </Label>
             <TextField fx:id="txCodigo" disable="true" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" />
             <TextField fx:id="txNome" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txDocumento" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txEndereco" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="txTelefone" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="txSexo" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="txDocumento" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" promptText="Ex: 14785236975 (Digite somente os números)" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txEndereco" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" promptText="Ex: Rua X" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txTelefone" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" promptText="Ex: 18997148714 (Digite somente os números)" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txSexo" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" promptText="Ex: Masculino" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <DatePicker fx:id="dpDataNasc" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="632.0" style="-fx-background-color: #fefefe;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
          <VBox.margin>
