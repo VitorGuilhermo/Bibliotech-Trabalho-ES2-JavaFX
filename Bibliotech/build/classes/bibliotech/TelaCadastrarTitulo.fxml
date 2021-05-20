@@ -157,7 +157,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
-                  <ComboBox fx:id="cbEditora" prefHeight="30.0" prefWidth="512.0" style="-fx-background-color: #fefefe;" />
+                  <ComboBox fx:id="cbEditora" prefHeight="30.0" prefWidth="555.0" style="-fx-background-color: #fefefe;" />
                   <Label text="*" textFill="#1e93ff">
                      <font>
                         <Font name="Arial" size="18.0" />

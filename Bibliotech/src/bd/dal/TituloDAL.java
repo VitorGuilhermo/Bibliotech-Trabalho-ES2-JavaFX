@@ -1,5 +1,7 @@
 package bd.dal;
 
+import bd.entidades.Assunto;
+import bd.entidades.Autor;
 import bd.entidades.Exemplar;
 import bd.entidades.Titulo;
 import bd.util.Banco;
@@ -53,7 +55,8 @@ public class TituloDAL {
             if(rs.next())
                 aux = new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAL().get(rs.getInt("gen_cod")), 
                         new EditoraDAL().get(rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
-                        rs.getDate("tit_datapublic").toLocalDate(), rs.getDate("tit_datareg").toLocalDate());
+                        rs.getDate("tit_datapublic").toLocalDate(), rs.getDate("tit_datareg").toLocalDate(),
+                        new Autor_TituloDAL().get(" titulo_tit_cod="+rs.getInt("tit_cod")),  new Assunto_TituloDAL().get(" titulo_tit_cod="+rs.getInt("tit_cod")) );
         }
         catch(Exception e){
         }
@@ -70,7 +73,8 @@ public class TituloDAL {
             while(rs.next())
                 titulos.add( new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAL().get(rs.getInt("gen_cod")), 
                         new EditoraDAL().get(rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
-                        rs.getDate("tit_datapublic").toLocalDate(), rs.getDate("tit_datareg").toLocalDate()) );
+                        rs.getDate("tit_datapublic").toLocalDate(), rs.getDate("tit_datareg").toLocalDate(),
+                        new Autor_TituloDAL().get(" titulo_tit_cod="+rs.getInt("tit_cod")),  new Assunto_TituloDAL().get(" titulo_tit_cod="+rs.getInt("tit_cod"))));
         }
         catch(Exception e){
         }

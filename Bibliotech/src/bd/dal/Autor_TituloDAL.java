@@ -2,8 +2,6 @@ package bd.dal;
 
 import bd.entidades.Autor;
 import bd.entidades.Autor_Titulo;
-import bd.entidades.Exemplar;
-import bd.entidades.Titulo;
 import bd.util.Banco;
 import java.sql.ResultSet;
 import java.util.ArrayList;

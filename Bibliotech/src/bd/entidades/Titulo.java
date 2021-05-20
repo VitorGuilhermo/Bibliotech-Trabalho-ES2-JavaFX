@@ -2,7 +2,8 @@ package bd.entidades;
 
 import bd.dal.TituloDAL;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Titulo {
     private int codigo;
@@ -12,15 +13,16 @@ public class Titulo {
     private int qtdeExemplares;
     private LocalDate dataPubli;
     private LocalDate dataReg;
-
+    private List<Autor> autores;
+    private List<Assunto> assuntos;
     
     public Titulo() {
-        this(0, "", new Genero(), new Editora(), 0, LocalDate.now(), LocalDate.now());
+        this(0, "", new Genero(), new Editora(), 0, LocalDate.now(), LocalDate.now(), new ArrayList<Autor>(), new ArrayList<Assunto>());
     }
-    public Titulo(String nome, Genero genero, Editora editora, int qtde, LocalDate dataPubli, LocalDate dataReg) {
-        this(0, nome, genero, editora, qtde, dataPubli, dataReg);
+    public Titulo(String nome, Genero genero, Editora editora, int qtde, LocalDate dataPubli, LocalDate dataReg, List<Autor> autores, List<Assunto> assuntos) {
+        this(0, nome, genero, editora, qtde, dataPubli, dataReg, autores, assuntos);
     }
-    public Titulo(int codigo, String nome, Genero genero, Editora editora, int qtde, LocalDate dataPubli, LocalDate dataReg) {
+    public Titulo(int codigo, String nome, Genero genero, Editora editora, int qtde, LocalDate dataPubli, LocalDate dataReg, List<Autor> autores, List<Assunto> assuntos) {
         this.codigo = codigo;
         this.nome = nome;
         this.genero = genero;
@@ -28,6 +30,8 @@ public class Titulo {
         this.qtdeExemplares = qtde;
         this.dataPubli = dataPubli;
         this.dataReg = dataReg;
+        this.autores = autores;
+        this.assuntos = assuntos;
     }
 
     
@@ -73,6 +77,19 @@ public class Titulo {
     public void setDataReg(LocalDate dataReg) {
         this.dataReg = dataReg;
     }
+    public List<Autor> getAutores() {
+        return autores;
+    }
+    public void setAutores(List<Autor> autores) {
+        this.autores = autores;
+    }
+    public List<Assunto> getAssuntos() {
+        return assuntos;
+    }
+    public void setAssuntos(List<Assunto> assuntos) {
+        this.assuntos = assuntos;
+    }
+    
 
     public boolean gravar(){
         return new TituloDAL().gravar(this);

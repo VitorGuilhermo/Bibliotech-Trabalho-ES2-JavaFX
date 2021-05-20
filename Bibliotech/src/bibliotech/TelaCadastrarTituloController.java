@@ -16,6 +16,7 @@ import bd.util.Banco;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -125,10 +126,10 @@ public class TelaCadastrarTituloController implements Initializable {
 
     @FXML
     private void evtCadastrar(ActionEvent event) {
+        ArrayList<Autor> autores = new ArrayList<>();
+        ArrayList<Assunto> assuntos = new ArrayList<>();
+        Titulo t = new Titulo(txTitulo.getText(), cbGenero.getValue(), cbEditora.getValue(), spQtdeExem.getValue(), dtDataPubl.getValue(), dtDataRegistro.getValue(), autores, assuntos);
         boolean gravouT=false;
-        Titulo t = new Titulo(txTitulo.getText(), cbGenero.getValue(), cbEditora.getValue(), spQtdeExem.getValue(), dtDataPubl.getValue(), dtDataRegistro.getValue());
-        Autor_Titulo at1=null, at2=null, at3=null;
-        Assunto_Titulo ast1=null, ast2=null, ast3=null;
         
         if(txTitulo.getText().isEmpty() || cbGenero.getValue() == null || cbEditora.getValue() == null || spQtdeExem.getValue() == null || spQtdeExem.getValue() == null || dtDataPubl.getValue() == null
                 || dtDataRegistro.getValue() == null || cbAutor1.getValue() == null || cbAssunto1.getValue() == null){
@@ -136,41 +137,36 @@ public class TelaCadastrarTituloController implements Initializable {
             alert.setContentText("Erro: Algum campo está vazio");
             alert.showAndWait();
         }
-        else if(cbAutor1.getValue().equalsAutor(cbAutor2.getValue()) || cbAutor2.getValue().equalsAutor(cbAutor3.getValue()) || cbAutor1.getValue().equalsAutor(cbAutor3.getValue()) 
-                || cbAssunto1.getValue().equalsAssunto(cbAssunto2.getValue()) || cbAssunto2.getValue().equalsAssunto(cbAssunto3.getValue()) || cbAssunto1.getValue().equalsAssunto(cbAssunto3.getValue()) ){
+        else if(validaIgualdadeCB()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erro: O campo de Autor ou Assunto apresentam dados repetidos");
             alert.showAndWait();
         }
         else if(txCodigo.getText().isEmpty()){
+            //alimenta lista autores
+            if (!cbAutor1.getSelectionModel().isEmpty())
+                autores.add(cbAutor1.getValue());
+            if (!cbAutor2.getSelectionModel().isEmpty())
+                autores.add(cbAutor2.getValue());
+            if (!cbAutor3.getSelectionModel().isEmpty()) 
+                autores.add(cbAutor3.getValue());
+            //alimenta lista assuntos
+            if (!cbAssunto1.getSelectionModel().isEmpty())
+                assuntos.add(cbAssunto1.getValue());
+            if (!cbAssunto2.getSelectionModel().isEmpty()) 
+                assuntos.add(cbAssunto2.getValue());
+            if (!cbAssunto3.getSelectionModel().isEmpty())
+                assuntos.add(cbAssunto3.getValue());
+            
+            //grava titulo
+            t.setAutores(autores);
+            t.setAssuntos(assuntos);
             gravouT = t.gravar();
-            if (gravouT) {
-                //grava autores
-                if (!cbAutor1.getSelectionModel().isEmpty()) {
-                    at1 = new Autor_Titulo(cbAutor1.getValue(), t);
-                    at1.gravar();
-                }
-                if (!cbAutor2.getSelectionModel().isEmpty()) {
-                    at2 = new Autor_Titulo(cbAutor2.getValue(), t);
-                    at2.gravar();
-                }
-                if (!cbAutor3.getSelectionModel().isEmpty()) {
-                    at3 = new Autor_Titulo(cbAutor3.getValue(), t);
-                    at3.gravar();
-                }
-                //grava assuntos
-                if (!cbAssunto1.getSelectionModel().isEmpty()) {
-                    ast1 = new Assunto_Titulo(cbAssunto1.getValue(), t);
-                    ast1.gravar();
-                }
-                if (!cbAssunto2.getSelectionModel().isEmpty()) {
-                    ast2 = new Assunto_Titulo(cbAssunto2.getValue(), t);
-                    ast2.gravar();
-                }
-                if (!cbAssunto3.getSelectionModel().isEmpty()) {
-                    ast3 = new Assunto_Titulo(cbAssunto3.getValue(), t);
-                    ast3.gravar();
-                }
+            if (gravouT){   //se gravou o titulo, vai gravar os assuntos e os autores
+                for(Autor a : autores)
+                    new Autor_Titulo(a, t).gravar();
+                for(Assunto a : assuntos)
+                    new Assunto_Titulo(a, t).gravar();
             }
             else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -237,5 +233,31 @@ public class TelaCadastrarTituloController implements Initializable {
         cbAssunto2.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
         cbAssunto3.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
     }
-    
+    public boolean validaIgualdadeCB(){
+        if(cbAutor1.getValue() != null && cbAutor2.getValue() != null){
+            if(cbAutor1.getValue().equalsAutor(cbAutor2.getValue()))
+                return true;
+        }
+        if(cbAutor2.getValue() != null && cbAutor3.getValue() != null){
+            if(cbAutor2.getValue().equalsAutor(cbAutor3.getValue()))
+                return true;
+        }
+        if(cbAutor1.getValue() != null && cbAutor3.getValue() != null){
+            if(cbAutor1.getValue().equalsAutor(cbAutor3.getValue()))
+                return true;
+        }
+        if(cbAssunto1.getValue() != null && cbAssunto2.getValue() != null){
+            if(cbAssunto1.getValue().equalsAssunto(cbAssunto2.getValue()))
+                return true;
+        }
+        if(cbAssunto2.getValue() != null && cbAssunto3.getValue() != null){
+            if(cbAssunto2.getValue().equalsAssunto(cbAssunto3.getValue()))
+                return true;
+        }
+        if(cbAssunto1.getValue() != null && cbAssunto3.getValue() != null){
+            if(cbAssunto1.getValue().equalsAssunto(cbAssunto3.getValue()))
+                return true;
+        }
+        return false;
+    }
 }
