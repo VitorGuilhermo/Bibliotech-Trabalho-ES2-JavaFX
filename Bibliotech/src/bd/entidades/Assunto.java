@@ -51,5 +51,10 @@ public class Assunto {
     public String toString() {
         return nome;
     }
-    
+    public boolean equalsAssunto(Assunto ast) { 
+        if(ast != null)
+            if (nome.equals(ast.getNome()))
+                return true;  
+        return false; 
+    }
 }

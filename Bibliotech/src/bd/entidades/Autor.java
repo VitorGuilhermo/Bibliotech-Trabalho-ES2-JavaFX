@@ -50,4 +50,10 @@ public class Autor {
     public String toString() {
         return nome;
     }
+    public boolean equalsAutor(Autor aut) { 
+        if(aut != null)
+            if (nome.equals(aut.getNome()))
+                return true;  
+        return false; 
+    }
 }

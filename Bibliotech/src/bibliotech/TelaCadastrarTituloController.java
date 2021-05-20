@@ -136,6 +136,12 @@ public class TelaCadastrarTituloController implements Initializable {
             alert.setContentText("Erro: Algum campo está vazio");
             alert.showAndWait();
         }
+        else if(cbAutor1.getValue().equalsAutor(cbAutor2.getValue()) || cbAutor2.getValue().equalsAutor(cbAutor3.getValue()) || cbAutor1.getValue().equalsAutor(cbAutor3.getValue()) 
+                || cbAssunto1.getValue().equalsAssunto(cbAssunto2.getValue()) || cbAssunto2.getValue().equalsAssunto(cbAssunto3.getValue()) || cbAssunto1.getValue().equalsAssunto(cbAssunto3.getValue()) ){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro: O campo de Autor ou Assunto apresentam dados repetidos");
+            alert.showAndWait();
+        }
         else if(txCodigo.getText().isEmpty()){
             gravouT = t.gravar();
             if (gravouT) {
