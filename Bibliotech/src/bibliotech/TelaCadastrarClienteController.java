@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 
 public class TelaCadastrarClienteController implements Initializable {
 
+    static TelaCadastrarClienteController instancia;
     @FXML
     private TextField txCodigo;
     @FXML
@@ -31,6 +32,15 @@ public class TelaCadastrarClienteController implements Initializable {
     private DatePicker dpDataNasc;
 
 
+    public TelaCadastrarClienteController() {
+    }
+    public static TelaCadastrarClienteController retorna(){
+        if (instancia == null){
+            instancia = new TelaCadastrarClienteController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

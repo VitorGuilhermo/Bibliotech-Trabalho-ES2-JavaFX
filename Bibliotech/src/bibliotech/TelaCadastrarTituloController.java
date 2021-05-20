@@ -36,6 +36,7 @@ import javafx.stage.Stage;
 
 public class TelaCadastrarTituloController implements Initializable {
 
+    static TelaCadastrarTituloController instancia;
     @FXML
     private TextField txCodigo;
     @FXML
@@ -63,6 +64,16 @@ public class TelaCadastrarTituloController implements Initializable {
     @FXML
     private ComboBox<Assunto> cbAssunto3;
 
+    
+    public TelaCadastrarTituloController() {
+    }
+    public static TelaCadastrarTituloController retorna(){
+        if (instancia == null){
+            instancia = new TelaCadastrarTituloController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cbAutor1.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
@@ -73,7 +84,7 @@ public class TelaCadastrarTituloController implements Initializable {
         cbAssunto2.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
         cbAssunto3.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
         cbEditora.setItems(FXCollections.observableArrayList(new EditoraDAL().get("")));
-        spQtdeExem.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000000, 1));
+        spQtdeExem.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000000, 1));
     }    
 
     public void setDados(int cod, String nome, List<Autor>autores, Genero gen, List<Assunto>assuntos, Editora editora, int qtde, LocalDate dataP, LocalDate dataR){

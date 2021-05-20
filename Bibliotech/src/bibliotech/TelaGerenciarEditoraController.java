@@ -1,6 +1,5 @@
 package bibliotech;
 
-import bd.dal.EditoraDAL;
 import bd.entidades.Editora;
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +23,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class TelaGerenciarEditoraController implements Initializable {
-
+    static TelaGerenciarEditoraController instancia;
     @FXML
     private TextField txFiltro;
     @FXML
@@ -37,6 +36,15 @@ public class TelaGerenciarEditoraController implements Initializable {
     private TableColumn<Editora, String> colCnpj;
 
 
+    public TelaGerenciarEditoraController() {
+    }
+    public static TelaGerenciarEditoraController retorna(){
+        if (instancia == null){
+            instancia = new TelaGerenciarEditoraController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));

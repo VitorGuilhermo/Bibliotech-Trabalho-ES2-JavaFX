@@ -1,6 +1,5 @@
 package bibliotech;
 
-import bd.dal.AutorDAL;
 import bd.entidades.Autor;
 import bd.util.Banco;
 import java.net.URL;
@@ -13,7 +12,8 @@ import javafx.scene.control.TextField;
 
 
 public class TelaCadastrarAutorController implements Initializable {
-
+    
+    static TelaCadastrarAutorController instancia;
     @FXML
     private TextField txCodigo;
     @FXML
@@ -24,6 +24,15 @@ public class TelaCadastrarAutorController implements Initializable {
         txNome.setText(nome);
     }
 
+    public TelaCadastrarAutorController() {
+    }
+    public static TelaCadastrarAutorController retorna(){
+        if (instancia == null){
+            instancia = new TelaCadastrarAutorController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

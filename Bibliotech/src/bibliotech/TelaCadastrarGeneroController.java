@@ -1,6 +1,5 @@
 package bibliotech;
 
-import bd.dal.GeneroDAL;
 import bd.entidades.Genero;
 import bd.util.Banco;
 import java.net.URL;
@@ -13,11 +12,22 @@ import javafx.scene.control.TextField;
 
 public class TelaCadastrarGeneroController implements Initializable {
 
+    static TelaCadastrarGeneroController instancia;
     @FXML
     private TextField txCodigo;
     @FXML
     private TextField txNome;
 
+    
+    public TelaCadastrarGeneroController() {
+    }
+    public static TelaCadastrarGeneroController retorna(){
+        if (instancia == null){
+            instancia = new TelaCadastrarGeneroController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

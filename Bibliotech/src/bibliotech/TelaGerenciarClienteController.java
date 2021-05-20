@@ -1,6 +1,5 @@
 package bibliotech;
 
-import bd.dal.ClienteDAL;
 import bd.entidades.Cliente;
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +25,7 @@ import javafx.stage.Stage;
 
 
 public class TelaGerenciarClienteController implements Initializable {
-
+    static TelaGerenciarClienteController instancia;
     @FXML
     private TextField txFiltrar;
     @FXML
@@ -44,6 +43,16 @@ public class TelaGerenciarClienteController implements Initializable {
     @FXML
     private TableColumn<Cliente, LocalDate> colDtNasc;
 
+    
+    public TelaGerenciarClienteController() {
+    }
+    public static TelaGerenciarClienteController retorna(){
+        if (instancia == null){
+            instancia = new TelaGerenciarClienteController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));

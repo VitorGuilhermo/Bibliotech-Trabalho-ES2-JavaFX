@@ -1,6 +1,5 @@
 package bibliotech;
 
-import bd.dal.AssuntoDAL;
 import bd.entidades.Assunto;
 import bd.util.Banco;
 import java.net.URL;
@@ -12,12 +11,23 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 public class TelaCadastrarAssuntoController implements Initializable {
-
+    
+    static TelaCadastrarAssuntoController instancia;
     @FXML
     private TextField txCod;
     @FXML
     private TextField txNome;
 
+    
+    public TelaCadastrarAssuntoController() {
+    }
+    public static TelaCadastrarAssuntoController retorna(){
+        if (instancia == null){
+            instancia = new TelaCadastrarAssuntoController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

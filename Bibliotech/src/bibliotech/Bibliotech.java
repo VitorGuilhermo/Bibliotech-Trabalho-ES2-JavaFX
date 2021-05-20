@@ -19,14 +19,16 @@ public class Bibliotech extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("TelaLogin.fxml"));
-        
-        Scene scene = new Scene(root);
-        stage.setTitle("Login");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+        if(TelaLoginController.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("TelaLogin.fxml"));
+
+            Scene scene = new Scene(root);
+            stage.setTitle("Login");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public static void main(String[] args) {

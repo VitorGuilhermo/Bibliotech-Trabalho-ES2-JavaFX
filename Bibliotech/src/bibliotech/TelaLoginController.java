@@ -23,12 +23,22 @@ import javafx.stage.Stage;
  * @author Vitor Guilhermo
  */
 public class TelaLoginController implements Initializable {
-
+    static TelaLoginController instancia;
     @FXML
     private TextField txDocumento;
     @FXML
     private PasswordField txSenha;
 
+    
+    public TelaLoginController() {
+    }
+    public static TelaLoginController retorna(){
+        if (instancia == null){
+            instancia = new TelaLoginController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -41,35 +51,37 @@ public class TelaLoginController implements Initializable {
 
     @FXML
     private void evtEntrar(ActionEvent event) throws IOException {
-        Bibliotecario bib = new Bibliotecario(txDocumento.getText(), txSenha.getText());
-        Bibliotecario aux = bib.verificaLogin();
-        
-        if(aux != null){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaPrincipal.fxml"));
-            Parent root = (Parent) loader.load();
-            TelaPrincipalController ctr = loader.getController();
-            ctr.setDados(bib.getNomeBibliotecario());
+        if(TelaPrincipalController.retorna() != null){
+            Bibliotecario bib = new Bibliotecario(txDocumento.getText(), txSenha.getText());
+            Bibliotecario aux = bib.verificaLogin();
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
+            if(aux != null){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaPrincipal.fxml"));
+                Parent root = (Parent) loader.load();
+                TelaPrincipalController ctr = loader.getController();
+                ctr.setDados(bib.getNomeBibliotecario());
 
-            stage.setTitle("Bibliotech");
-            stage.getIcons().add(new Image("img/icone.png"));
-            stage.setScene(scene);
-            stage.setOnCloseRequest(e->{Banco.getCon().desconectar();});
-            stage.show();
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
 
-            txDocumento.getScene().getWindow().hide();
-        }
-        else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Falha");
-            alert.setHeaderText("Erro no documento ou senha...");
-            alert.setContentText("Tente novamente!");
-            Optional<ButtonType> result =  alert.showAndWait();
+                stage.setTitle("Bibliotech");
+                stage.getIcons().add(new Image("img/icone.png"));
+                stage.setScene(scene);
+                stage.setOnCloseRequest(e->{Banco.getCon().desconectar();});
+                stage.show();
 
-            txDocumento.clear();
-            txSenha.clear();
+                txDocumento.getScene().getWindow().hide();
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Falha");
+                alert.setHeaderText("Erro no documento ou senha...");
+                alert.setContentText("Tente novamente!");
+                Optional<ButtonType> result =  alert.showAndWait();
+
+                txDocumento.clear();
+                txSenha.clear();
+            }
         }
     }
     

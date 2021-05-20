@@ -26,7 +26,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class TelaGerenciarTituloController implements Initializable {
-
+    static TelaGerenciarTituloController instancia;
     @FXML
     private TextField txFiltro;
     @FXML
@@ -44,7 +44,16 @@ public class TelaGerenciarTituloController implements Initializable {
     @FXML
     private TableColumn<Titulo, Genero> colGenero;
 
-
+    
+    public TelaGerenciarTituloController() {
+    }
+    public static TelaGerenciarTituloController retorna(){
+        if (instancia == null){
+            instancia = new TelaGerenciarTituloController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));

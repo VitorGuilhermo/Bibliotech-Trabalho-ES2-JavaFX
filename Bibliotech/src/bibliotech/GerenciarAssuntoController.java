@@ -1,6 +1,5 @@
 package bibliotech;
 
-import bd.dal.AssuntoDAL;
 import bd.entidades.Assunto;
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +24,7 @@ import javafx.stage.Stage;
 
 public class GerenciarAssuntoController implements Initializable {
 
+    static GerenciarAssuntoController instancia;
     @FXML
     private TextField txFiltro;
     @FXML
@@ -34,6 +34,16 @@ public class GerenciarAssuntoController implements Initializable {
     @FXML
     private TableColumn<Assunto, String> colNome;
 
+    
+    public GerenciarAssuntoController() {
+    }
+    public static GerenciarAssuntoController retorna(){
+        if (instancia == null){
+            instancia = new GerenciarAssuntoController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCod.setCellValueFactory(new PropertyValueFactory<>("codigo"));

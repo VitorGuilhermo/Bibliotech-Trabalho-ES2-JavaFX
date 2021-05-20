@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 
 public class TelaCadastrarEditoraController implements Initializable {
 
+    static TelaCadastrarEditoraController instancia;
     @FXML
     private TextField txCodigo;
     @FXML
@@ -21,6 +22,15 @@ public class TelaCadastrarEditoraController implements Initializable {
     private TextField txCnpj;
 
     
+    public TelaCadastrarEditoraController() {
+    }
+    public static TelaCadastrarEditoraController retorna(){
+        if (instancia == null){
+            instancia = new TelaCadastrarEditoraController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

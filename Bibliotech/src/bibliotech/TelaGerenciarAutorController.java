@@ -1,7 +1,7 @@
 package bibliotech;
 
-import bd.dal.AutorDAL;
 import bd.entidades.Autor;
+import static bibliotech.TelaCadastrarTituloController.instancia;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -24,7 +24,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class TelaGerenciarAutorController implements Initializable {
-
+    
+    static TelaGerenciarAutorController instancia;
     @FXML
     private TextField txFiltro;
     @FXML
@@ -35,6 +36,15 @@ public class TelaGerenciarAutorController implements Initializable {
     private TableColumn<Autor, String> colNome;
 
 
+    public TelaGerenciarAutorController() {
+    }
+    public static TelaGerenciarAutorController retorna(){
+        if (instancia == null){
+            instancia = new TelaGerenciarAutorController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));

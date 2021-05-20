@@ -1,6 +1,5 @@
 package bibliotech;
 
-import bd.dal.GeneroDAL;
 import bd.entidades.Genero;
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +24,7 @@ import javafx.stage.Stage;
 
 
 public class TelaGerenciarGeneroController implements Initializable {
-
+    static TelaGerenciarGeneroController instancia;
     @FXML
     private TextField txFiltro;
     @FXML
@@ -35,7 +34,16 @@ public class TelaGerenciarGeneroController implements Initializable {
     @FXML
     private TableColumn<Genero, String> colNome;
 
-
+    
+    public TelaGerenciarGeneroController() {
+    }
+    public static TelaGerenciarGeneroController retorna(){
+        if (instancia == null){
+            instancia = new TelaGerenciarGeneroController();
+            return (instancia);
+        }
+        return null;
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
