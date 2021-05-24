@@ -1,5 +1,6 @@
 package bibliotech;
 
+import bd.entidades.Bibliotecario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +22,7 @@ public class TelaPrincipalController implements Initializable {
     static TelaPrincipalController instancia;
     @FXML
     private Label lblNomeUser;
+    private Bibliotecario bib;
 
     
     public TelaPrincipalController() {
@@ -37,8 +39,9 @@ public class TelaPrincipalController implements Initializable {
         // TODO
     }    
 
-    public void setDados(String nome){
-        lblNomeUser.setText(nome);
+    public void setDados(Bibliotecario bib){
+        this.bib = bib;
+        lblNomeUser.setText(bib.getNomeBibliotecario());
     }
     
     @FXML
@@ -132,6 +135,26 @@ public class TelaPrincipalController implements Initializable {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.setTitle("Gerenciar Cliente");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+        }
+    }
+
+    @FXML
+    private void evtRetirarLivro(ActionEvent event) throws IOException {
+        if(TelaRetirarLivroController.retorna() != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaRetirarLivro.fxml"));
+            Parent root = (Parent) loader.load();
+            TelaRetirarLivroController ctr = loader.getController();
+
+            ctr.setDados(bib);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Retirar livros do acervo da biblioteca");
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
         }

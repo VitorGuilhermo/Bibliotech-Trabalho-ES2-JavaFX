@@ -1,5 +1,7 @@
 package bd.entidades;
 
+import bd.dal.ExemplarDAL;
+
 
 public class Exemplar {
     private int codigo;
@@ -38,6 +40,9 @@ public class Exemplar {
         this.titulo = titulo;
     }
 
+    public boolean excluir(){
+        return new ExemplarDAL().apagar(codigo);
+    }
     @Override
     public String toString() {
         return titulo.getNome();

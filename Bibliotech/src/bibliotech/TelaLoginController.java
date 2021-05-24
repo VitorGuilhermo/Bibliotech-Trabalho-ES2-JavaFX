@@ -59,7 +59,7 @@ public class TelaLoginController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaPrincipal.fxml"));
                 Parent root = (Parent) loader.load();
                 TelaPrincipalController ctr = loader.getController();
-                ctr.setDados(bib.getNomeBibliotecario());
+                ctr.setDados(aux);
 
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();

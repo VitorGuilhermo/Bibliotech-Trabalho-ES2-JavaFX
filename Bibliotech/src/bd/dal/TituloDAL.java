@@ -43,6 +43,11 @@ public class TituloDAL {
         sql = sql.replace("#6", ""+t.getDataReg());
         return Banco.getCon().manipular(sql);
     }
+    public boolean alterarQtdeExemplares(int id, int qtde){
+        String sql = "update titulo set tit_qtdeexe=#1 where tit_cod="+id;
+        sql = sql.replace("#1", ""+qtde);
+        return Banco.getCon().manipular(sql);
+    }
     public boolean apagar(int id){
         String sql = "delete from titulo where tit_cod="+id;
         return Banco.getCon().manipular(sql);
@@ -66,6 +71,24 @@ public class TituloDAL {
         List<Titulo> titulos = new ArrayList<>();
         
         String sql = "select * from titulo";
+        if(!filtro.isEmpty())
+            sql += " where " + filtro;
+        ResultSet rs = Banco.getCon().consultar(sql);
+        try{
+            while(rs.next())
+                titulos.add( new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAL().get(rs.getInt("gen_cod")), 
+                        new EditoraDAL().get(rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
+                        rs.getDate("tit_datapublic").toLocalDate(), rs.getDate("tit_datareg").toLocalDate(),
+                        new Autor_TituloDAL().get(" titulo_tit_cod="+rs.getInt("tit_cod")),  new Assunto_TituloDAL().get(" titulo_tit_cod="+rs.getInt("tit_cod"))));
+        }
+        catch(Exception e){
+        }
+        return titulos;
+    } 
+    public List<Titulo> getTitulosCompostos(String filtro, String contSql){
+        List<Titulo> titulos = new ArrayList<>();
+        
+        String sql = "select * from titulo "+contSql;
         if(!filtro.isEmpty())
             sql += " where " + filtro;
         ResultSet rs = Banco.getCon().consultar(sql);

@@ -94,6 +94,13 @@ public class Titulo {
     public boolean gravar(){
         return new TituloDAL().gravar(this);
     }
+    public Titulo pesquisar(){
+        return new TituloDAL().get(codigo);
+    }
+    public void decrementaQtdeExemplar(){
+        Titulo t = this.pesquisar();
+        new TituloDAL().alterarQtdeExemplares(t.getCodigo(), t.getQtdeExemplares()-1);
+    }
     
     @Override
     public String toString() {
