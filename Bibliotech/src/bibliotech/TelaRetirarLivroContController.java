@@ -96,7 +96,7 @@ public class TelaRetirarLivroContController implements Initializable {
                 tit.setCodigo(codTit);
                 if(tit.pesquisar().getQtdeExemplares() > 0){
                     //primeiro da a baixa
-                    Baixa baixa = new Baixa(txTitulo.getText(), LocalDate.parse(txDtPubl.getText()), taMotivo.getText(), bibliotecario);
+                    Baixa baixa = new Baixa(txTitulo.getText(), LocalDate.now(), taMotivo.getText(), bibliotecario);
                     baixa.gravar();
                     //exclui o exemplar
                     Exemplar exe = new Exemplar(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().isSituacao(), tabela.getSelectionModel().getSelectedItem().getTitulo());

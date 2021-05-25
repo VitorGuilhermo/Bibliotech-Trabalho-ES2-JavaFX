@@ -1,6 +1,5 @@
 package bibliotech;
 
-import bd.dal.ClienteDAL;
 import bd.entidades.Cliente;
 import bd.util.Banco;
 import java.net.URL;

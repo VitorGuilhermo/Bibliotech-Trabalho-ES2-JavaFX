@@ -93,37 +93,43 @@ public class TelaGerenciarGeneroController implements Initializable {
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarGenero.fxml"));
-        Parent root = (Parent) loader.load();
-        TelaCadastrarGeneroController ctr = loader.getController();
-        ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome());
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Alterar Gênero");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.showAndWait();
-        
-        carregarTabela("");
+        if(TelaCadastrarGeneroController.retorna() != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarGenero.fxml"));
+            Parent root = (Parent) loader.load();
+            TelaCadastrarGeneroController ctr = loader.getController();
+            ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome());
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Alterar Gênero");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+
+            TelaCadastrarGeneroController.instancia = null;
+            carregarTabela("");
+        }
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarGenero.fxml"));
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Cadastrar Gênero");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.showAndWait();
-        
-        carregarTabela("");
+        if(TelaCadastrarGeneroController.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarGenero.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Cadastrar Gênero");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+
+            TelaCadastrarGeneroController.instancia = null;
+            carregarTabela("");
+        }
     }
     
 }

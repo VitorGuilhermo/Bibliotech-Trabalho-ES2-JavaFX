@@ -107,41 +107,47 @@ public class TelaGerenciarClienteController implements Initializable {
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarCliente.fxml"));
-        Parent root = (Parent) loader.load();
-        TelaCadastrarClienteController ctr = loader.getController();
-        ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(),
-                tabela.getSelectionModel().getSelectedItem().getDocumento(), tabela.getSelectionModel().getSelectedItem().getEndereco(),
-                tabela.getSelectionModel().getSelectedItem().getTelefone(), tabela.getSelectionModel().getSelectedItem().getSexo(),
-                tabela.getSelectionModel().getSelectedItem().getDataNasc()
-                );
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Alterar Cliente");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.showAndWait();
-        
-        carregarTabela("");
+        if(TelaCadastrarClienteController.retorna() != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarCliente.fxml"));
+            Parent root = (Parent) loader.load();
+            TelaCadastrarClienteController ctr = loader.getController();
+            ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(),
+                    tabela.getSelectionModel().getSelectedItem().getDocumento(), tabela.getSelectionModel().getSelectedItem().getEndereco(),
+                    tabela.getSelectionModel().getSelectedItem().getTelefone(), tabela.getSelectionModel().getSelectedItem().getSexo(),
+                    tabela.getSelectionModel().getSelectedItem().getDataNasc()
+                    );
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Alterar Cliente");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+
+            TelaCadastrarClienteController.instancia = null;
+            carregarTabela("");
+        }
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarCliente.fxml"));
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Cadastrar Cliente");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.showAndWait();
-        
-        carregarTabela("");
+        if(TelaCadastrarClienteController.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarCliente.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Cadastrar Cliente");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+
+            TelaCadastrarClienteController.instancia = null;
+            carregarTabela("");
+        }
     }
     
 }

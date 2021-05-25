@@ -187,51 +187,60 @@ public class TelaCadastrarTituloController implements Initializable {
 
     @FXML
     private void evtNovoAutor(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarAutor.fxml"));
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Cadastrar Autor");
-        stage.showAndWait();
-        
-        cbAutor1.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
-        cbAutor2.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
-        cbAutor3.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+        if(TelaCadastrarAutorController.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarAutor.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Cadastrar Autor");
+            stage.showAndWait();
+
+            TelaCadastrarAutorController.instancia = null;
+            cbAutor1.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+            cbAutor2.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+            cbAutor3.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+        }
     }
 
     @FXML
     private void evtNovoGenero(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarGenero.fxml"));
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Cadastrar Gênero");
-        stage.showAndWait();
-        
-        cbGenero.setItems(FXCollections.observableArrayList(new GeneroDAL().get("")));
+        if(TelaCadastrarGeneroController.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarGenero.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Cadastrar Gênero");
+            stage.showAndWait();
+
+            TelaCadastrarGeneroController.instancia = null;
+            cbGenero.setItems(FXCollections.observableArrayList(new GeneroDAL().get("")));
+        }
     }
 
     @FXML
     private void evtNovoAssunto(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarAssunto.fxml"));
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Cadastrar Assunto");
-        stage.showAndWait();
-        
-        cbAssunto1.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
-        cbAssunto2.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
-        cbAssunto3.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+        if(TelaCadastrarAssuntoController.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarAssunto.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Cadastrar Assunto");
+            stage.showAndWait();
+
+            TelaCadastrarAssuntoController.instancia = null;
+            cbAssunto1.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+            cbAssunto2.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+            cbAssunto3.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+        }
     }
     public boolean validaIgualdadeCB(){
         if(cbAutor1.getValue() != null && cbAutor2.getValue() != null){

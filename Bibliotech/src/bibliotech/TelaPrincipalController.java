@@ -57,6 +57,8 @@ public class TelaPrincipalController implements Initializable {
             stage.setTitle("Gerenciar Título");
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
+            
+            TelaGerenciarTituloController.instancia = null;
         }
     }
 
@@ -73,6 +75,8 @@ public class TelaPrincipalController implements Initializable {
             stage.setTitle("Gerenciar Assunto");
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
+            
+            GerenciarAssuntoController.instancia = null;
         }
     }
 
@@ -89,6 +93,8 @@ public class TelaPrincipalController implements Initializable {
             stage.setTitle("Gerenciar Editora");
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
+            
+            TelaGerenciarEditoraController.instancia = null;
         }
     }
 
@@ -105,6 +111,8 @@ public class TelaPrincipalController implements Initializable {
             stage.setTitle("Gerenciar Autor");
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
+            
+            TelaGerenciarAutorController.instancia = null;
         }
     }
 
@@ -121,6 +129,8 @@ public class TelaPrincipalController implements Initializable {
             stage.setTitle("Gerenciar Gênero");
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
+            
+            TelaGerenciarGeneroController.instancia = null;
         }
     }
 
@@ -137,6 +147,8 @@ public class TelaPrincipalController implements Initializable {
             stage.setTitle("Gerenciar Cliente");
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
+            
+            TelaGerenciarClienteController.instancia = null;
         }
     }
 
@@ -157,6 +169,26 @@ public class TelaPrincipalController implements Initializable {
             stage.setTitle("Retirar livros do acervo da biblioteca");
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
+            
+            TelaRetirarLivroController.instancia = null;
+        }
+    }
+
+    @FXML
+    private void evtEfetuarEmprestimo(ActionEvent event) throws IOException {
+        if(TelaEfetuarEmprestimoController.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("TelaEfetuarEmprestimo.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Efetuar Empréstimo");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+            
+            TelaEfetuarEmprestimoController.instancia = null;
         }
     }
     

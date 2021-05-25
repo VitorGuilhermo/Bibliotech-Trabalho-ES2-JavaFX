@@ -1,6 +1,7 @@
 package bd.entidades;
 
 import bd.dal.ExemplarDAL;
+import java.util.List;
 
 
 public class Exemplar {
@@ -39,9 +40,15 @@ public class Exemplar {
     public void setTitulo(Titulo titulo) {
         this.titulo = titulo;
     }
-
+    
+    public List<Exemplar> buscaExemplares(String filtro){
+        return new ExemplarDAL().getExemplares(filtro);
+    }
     public boolean excluir(){
         return new ExemplarDAL().apagar(codigo);
+    }
+    public boolean alteraSituacao(){
+        return new ExemplarDAL().alterarSituacao(this);
     }
     @Override
     public String toString() {

@@ -95,6 +95,9 @@ public class Cliente {
     public List<Cliente> buscar(String filtro) {
         return new ClienteDAL().get(filtro);
     }
+    public Cliente buscarCliente(int codigo) {
+        return new ClienteDAL().get(codigo);
+    }
     //Máscaras
     public String formataCpf(String cpf){
         try {
@@ -120,6 +123,12 @@ public class Cliente {
         else if(sexo.charAt(0) == 'F' || sexo.charAt(0) == 'f')
             return "F";
         return "I";
+    }
+    public Cliente getCliente(String filtro){
+        return new ClienteDAL().getClienteEmp(filtro);
+    }
+    public int getQtdeLivros(){
+        return new ClienteDAL().getNumeroExemplaresCliente(codigo);
     }
     @Override
     public String toString() {

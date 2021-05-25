@@ -20,6 +20,11 @@ public class ExemplarDAL {
         sql = sql.replace("#2", ""+e.getTitulo().getCodigo());
         return Banco.getCon().manipular(sql);
     }
+    public boolean alterarSituacao(Exemplar e){
+        String sql = "update exemplar set exe_situacao=#1 where exe_cod="+e.getCodigo();
+        sql = sql.replace("#1", ""+e.isSituacao());
+        return Banco.getCon().manipular(sql);
+    }
     public boolean apagar(int id){
         String sql = "delete from exemplar where exe_cod="+id;
         return Banco.getCon().manipular(sql);
@@ -42,6 +47,27 @@ public class ExemplarDAL {
         String sql = "select * from exemplar";
         if(!filtro.isEmpty())
             sql += " where " + filtro;
+        ResultSet rs = Banco.getCon().consultar(sql);
+        try{
+            while(rs.next())
+                exemplares.add( new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAL().get(rs.getInt("tit_cod"))) );
+        }
+        catch(Exception e){
+        }
+        return exemplares;
+    }
+    public List<Exemplar> getExemplares(String filtro){
+        List<Exemplar> exemplares = new ArrayList<>();
+        
+        String sql = "select * from exemplar";
+        if(!filtro.isEmpty()){
+            sql = "select * from exemplar inner join titulo on exemplar.tit_cod = titulo.tit_cod";
+            sql += " where " + filtro;
+            sql += " and exe_situacao=false";
+        }
+        else
+            sql += " where exe_situacao=false";
+        
         ResultSet rs = Banco.getCon().consultar(sql);
         try{
             while(rs.next())

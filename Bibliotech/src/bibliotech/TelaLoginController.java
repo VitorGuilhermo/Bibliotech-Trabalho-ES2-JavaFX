@@ -82,6 +82,7 @@ public class TelaLoginController implements Initializable {
                 txDocumento.clear();
                 txSenha.clear();
             }
+            TelaPrincipalController.instancia = null;
         }
     }
     

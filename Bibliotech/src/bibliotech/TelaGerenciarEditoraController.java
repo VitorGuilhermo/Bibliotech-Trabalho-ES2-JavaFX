@@ -95,37 +95,43 @@ public class TelaGerenciarEditoraController implements Initializable {
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarEditora.fxml"));
-        Parent root = (Parent) loader.load();
-        TelaCadastrarEditoraController ctr = loader.getController();
-        ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(), tabela.getSelectionModel().getSelectedItem().getCnpj());
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Alterar Editora");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.showAndWait();
-        
-        carregarTabela("");
+        if(TelaCadastrarEditoraController.retorna() != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarEditora.fxml"));
+            Parent root = (Parent) loader.load();
+            TelaCadastrarEditoraController ctr = loader.getController();
+            ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(), tabela.getSelectionModel().getSelectedItem().getCnpj());
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Alterar Editora");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+
+            TelaCadastrarEditoraController.instancia = null;
+            carregarTabela("");
+        }
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarEditora.fxml"));
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Cadastrar Editora");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.showAndWait();
-        
-        carregarTabela("");
+        if(TelaCadastrarEditoraController.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarEditora.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Cadastrar Editora");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+
+            TelaCadastrarEditoraController.instancia = null;
+            carregarTabela("");
+        }
     }
     
 }

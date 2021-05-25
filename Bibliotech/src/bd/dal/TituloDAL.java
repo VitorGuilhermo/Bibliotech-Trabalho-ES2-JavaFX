@@ -1,7 +1,5 @@
 package bd.dal;
 
-import bd.entidades.Assunto;
-import bd.entidades.Autor;
 import bd.entidades.Exemplar;
 import bd.entidades.Titulo;
 import bd.util.Banco;

@@ -59,4 +59,30 @@ public class ClienteDAL {
         }
         return clientes;
     }
+    public Cliente getClienteEmp(String filtro){
+        Cliente aux = null;
+        String sql = "select * from cliente";
+        if(!filtro.isEmpty())
+            sql += " where " + filtro;
+        ResultSet rs = Banco.getCon().consultar(sql);
+        try{
+            if(rs.next())
+                aux = new Cliente(rs.getInt("cli_cod"), rs.getString("cli_nome"), rs.getString("cli_documento"), rs.getString("cli_endereco"), rs.getString("cli_telefone"), rs.getString("cli_sexo"), rs.getDate("cli_datanasc").toLocalDate());
+        }
+        catch(Exception e){
+        }
+        return aux;
+    }
+    public int getNumeroExemplaresCliente(int id){
+        int aux=0;
+        String sql = "select * from cliente inner join emprestimo on cliente.cli_cod = emprestimo.cli_cod where cliente.cli_cod="+id;
+        ResultSet rs = Banco.getCon().consultar(sql);
+        try{
+            if(rs.next())
+                aux = rs.getInt("emp_qtde");
+        }
+        catch(Exception e){
+        }
+        return aux;
+    }
 }

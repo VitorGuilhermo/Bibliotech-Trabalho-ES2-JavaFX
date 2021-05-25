@@ -108,23 +108,26 @@ public class TelaRetirarLivroController implements Initializable {
 
     @FXML
     private void evtConfirmar(ActionEvent event) throws IOException {
-        if(tabela.getSelectionModel().getSelectedItem() != null){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaRetirarLivroCont.fxml"));
-            Parent root = (Parent) loader.load();
-            TelaRetirarLivroContController ctr = loader.getController();
+        if(TelaRetirarLivroContController.retorna() != null){
+            if(tabela.getSelectionModel().getSelectedItem() != null){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaRetirarLivroCont.fxml"));
+                Parent root = (Parent) loader.load();
+                TelaRetirarLivroContController ctr = loader.getController();
 
-            ctr.setDados(tabela.getSelectionModel().getSelectedItem(), bib);
+                ctr.setDados(tabela.getSelectionModel().getSelectedItem(), bib);
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
 
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle("Excolha de exemplares para serem retirados");
-            stage.getIcons().add(new Image("img/icone.png"));
-            stage.showAndWait();
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.setTitle("Excolha de exemplares para serem retirados");
+                stage.getIcons().add(new Image("img/icone.png"));
+                stage.showAndWait();
 
-            carregarTabela("", "");
+                carregarTabela("", "");
+            }
+            TelaRetirarLivroContController.instancia = null;
         }
     }
     

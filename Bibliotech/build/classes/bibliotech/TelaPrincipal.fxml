@@ -29,7 +29,7 @@
                 </Menu>
                   <Menu mnemonicParsing="false" text="_CONTROLE">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Efetuar empréstimo de livros" />
+                        <MenuItem mnemonicParsing="false" onAction="#evtEfetuarEmprestimo" text="Efetuar empréstimo de livros" />
                         <MenuItem mnemonicParsing="false" onAction="#evtRetirarLivro" text="Retirar livro do acervo da biblioteca" />
                      </items>
                   </Menu>

@@ -94,37 +94,43 @@ public class TelaGerenciarAutorController implements Initializable {
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarAutor.fxml"));
-        Parent root = (Parent) loader.load();
-        TelaCadastrarAutorController ctr = loader.getController();
-        ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome());
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Alterar Autor");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.showAndWait();
-        
-        carregarTabela("");
+        if(TelaCadastrarAutorController.retorna() != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarAutor.fxml"));
+            Parent root = (Parent) loader.load();
+            TelaCadastrarAutorController ctr = loader.getController();
+            ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome());
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Alterar Autor");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+
+            TelaCadastrarAutorController.instancia = null;
+            carregarTabela("");
+        }
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarAutor.fxml"));
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Cadastrar Autor");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.showAndWait();
-        
-        carregarTabela("");
+        if(TelaCadastrarAutorController.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarAutor.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Cadastrar Autor");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+
+            TelaCadastrarAutorController.instancia = null;
+            carregarTabela("");
+        }
     }
     
 }

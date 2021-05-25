@@ -107,40 +107,46 @@ public class TelaGerenciarTituloController implements Initializable {
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarTitulo.fxml"));
-        Parent root = (Parent) loader.load();
-        TelaCadastrarTituloController ctr = loader.getController();
-        
-        ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(), new Autor_TituloDAL().get("titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()),
-            tabela.getSelectionModel().getSelectedItem().getGenero(), new Assunto_TituloDAL().get("titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()), tabela.getSelectionModel().getSelectedItem().getEditora(),
-            tabela.getSelectionModel().getSelectedItem().getQtdeExemplares(), tabela.getSelectionModel().getSelectedItem().getDataPubli(), tabela.getSelectionModel().getSelectedItem().getDataReg());
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Alterar Título");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.showAndWait();
-        
-        carregarTabela("");
+        if(TelaCadastrarTituloController.retorna() != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarTitulo.fxml"));
+            Parent root = (Parent) loader.load();
+            TelaCadastrarTituloController ctr = loader.getController();
+
+            ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(), new Autor_TituloDAL().get("titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()),
+                tabela.getSelectionModel().getSelectedItem().getGenero(), new Assunto_TituloDAL().get("titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()), tabela.getSelectionModel().getSelectedItem().getEditora(),
+                tabela.getSelectionModel().getSelectedItem().getQtdeExemplares(), tabela.getSelectionModel().getSelectedItem().getDataPubli(), tabela.getSelectionModel().getSelectedItem().getDataReg());
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Alterar Título");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+
+            TelaCadastrarTituloController.instancia = null;
+            carregarTabela("");
+        }
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarTitulo.fxml"));
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Cadastrar Título");
-        stage.getIcons().add(new Image("img/icone.png"));
-        stage.showAndWait();
-        
-        carregarTabela("");
+        if(TelaCadastrarTituloController.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarTitulo.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Cadastrar Título");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+
+            TelaCadastrarTituloController.instancia = null;
+            carregarTabela("");
+        }
     }
     
 }
