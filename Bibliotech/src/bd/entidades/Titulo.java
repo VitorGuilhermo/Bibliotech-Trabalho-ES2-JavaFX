@@ -98,6 +98,9 @@ public class Titulo {
     public boolean alterar(Conexao con){
         return new TituloDAL().alterar(con, this);
     }
+    public boolean excluir(Conexao con, int cod){
+        return new TituloDAL().apagar(con, cod);
+    }
     public List<Titulo> buscarTitulosCompostos(Conexao con, String filtro, String contSql){
         return new TituloDAL().getTitulosCompostos(con, filtro, contSql);
     }

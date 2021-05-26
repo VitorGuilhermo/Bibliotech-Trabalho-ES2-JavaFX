@@ -30,4 +30,8 @@ public class Autor_TituloDAL {
         }
         return autores;
     } 
+    public boolean apagar(Conexao con, int id){
+        String sql = "delete from autor_titulo where titulo_tit_cod="+id;
+        return con.manipular(sql);
+    }
 }

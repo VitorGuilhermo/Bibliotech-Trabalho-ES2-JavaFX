@@ -45,6 +45,9 @@ public class Assunto_Titulo {
     public boolean gravar(Conexao con){
         return new Assunto_TituloDAL().gravar(con, this);
     }
+    public boolean excluir(Conexao con, int cod){
+        return new Assunto_TituloDAL().apagar(con, cod);
+    }
     public List<Assunto> buscar(Conexao con, String filtro){
         return new Assunto_TituloDAL().get(con, filtro);
     }

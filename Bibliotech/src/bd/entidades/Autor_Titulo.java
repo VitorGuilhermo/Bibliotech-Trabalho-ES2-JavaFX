@@ -48,7 +48,9 @@ public class Autor_Titulo {
     public List<Autor> buscar(Conexao con, String filtro){
         return new Autor_TituloDAL().get(con, filtro);
     }
-
+    public boolean excluir(Conexao con, int cod){
+        return new Autor_TituloDAL().apagar(con, cod);
+    }
     @Override
     public String toString() {
         return ""+autor;

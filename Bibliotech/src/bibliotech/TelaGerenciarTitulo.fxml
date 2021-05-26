@@ -36,6 +36,11 @@
                   <Font name="Arial" size="14.0" />
                </font>
             </Button>
+            <Button layoutX="760.0" layoutY="40.0" maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" onAction="#evtExcluir" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #d4d3d8;" text="Excluir" textFill="#1e93ff">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
             <Button layoutX="930.0" layoutY="40.0" maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" onAction="#evtAlterar" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #d4d3d8;" text="Alterar" textFill="#1e93ff">
                <font>
                   <Font name="Arial" size="14.0" />
