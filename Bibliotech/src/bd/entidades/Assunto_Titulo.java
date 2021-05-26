@@ -1,6 +1,8 @@
 package bd.entidades;
 
 import bd.dal.Assunto_TituloDAL;
+import bd.util.Conexao;
+import java.util.List;
 
 
 public class Assunto_Titulo {
@@ -40,7 +42,11 @@ public class Assunto_Titulo {
         this.titulo = titulo;
     }
     
-    public boolean gravar(){
-        return new Assunto_TituloDAL().gravar(this);
+    public boolean gravar(Conexao con){
+        return new Assunto_TituloDAL().gravar(con, this);
     }
+    public List<Assunto> buscar(Conexao con, String filtro){
+        return new Assunto_TituloDAL().get(con, filtro);
+    }
+    
 }

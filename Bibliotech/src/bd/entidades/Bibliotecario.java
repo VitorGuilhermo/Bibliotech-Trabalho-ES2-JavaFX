@@ -1,6 +1,7 @@
 package bd.entidades;
 
 import bd.dal.BibliotecarioDAL;
+import bd.util.Conexao;
 
 
 public class Bibliotecario {
@@ -50,12 +51,12 @@ public class Bibliotecario {
         this.senha = senha;
     }
     
-    public Bibliotecario verificaLogin(){
-        Bibliotecario aux = new BibliotecarioDAL().get(documento, senha);
+    public Bibliotecario verificaLogin(Conexao con){
+        Bibliotecario aux = new BibliotecarioDAL().get(con, documento, senha);
         return aux;
     }
-    public String getNomeBibliotecario(){
-        return new BibliotecarioDAL().get(documento, senha).getNome();
+    public String getNomeBibliotecario(Conexao con){
+        return new BibliotecarioDAL().get(con, documento, senha).getNome();
     }
     @Override
     public String toString() {

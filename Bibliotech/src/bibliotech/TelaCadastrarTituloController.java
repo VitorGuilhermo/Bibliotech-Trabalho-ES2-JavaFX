@@ -1,10 +1,7 @@
 package bibliotech;
 
-import bd.dal.AssuntoDAL;
-import bd.dal.AutorDAL;
 import bd.dal.EditoraDAL;
 import bd.dal.GeneroDAL;
-import bd.dal.TituloDAL;
 import bd.entidades.Assunto;
 import bd.entidades.Assunto_Titulo;
 import bd.entidades.Autor;
@@ -13,6 +10,7 @@ import bd.entidades.Editora;
 import bd.entidades.Genero;
 import bd.entidades.Titulo;
 import bd.util.Banco;
+import bd.util.Conexao;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -77,14 +75,15 @@ public class TelaCadastrarTituloController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cbAutor1.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
-        cbAutor2.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
-        cbAutor3.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
-        cbGenero.setItems(FXCollections.observableArrayList(new GeneroDAL().get("")));
-        cbAssunto1.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
-        cbAssunto2.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
-        cbAssunto3.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
-        cbEditora.setItems(FXCollections.observableArrayList(new EditoraDAL().get("")));
+        Conexao con = Banco.getCon();
+        cbAutor1.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
+        cbAutor2.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
+        cbAutor3.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
+        cbGenero.setItems(FXCollections.observableArrayList(new Genero().buscar(con, "")));
+        cbAssunto1.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
+        cbAssunto2.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
+        cbAssunto3.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
+        cbEditora.setItems(FXCollections.observableArrayList(new Editora().buscar(con, "")));
         spQtdeExem.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000000, 1));
     }    
 
@@ -126,6 +125,7 @@ public class TelaCadastrarTituloController implements Initializable {
 
     @FXML
     private void evtCadastrar(ActionEvent event) {
+        Conexao con = Banco.getCon();
         ArrayList<Autor> autores = new ArrayList<>();
         ArrayList<Assunto> assuntos = new ArrayList<>();
         Titulo t = new Titulo(txTitulo.getText(), cbGenero.getValue(), cbEditora.getValue(), spQtdeExem.getValue(), dtDataPubl.getValue(), dtDataRegistro.getValue(), autores, assuntos);
@@ -161,12 +161,12 @@ public class TelaCadastrarTituloController implements Initializable {
             //grava titulo
             t.setAutores(autores);
             t.setAssuntos(assuntos);
-            gravouT = t.gravar();
+            gravouT = t.gravar(con);
             if (gravouT){   //se gravou o titulo, vai gravar os assuntos e os autores
                 for(Autor a : autores)
-                    new Autor_Titulo(a, t).gravar();
+                    new Autor_Titulo(a, t).gravar(con);
                 for(Assunto a : assuntos)
-                    new Assunto_Titulo(a, t).gravar();
+                    new Assunto_Titulo(a, t).gravar(con);
             }
             else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -176,7 +176,7 @@ public class TelaCadastrarTituloController implements Initializable {
         }
         else{  //alterar
             t.setCodigo(Integer.parseInt(txCodigo.getText()));
-            if(!new TituloDAL().alterar(t)){
+            if(!t.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -188,6 +188,7 @@ public class TelaCadastrarTituloController implements Initializable {
     @FXML
     private void evtNovoAutor(ActionEvent event) throws IOException {
         if(TelaCadastrarAutorController.retorna() != null){
+            Conexao con = Banco.getCon();
             Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarAutor.fxml"));
 
             Scene scene = new Scene(root);
@@ -199,9 +200,9 @@ public class TelaCadastrarTituloController implements Initializable {
             stage.showAndWait();
 
             TelaCadastrarAutorController.instancia = null;
-            cbAutor1.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
-            cbAutor2.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
-            cbAutor3.setItems(FXCollections.observableArrayList(new AutorDAL().get("")));
+            cbAutor1.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
+            cbAutor2.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
+            cbAutor3.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
         }
     }
 
@@ -219,13 +220,16 @@ public class TelaCadastrarTituloController implements Initializable {
             stage.showAndWait();
 
             TelaCadastrarGeneroController.instancia = null;
-            cbGenero.setItems(FXCollections.observableArrayList(new GeneroDAL().get("")));
+            Conexao con = Banco.getCon();
+            cbGenero.setItems(FXCollections.observableArrayList(new Genero().buscar(con, "")));
         }
     }
 
     @FXML
     private void evtNovoAssunto(ActionEvent event) throws IOException {
         if(TelaCadastrarAssuntoController.retorna() != null){
+            Conexao con = Banco.getCon();
+            
             Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarAssunto.fxml"));
 
             Scene scene = new Scene(root);
@@ -237,9 +241,9 @@ public class TelaCadastrarTituloController implements Initializable {
             stage.showAndWait();
 
             TelaCadastrarAssuntoController.instancia = null;
-            cbAssunto1.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
-            cbAssunto2.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
-            cbAssunto3.setItems(FXCollections.observableArrayList(new AssuntoDAL().get("")));
+            cbAssunto1.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
+            cbAssunto2.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
+            cbAssunto3.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
         }
     }
     public boolean validaIgualdadeCB(){

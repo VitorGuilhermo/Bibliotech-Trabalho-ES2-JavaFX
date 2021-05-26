@@ -1,6 +1,8 @@
 package bibliotech;
 
 import bd.entidades.Cliente;
+import bd.util.Banco;
+import bd.util.Conexao;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -67,8 +69,8 @@ public class TelaGerenciarClienteController implements Initializable {
 
     private void carregarTabela(String filtro){
         Cliente c = new Cliente();
-        
-        List<Cliente> clientes = c.buscar(filtro);
+        Conexao con = Banco.getCon();
+        List<Cliente> clientes = c.buscar(con, filtro);
         tabela.setItems(FXCollections.observableArrayList(clientes));
     }
     
@@ -92,16 +94,19 @@ public class TelaGerenciarClienteController implements Initializable {
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exclusão de um Cliente");
-        alert.setHeaderText("Confirma exclusão?");
-        alert.setContentText("Tem certeza que deseja excluir o cliente: "+tabela.getSelectionModel().getSelectedItem().getNome()+" com documento:"+tabela.getSelectionModel().getSelectedItem().getDocumento()+" ?");
-        Optional<ButtonType> result =  alert.showAndWait();
-        
-        if(result.get() == ButtonType.OK){
-            Cliente c = tabela.getSelectionModel().getSelectedItem();
-            c.excluir();
-            carregarTabela("");
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Exclusão de um Cliente");
+            alert.setHeaderText("Confirma exclusão?");
+            alert.setContentText("Tem certeza que deseja excluir o cliente: "+tabela.getSelectionModel().getSelectedItem().getNome()+" com documento:"+tabela.getSelectionModel().getSelectedItem().getDocumento()+" ?");
+            Optional<ButtonType> result =  alert.showAndWait();
+
+            if(result.get() == ButtonType.OK){
+                Conexao con = Banco.getCon();
+                Cliente c = tabela.getSelectionModel().getSelectedItem();
+                c.excluir(con);
+                carregarTabela("");
+            }
         }
     }
 
@@ -147,6 +152,24 @@ public class TelaGerenciarClienteController implements Initializable {
 
             TelaCadastrarClienteController.instancia = null;
             carregarTabela("");
+        }
+    }
+
+    @FXML
+    private void evtDesativar(ActionEvent event) {
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Exclusão de um Cliente");
+            alert.setHeaderText("Confirma desativação?");
+            alert.setContentText("Tem certeza que deseja desativar o cliente: "+tabela.getSelectionModel().getSelectedItem().getNome()+" com documento:"+tabela.getSelectionModel().getSelectedItem().getDocumento()+" ?");
+            Optional<ButtonType> result =  alert.showAndWait();
+            
+            if(result.get() == ButtonType.OK){
+                Conexao con = Banco.getCon();
+                Cliente c = tabela.getSelectionModel().getSelectedItem();           
+                c.desativar(con);
+                carregarTabela("");
+            }
         }
     }
     

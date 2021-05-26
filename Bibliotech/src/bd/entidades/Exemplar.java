@@ -1,6 +1,7 @@
 package bd.entidades;
 
 import bd.dal.ExemplarDAL;
+import bd.util.Conexao;
 import java.util.List;
 
 
@@ -41,14 +42,17 @@ public class Exemplar {
         this.titulo = titulo;
     }
     
-    public List<Exemplar> buscaExemplares(String filtro){
-        return new ExemplarDAL().getExemplares(filtro);
+    public List<Exemplar> buscaExemplares(Conexao con, String filtro){
+        return new ExemplarDAL().getExemplares(con, filtro);
     }
-    public boolean excluir(){
-        return new ExemplarDAL().apagar(codigo);
+    public List<Exemplar> buscar(Conexao con, String filtro){
+        return new ExemplarDAL().get(con, filtro);
     }
-    public boolean alteraSituacao(){
-        return new ExemplarDAL().alterarSituacao(this);
+    public boolean excluir(Conexao con){
+        return new ExemplarDAL().apagar(con, codigo);
+    }
+    public boolean alteraSituacao(Conexao con){
+        return new ExemplarDAL().alterarSituacao(con, this);
     }
     @Override
     public String toString() {

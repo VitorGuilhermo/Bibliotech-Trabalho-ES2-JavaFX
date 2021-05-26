@@ -1,6 +1,8 @@
 package bibliotech;
 
 import bd.entidades.Assunto;
+import bd.util.Banco;
+import bd.util.Conexao;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -54,8 +56,9 @@ public class GerenciarAssuntoController implements Initializable {
 
     private void carregarTabela(String filtro){
         Assunto a = new Assunto();
+        Conexao con = Banco.getCon();
         
-        List<Assunto> assuntos = a.buscar(filtro);
+        List<Assunto> assuntos = a.buscar(con, filtro);
         tabela.setItems(FXCollections.observableArrayList(assuntos));
     }
     
@@ -78,6 +81,7 @@ public class GerenciarAssuntoController implements Initializable {
 
     @FXML
     private void evtExcluir(ActionEvent event) {
+        Conexao con = Banco.getCon();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exclusão de um Assunto");
         alert.setHeaderText("Confirma exclusão?");
@@ -86,7 +90,7 @@ public class GerenciarAssuntoController implements Initializable {
         
         if(result.get() == ButtonType.OK){
             Assunto a = tabela.getSelectionModel().getSelectedItem();
-            a.excluir();
+            a.excluir(con);
             carregarTabela("");
         }
     }

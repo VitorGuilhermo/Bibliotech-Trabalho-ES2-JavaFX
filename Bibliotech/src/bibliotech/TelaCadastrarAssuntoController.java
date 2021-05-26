@@ -2,6 +2,7 @@ package bibliotech;
 
 import bd.entidades.Assunto;
 import bd.util.Banco;
+import bd.util.Conexao;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -45,6 +46,7 @@ public class TelaCadastrarAssuntoController implements Initializable {
 
     @FXML
     private void evtCadastrar(ActionEvent event) {
+        Conexao con = Banco.getCon();
         Assunto a = new Assunto(txNome.getText());
         
         if(txNome.getText().isEmpty()){
@@ -53,7 +55,7 @@ public class TelaCadastrarAssuntoController implements Initializable {
             alert.showAndWait();
         }
         else if(txCod.getText().isEmpty()){
-            if(!a.gravar()){
+            if(!a.gravar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -61,7 +63,7 @@ public class TelaCadastrarAssuntoController implements Initializable {
         }
         else{  //alterar
             a.setCodigo(Integer.parseInt(txCod.getText()));
-            if(!a.alterar()){
+            if(!a.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();

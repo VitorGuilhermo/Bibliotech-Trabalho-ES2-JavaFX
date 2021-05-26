@@ -3,9 +3,13 @@ package bibliotech;
 import bd.dal.Assunto_TituloDAL;
 import bd.dal.Autor_TituloDAL;
 import bd.dal.TituloDAL;
+import bd.entidades.Assunto_Titulo;
+import bd.entidades.Autor_Titulo;
 import bd.entidades.Editora;
 import bd.entidades.Genero;
 import bd.entidades.Titulo;
+import bd.util.Banco;
+import bd.util.Conexao;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -68,8 +72,8 @@ public class TelaGerenciarTituloController implements Initializable {
 
     private void carregarTabela(String filtro){
         TituloDAL dal = new TituloDAL();
-        
-        List<Titulo> titulos = dal.get(filtro);
+        Conexao con = Banco.getCon();
+        List<Titulo> titulos = dal.get(con, filtro);
         tabela.setItems(FXCollections.observableArrayList(titulos));
     }
     
@@ -108,12 +112,13 @@ public class TelaGerenciarTituloController implements Initializable {
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
         if(TelaCadastrarTituloController.retorna() != null){
+            Conexao con = Banco.getCon();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarTitulo.fxml"));
             Parent root = (Parent) loader.load();
             TelaCadastrarTituloController ctr = loader.getController();
 
-            ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(), new Autor_TituloDAL().get("titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()),
-                tabela.getSelectionModel().getSelectedItem().getGenero(), new Assunto_TituloDAL().get("titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()), tabela.getSelectionModel().getSelectedItem().getEditora(),
+            ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(), new Autor_Titulo().buscar(con, "titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()),
+                tabela.getSelectionModel().getSelectedItem().getGenero(), new Assunto_Titulo().buscar(con, "titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()), tabela.getSelectionModel().getSelectedItem().getEditora(),
                 tabela.getSelectionModel().getSelectedItem().getQtdeExemplares(), tabela.getSelectionModel().getSelectedItem().getDataPubli(), tabela.getSelectionModel().getSelectedItem().getDataReg());
 
             Scene scene = new Scene(root);

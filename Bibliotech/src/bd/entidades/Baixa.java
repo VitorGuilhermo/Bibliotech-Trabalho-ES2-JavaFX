@@ -1,6 +1,7 @@
 package bd.entidades;
 
 import bd.dal.BaixaDAL;
+import bd.util.Conexao;
 import java.time.LocalDate;
 
 
@@ -57,8 +58,8 @@ public class Baixa {
         this.bibliotecario = bibliotecario;
     }
    
-    public boolean gravar(){
-        return new BaixaDAL().gravar(this);
+    public boolean gravar(Conexao con){
+        return new BaixaDAL().gravar(con, this);
     }
     
     

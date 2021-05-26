@@ -2,6 +2,7 @@ package bibliotech;
 
 import bd.entidades.Autor;
 import bd.util.Banco;
+import bd.util.Conexao;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -46,14 +47,14 @@ public class TelaCadastrarAutorController implements Initializable {
     @FXML
     private void evtCadastrar(ActionEvent event) {
         Autor a = new Autor(txNome.getText());
-        
+        Conexao con = Banco.getCon();
         if(txNome.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erro: Campo NOME vazio");
             alert.showAndWait();
         }
         else if(txCodigo.getText().isEmpty()){
-            if(!a.gravar()){
+            if(!a.gravar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -61,7 +62,7 @@ public class TelaCadastrarAutorController implements Initializable {
         }
         else{  //alterar
             a.setCodigo(Integer.parseInt(txCodigo.getText()));
-            if(!a.alterar()){
+            if(!a.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();

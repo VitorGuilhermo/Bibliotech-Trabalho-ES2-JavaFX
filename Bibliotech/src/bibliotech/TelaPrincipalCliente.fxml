@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #eeeef3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bibliotech.TelaPrincipalClienteController">
+   <top>
+      <VBox prefHeight="92.0" prefWidth="1000.0" style="-fx-background-color: #fefefe;" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar style="-fx-background-color: #fefefe;">
+              <menus>
+                <Menu mnemonicParsing="false" text="CONSULTA">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Meus dados" />
+                        <MenuItem mnemonicParsing="false" text="Meus livros" />
+                        <MenuItem mnemonicParsing="false" text="Minhas reservas" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="CONTROLE">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Renovar empréstimo" />
+                        <MenuItem mnemonicParsing="false" text="Reservar livro" />
+                        <MenuItem mnemonicParsing="false" text="Cancelar reserva" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="AJUDA">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Contato" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/user.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Usuário: ">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="txUsuário">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <VBox prefHeight="75.0" prefWidth="1000.0" style="-fx-background-color: #fefefe;" BorderPane.alignment="CENTER" />
+   </bottom>
+   <center>
+      <VBox alignment="CENTER" minHeight="450.0" prefHeight="450.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="159.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/icone.png" />
+               </image>
+            </ImageView>
+            <Label text="BIBLIOTECH" textFill="#1e93ff">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

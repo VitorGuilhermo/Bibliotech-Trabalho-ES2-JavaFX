@@ -5,6 +5,7 @@ import bd.entidades.Emprestimo;
 import bd.entidades.Exemplar;
 import bd.entidades.Exemplar_Emprestimo;
 import bd.util.Banco;
+import bd.util.Conexao;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -80,8 +81,8 @@ public class TelaEfetuarEmprestimoController implements Initializable {
     }
     public void carregaTabela(String filtro){
         Exemplar e = new Exemplar();
-        
-        List<Exemplar> exememplares = e.buscaExemplares(filtro);
+        Conexao con = Banco.getCon();
+        List<Exemplar> exememplares = e.buscaExemplares(con, filtro);
         tabela.setItems(FXCollections.observableArrayList(exememplares));
     }
     public void carregaListaExemplares(){
@@ -149,24 +150,25 @@ public class TelaEfetuarEmprestimoController implements Initializable {
         if(!txCodigo.getText().isEmpty()){
             boolean erro;
             if(!exemplares.isEmpty()){
+                Conexao con = Banco.getCon();
                 Cliente cliente = new Cliente();
-                cliente = cliente.buscarCliente(Integer.parseInt(txCodigo.getText()));
+                cliente = cliente.buscarCliente(con, Integer.parseInt(txCodigo.getText()));
                 
                 Emprestimo emp = new Emprestimo(LocalDate.now(), LocalDate.now().plusDays(7), exemplares.size(), cliente, exemplares);
                 //grava empréstimo
-                erro = emp.gravar();
+                erro = emp.gravar(con);
                 if(erro){
                     //grava exemplar_emprestimo
                     emp.setCodigo(Banco.getCon().getMaxPK("emprestimo", "emp_cod"));
                     for(Exemplar e : exemplares){
                         boolean flag;                    
                         Exemplar_Emprestimo exempEmp = new Exemplar_Emprestimo(LocalDate.now().plusDays(7), 0., e, emp);
-                        flag = exempEmp.gravar();
+                        flag = exempEmp.gravar(con);
                         if(!flag)
                             erro = false;
                         //altera situacao exemplar
                         e.setSituacao(!e.isSituacao());
-                        e.alteraSituacao();
+                        e.alteraSituacao(con);
                     }
                 }
                 if(!erro){
@@ -208,6 +210,7 @@ public class TelaEfetuarEmprestimoController implements Initializable {
         Cliente cli = new Cliente();
         String sql = "cli_documento='";
         String filtro = txFiltro.getText();
+        Conexao con = Banco.getCon();
         
         if(cbFiltro.getSelectionModel().getSelectedItem().equals("Nome"))
             sql = "cli_nome='";
@@ -218,13 +221,13 @@ public class TelaEfetuarEmprestimoController implements Initializable {
         else
             filtro = new Cliente().formataCpf(txFiltro.getText());
             
-        cli = cli.getCliente(sql+filtro+"'");
+        cli = cli.getCliente(con, sql+filtro+"'");
         if(cli != null){
             txCodigo.setText(""+cli.getCodigo());
             txNome.setText(cli.getNome());
             txDocumento.setText(cli.formataCpf(cli.getDocumento()));
             
-            qtdeLivrosJaEmprestados = cli.getQtdeLivros();
+            qtdeLivrosJaEmprestados = cli.getQtdeLivros(con);
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);

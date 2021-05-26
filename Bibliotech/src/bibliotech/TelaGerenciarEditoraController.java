@@ -1,6 +1,8 @@
 package bibliotech;
 
 import bd.entidades.Editora;
+import bd.util.Banco;
+import bd.util.Conexao;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -56,8 +58,8 @@ public class TelaGerenciarEditoraController implements Initializable {
 
     private void carregarTabela(String filtro){
         Editora e = new Editora();
-        
-        List<Editora> editoras = e.buscar(filtro);
+        Conexao con = Banco.getCon();
+        List<Editora> editoras = e.buscar(con, filtro);
         tabela.setItems(FXCollections.observableArrayList(editoras));
     }
     
@@ -87,8 +89,9 @@ public class TelaGerenciarEditoraController implements Initializable {
         Optional<ButtonType> result =  alert.showAndWait();
         
         if(result.get() == ButtonType.OK){
+            Conexao con = Banco.getCon();
             Editora e = tabela.getSelectionModel().getSelectedItem();
-            e.excluir();
+            e.excluir(con);
             carregarTabela("");
         }
     }

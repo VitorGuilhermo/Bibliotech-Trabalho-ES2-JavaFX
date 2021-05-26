@@ -1,7 +1,8 @@
 package bibliotech;
 
 import bd.entidades.Autor;
-import static bibliotech.TelaCadastrarTituloController.instancia;
+import bd.util.Banco;
+import bd.util.Conexao;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -54,9 +55,10 @@ public class TelaGerenciarAutorController implements Initializable {
     }    
 
      private void carregarTabela(String filtro){
+        Conexao con = Banco.getCon();
         Autor a = new Autor();
         
-        List<Autor> autores = a.buscar(filtro);
+        List<Autor> autores = a.buscar(con, filtro);
         tabela.setItems(FXCollections.observableArrayList(autores));
     }
      
@@ -86,8 +88,9 @@ public class TelaGerenciarAutorController implements Initializable {
         Optional<ButtonType> result =  alert.showAndWait();
         
         if(result.get() == ButtonType.OK){
+            Conexao con = Banco.getCon();
             Autor a = tabela.getSelectionModel().getSelectedItem();
-            a.excluir();
+            a.excluir(con);
             carregarTabela("");
         }
     }

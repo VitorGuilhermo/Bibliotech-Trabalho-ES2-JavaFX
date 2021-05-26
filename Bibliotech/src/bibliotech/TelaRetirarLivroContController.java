@@ -1,10 +1,11 @@
 package bibliotech;
 
-import bd.dal.ExemplarDAL;
 import bd.entidades.Baixa;
 import bd.entidades.Bibliotecario;
 import bd.entidades.Exemplar;
 import bd.entidades.Titulo;
+import bd.util.Banco;
+import bd.util.Conexao;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
@@ -67,12 +68,12 @@ public class TelaRetirarLivroContController implements Initializable {
         txTitulo.setText(titulo.getNome());
         txDtPubl.setText(""+titulo.getDataReg());
         bibliotecario = bib;
-        carregarTabela("tit_cod="+titulo.getCodigo());
+        carregarTabela("titulo.tit_cod="+titulo.getCodigo());
     }
     private void carregarTabela(String filtro){
-        ExemplarDAL dal = new ExemplarDAL();
-        
-        List<Exemplar> exemplares = dal.get(filtro);
+        Exemplar ex = new Exemplar();
+        Conexao con = Banco.getCon();
+        List<Exemplar> exemplares = ex.buscaExemplares(con, filtro);
         tabela.setItems(FXCollections.observableArrayList(exemplares));
     }
 
@@ -92,19 +93,20 @@ public class TelaRetirarLivroContController implements Initializable {
 
             
             if(result.get() == ButtonType.OK){
+                Conexao con = Banco.getCon();
                 Titulo tit = new Titulo();
                 tit.setCodigo(codTit);
-                if(tit.pesquisar().getQtdeExemplares() > 0){
+                if(tit.pesquisar(con).getQtdeExemplares() > 0){
                     //primeiro da a baixa
                     Baixa baixa = new Baixa(txTitulo.getText(), LocalDate.now(), taMotivo.getText(), bibliotecario);
-                    baixa.gravar();
+                    baixa.gravar(con);
                     //exclui o exemplar
                     Exemplar exe = new Exemplar(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().isSituacao(), tabela.getSelectionModel().getSelectedItem().getTitulo());
-                    exe.excluir();
+                    exe.excluir(con);
                     //diminui quantidade de exemplares do titulo
-                    tit.decrementaQtdeExemplar();
+                    tit.decrementaQtdeExemplar(con);
                     //atualiza tabela
-                    carregarTabela("tit_cod=" + tit.getCodigo());
+                    carregarTabela("titulo.tit_cod=" + tit.getCodigo());
                     taMotivo.clear();  
                 }
                 else{

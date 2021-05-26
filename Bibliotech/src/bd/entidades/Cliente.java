@@ -1,6 +1,7 @@
 package bd.entidades;
 
 import bd.dal.ClienteDAL;
+import bd.util.Conexao;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,11 +17,15 @@ public class Cliente {
     public Cliente() {
         this(0, "", "", "", "", "", LocalDate.now());
     }
-
+    public Cliente(String doc){
+        if(doc.equals(""))
+            this.documento = doc;
+        else
+            this.documento = formataCpf(doc.trim());
+    }
     public Cliente(String nome, String documento, String endereco, String telefone, String sexo, LocalDate dataNasc) {
         this(0, nome, documento, endereco, telefone, sexo, dataNasc);
     }
-
     public Cliente(int codigo, String nome, String documento, String endereco, String telefone, String sexo, LocalDate dataNasc) {
         this.codigo = codigo;
         this.nome = nome;
@@ -83,20 +88,23 @@ public class Cliente {
         this.dataNasc = dataNasc;
     }
 
-    public boolean gravar() {
-        return new ClienteDAL().gravar(this);
+    public boolean gravar(Conexao con) {
+        return new ClienteDAL().gravar(con, this);
     }
-    public boolean alterar() {
-        return new ClienteDAL().alterar(this);
+    public boolean alterar(Conexao con) {
+        return new ClienteDAL().alterar(con, this);
     }
-    public boolean excluir() {
-        return new ClienteDAL().apagar(codigo);
+    public boolean excluir(Conexao con) {
+        return new ClienteDAL().apagar(con, codigo);
     }
-    public List<Cliente> buscar(String filtro) {
-        return new ClienteDAL().get(filtro);
+    public boolean desativar(Conexao con){
+        return new ClienteDAL().desativar(con, codigo);
     }
-    public Cliente buscarCliente(int codigo) {
-        return new ClienteDAL().get(codigo);
+    public List<Cliente> buscar(Conexao con, String filtro) {
+        return new ClienteDAL().get(con, filtro);
+    }
+    public Cliente buscarCliente(Conexao con, int codigo) {
+        return new ClienteDAL().get(con, codigo);
     }
     //Máscaras
     public String formataCpf(String cpf){
@@ -124,11 +132,18 @@ public class Cliente {
             return "F";
         return "I";
     }
-    public Cliente getCliente(String filtro){
-        return new ClienteDAL().getClienteEmp(filtro);
+    public Cliente getCliente(Conexao con, String filtro){
+        return new ClienteDAL().getClienteEmp(con, filtro);
     }
-    public int getQtdeLivros(){
-        return new ClienteDAL().getNumeroExemplaresCliente(codigo);
+    public Cliente verificaLogin(Conexao con, String senha){
+        if(!senha.equals(""))
+            senha = formataCpf(senha.trim());
+        if(senha.equals(documento))
+            return new ClienteDAL().validaAcesso(con, documento);
+        return null;
+    }
+    public int getQtdeLivros(Conexao con){
+        return new ClienteDAL().getNumeroExemplaresCliente(con, codigo);
     }
     @Override
     public String toString() {

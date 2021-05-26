@@ -1,6 +1,8 @@
 package bibliotech;
 
 import bd.entidades.Genero;
+import bd.util.Banco;
+import bd.util.Conexao;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -54,8 +56,8 @@ public class TelaGerenciarGeneroController implements Initializable {
 
     private void carregarTabela(String filtro){
         Genero g = new Genero();
-        
-        List<Genero> generos = g.buscar(filtro);
+        Conexao con = Banco.getCon();
+        List<Genero> generos = g.buscar(con, filtro);
         tabela.setItems(FXCollections.observableArrayList(generos));
     }
     
@@ -85,8 +87,9 @@ public class TelaGerenciarGeneroController implements Initializable {
         Optional<ButtonType> result =  alert.showAndWait();
         
         if(result.get() == ButtonType.OK){
+            Conexao con = Banco.getCon();
             Genero g = tabela.getSelectionModel().getSelectedItem();
-            g.excluir();
+            g.excluir(con);
             carregarTabela("");
         }
     }

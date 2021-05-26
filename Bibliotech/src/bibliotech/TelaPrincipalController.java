@@ -1,8 +1,11 @@
 package bibliotech;
 
 import bd.entidades.Bibliotecario;
+import bd.util.Banco;
+import bd.util.Conexao;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +16,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -41,7 +48,8 @@ public class TelaPrincipalController implements Initializable {
 
     public void setDados(Bibliotecario bib){
         this.bib = bib;
-        lblNomeUser.setText(bib.getNomeBibliotecario());
+        Conexao con = Banco.getCon();
+        lblNomeUser.setText(bib.getNomeBibliotecario(con));
     }
     
     @FXML
@@ -190,6 +198,41 @@ public class TelaPrincipalController implements Initializable {
             
             TelaEfetuarEmprestimoController.instancia = null;
         }
+    }
+
+    public void gerarRelatorio(String sql, String relat) { //GERAÇÃO DE RELATÓRIOS
+        try {  
+            ResultSet rs = Banco.getCon().consultar(sql); 
+            JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+            //chama o relatório
+            String jasperPrint = JasperFillManager.fillReportToFile(relat, null, jrRS);
+            JasperViewer viewer = new JasperViewer(jasperPrint, false, false);
+            
+            viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
+            viewer.setVisible(true);
+        } 
+        catch (JRException erro){
+            erro.printStackTrace();
+        }
+    }
+    @FXML
+    private void evtRelExemp(ActionEvent event) {
+        gerarRelatorio("select titulo.tit_nome, exemplar.exe_cod, exemplar.exe_situacao from exemplar inner join titulo on exemplar.tit_cod = titulo.tit_cod", "MyReports/rel_exemplares.jasper");
+    }
+
+    @FXML
+    private void evtRelTitulo(ActionEvent event) {
+        gerarRelatorio("select titulo.tit_cod, titulo.tit_nome, genero.gen_nome, editora.edt_nome, titulo.tit_datapublic, titulo.tit_qtdeexe from titulo, genero, editora where genero.gen_cod = titulo.gen_cod and editora.edt_cod = titulo.edt_cod order by titulo.tit_nome", "MyReports/rel_titulo.jasper");
+    }
+
+    @FXML
+    private void evtRelAutor(ActionEvent event) {
+        gerarRelatorio("select * from autor order by autor.aut_nome", "MyReports/rel_autor.jasper");
+    }
+
+    @FXML
+    private void evtRelAssunto(ActionEvent event) {
+        gerarRelatorio("select distinct assunto.ast_nome, titulo.tit_cod, titulo.tit_nome, titulo.tit_datapublic from titulo inner join assunto_titulo on titulo.tit_cod = assunto_titulo.titulo_tit_cod inner join assunto on assunto.ast_cod = assunto_titulo.assunto_asn_cod order by titulo.tit_nome", "MyReports/rel_tit_ast.jasper");
     }
     
 }

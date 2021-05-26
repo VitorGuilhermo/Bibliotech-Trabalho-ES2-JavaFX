@@ -1,9 +1,10 @@
 package bibliotech;
 
-import bd.dal.TituloDAL;
 import bd.entidades.Bibliotecario;
 import bd.entidades.Editora;
 import bd.entidades.Titulo;
+import bd.util.Banco;
+import bd.util.Conexao;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -38,9 +39,16 @@ public class TelaRetirarLivroController implements Initializable {
     @FXML
     private TableColumn<Titulo, Integer> colQuantidade;
     @FXML
+    private TableColumn<Titulo, String> colAutores;
+    @FXML
+    private TableColumn<Titulo, String> colAssuntos;
+    @FXML
     private TableColumn<Titulo, Editora> colEditora;
     private Bibliotecario bib;
+    
+    
 
+    
     public TelaRetirarLivroController() {
     }
     public static TelaRetirarLivroController retorna(){
@@ -56,6 +64,8 @@ public class TelaRetirarLivroController implements Initializable {
         colTitulo.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colEditora.setCellValueFactory(new PropertyValueFactory<>("editora"));
         colQuantidade.setCellValueFactory(new PropertyValueFactory<>("qtdeExemplares"));
+        colAutores.setCellValueFactory(new PropertyValueFactory<>("autores"));
+        colAssuntos.setCellValueFactory(new PropertyValueFactory<>("assuntos"));
         
         cbConsulta.getItems().add("Titulo");
         cbConsulta.getItems().add("Autor");
@@ -69,9 +79,9 @@ public class TelaRetirarLivroController implements Initializable {
         this.bib = bib;
     }
     private void carregarTabela(String filtro, String contSql){
-        TituloDAL dal = new TituloDAL();
-        
-        List<Titulo> titulos = dal.getTitulosCompostos(filtro, contSql);
+        Titulo t = new Titulo();
+        Conexao con = Banco.getCon();
+        List<Titulo> titulos = t.buscarTitulosCompostos(con, filtro, contSql);
         tabela.setItems(FXCollections.observableArrayList(titulos));
     }
 

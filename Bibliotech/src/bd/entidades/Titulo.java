@@ -1,6 +1,7 @@
 package bd.entidades;
 
 import bd.dal.TituloDAL;
+import bd.util.Conexao;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,17 +92,34 @@ public class Titulo {
     }
     
 
-    public boolean gravar(){
-        return new TituloDAL().gravar(this);
+    public boolean gravar(Conexao con){
+        return new TituloDAL().gravar(con, this);
     }
-    public Titulo pesquisar(){
-        return new TituloDAL().get(codigo);
+    public boolean alterar(Conexao con){
+        return new TituloDAL().alterar(con, this);
     }
-    public void decrementaQtdeExemplar(){
-        Titulo t = this.pesquisar();
-        new TituloDAL().alterarQtdeExemplares(t.getCodigo(), t.getQtdeExemplares()-1);
+    public List<Titulo> buscarTitulosCompostos(Conexao con, String filtro, String contSql){
+        return new TituloDAL().getTitulosCompostos(con, filtro, contSql);
     }
-    
+    public Titulo pesquisar(Conexao con){
+        return new TituloDAL().get(con, codigo);
+    }
+    public void decrementaQtdeExemplar(Conexao con){
+        Titulo t = this.pesquisar(con);
+        new TituloDAL().alterarQtdeExemplares(con, t.getCodigo(), t.getQtdeExemplares()-1);
+    }
+    public String getTodosAssuntos(){
+        String ast = "";
+        for(Assunto a : assuntos)
+            ast = ast.concat(a.getNome()+" ");
+        return ast;
+    }
+    public String getTodosAutores(){
+        String aut = "";
+        for(Autor a : autores)
+            aut = aut.concat(a.getNome()+" ");
+        return aut;
+    }
     @Override
     public String toString() {
         return nome;

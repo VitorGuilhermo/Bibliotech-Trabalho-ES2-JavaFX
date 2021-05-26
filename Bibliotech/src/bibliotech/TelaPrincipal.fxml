@@ -35,15 +35,10 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="RELATÓRIOS">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Histórico usuário" />
-                        <MenuItem mnemonicParsing="false" text="Livros mais emprestados" />
-                        <MenuItem mnemonicParsing="false" text="Livros atrasados" />
-                        <MenuItem mnemonicParsing="false" text="Consulta exemplares" />
-                        <MenuItem mnemonicParsing="false" text="Consulta títulos" />
-                        <MenuItem mnemonicParsing="false" text="Consulta autores" />
-                        <MenuItem mnemonicParsing="false" text="Consulta reservas" />
-                        <MenuItem mnemonicParsing="false" text="Consulta reservas cliente" />
-                        <MenuItem mnemonicParsing="false" text="Consulta assunto" />
+                        <MenuItem mnemonicParsing="false" onAction="#evtRelExemp" text="Consulta exemplares" />
+                        <MenuItem mnemonicParsing="false" onAction="#evtRelTitulo" text="Consulta títulos" />
+                        <MenuItem mnemonicParsing="false" onAction="#evtRelAutor" text="Consulta autores" />
+                        <MenuItem mnemonicParsing="false" onAction="#evtRelAssunto" text="Consulta assunto" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="_SOBRE">
@@ -60,9 +55,9 @@
             </MenuBar>
             <HBox alignment="TOP_RIGHT" minHeight="60.0" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #fefefe;">
                <children>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
-                        <Insets right="10.0" top="7.0" />
+                        <Insets right="10.0" top="10.0" />
                      </HBox.margin>
                      <image>
                         <Image url="@../img/user.png" />

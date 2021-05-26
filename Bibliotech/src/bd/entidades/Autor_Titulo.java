@@ -1,6 +1,8 @@
 package bd.entidades;
 
 import bd.dal.Autor_TituloDAL;
+import bd.util.Conexao;
+import java.util.List;
 
 
 public class Autor_Titulo {
@@ -40,8 +42,11 @@ public class Autor_Titulo {
         this.titulo = titulo;
     }
     
-    public boolean gravar(){
-        return new Autor_TituloDAL().gravar(this);
+    public boolean gravar(Conexao con){
+        return new Autor_TituloDAL().gravar(con, this);
+    }
+    public List<Autor> buscar(Conexao con, String filtro){
+        return new Autor_TituloDAL().get(con, filtro);
     }
 
     @Override

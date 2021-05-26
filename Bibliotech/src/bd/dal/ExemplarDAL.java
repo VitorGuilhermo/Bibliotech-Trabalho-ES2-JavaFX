@@ -1,62 +1,62 @@
 package bd.dal;
 
 import bd.entidades.Exemplar;
-import bd.util.Banco;
+import bd.util.Conexao;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ExemplarDAL {
-    public boolean gravar(Exemplar e){
+    public boolean gravar(Conexao con, Exemplar e){
         String sql = "insert into exemplar values (default, #1, #2)";
         sql = sql.replace("#1", ""+e.isSituacao());
         sql = sql.replace("#2", ""+e.getTitulo().getCodigo());
-        return Banco.getCon().manipular(sql);
+        return con.manipular(sql);
     }
-    public boolean alterar(Exemplar e){
+    public boolean alterar(Conexao con, Exemplar e){
         String sql = "update exemplar set exe_situacao=#1, tit_cod=#2 where exe_cod="+e.getCodigo();
         sql = sql.replace("#1", ""+e.isSituacao());
         sql = sql.replace("#2", ""+e.getTitulo().getCodigo());
-        return Banco.getCon().manipular(sql);
+        return con.manipular(sql);
     }
-    public boolean alterarSituacao(Exemplar e){
+    public boolean alterarSituacao(Conexao con, Exemplar e){
         String sql = "update exemplar set exe_situacao=#1 where exe_cod="+e.getCodigo();
         sql = sql.replace("#1", ""+e.isSituacao());
-        return Banco.getCon().manipular(sql);
+        return con.manipular(sql);
     }
-    public boolean apagar(int id){
+    public boolean apagar(Conexao con, int id){
         String sql = "delete from exemplar where exe_cod="+id;
-        return Banco.getCon().manipular(sql);
+        return con.manipular(sql);
     }
-    public Exemplar get(int id){
+    public Exemplar get(Conexao con, int id){
         Exemplar aux = null;
         String sql = "select * from exemplar where exe_cod="+id;
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = con.consultar(sql);
         try{
             if(rs.next())
-                aux = new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAL().get(rs.getInt("tit_cod")));
+                aux = new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAL().get(con, rs.getInt("tit_cod")));
         }
         catch(Exception e){
         }
         return aux;
     }
-    public List<Exemplar> get(String filtro){
+    public List<Exemplar> get(Conexao con, String filtro){
         List<Exemplar> exemplares = new ArrayList<>();
         
         String sql = "select * from exemplar";
         if(!filtro.isEmpty())
             sql += " where " + filtro;
-        ResultSet rs = Banco.getCon().consultar(sql);
+        ResultSet rs = con.consultar(sql);
         try{
             while(rs.next())
-                exemplares.add( new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAL().get(rs.getInt("tit_cod"))) );
+                exemplares.add( new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAL().get(con, rs.getInt("tit_cod"))) );
         }
         catch(Exception e){
         }
         return exemplares;
     }
-    public List<Exemplar> getExemplares(String filtro){
+    public List<Exemplar> getExemplares(Conexao con, String filtro){
         List<Exemplar> exemplares = new ArrayList<>();
         
         String sql = "select * from exemplar";
@@ -67,11 +67,11 @@ public class ExemplarDAL {
         }
         else
             sql += " where exe_situacao=false";
-        
-        ResultSet rs = Banco.getCon().consultar(sql);
+ 
+        ResultSet rs = con.consultar(sql);
         try{
             while(rs.next())
-                exemplares.add( new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAL().get(rs.getInt("tit_cod"))) );
+                exemplares.add( new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAL().get(con, rs.getInt("tit_cod"))) );
         }
         catch(Exception e){
         }

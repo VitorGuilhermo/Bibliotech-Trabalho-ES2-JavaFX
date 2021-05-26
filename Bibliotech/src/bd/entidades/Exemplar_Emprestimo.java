@@ -1,6 +1,7 @@
 package bd.entidades;
 
 import bd.dal.Exemplar_EmprestimoDAL;
+import bd.util.Conexao;
 import java.time.LocalDate;
 
 
@@ -59,7 +60,7 @@ public class Exemplar_Emprestimo {
         this.emprestimo = emprestimo;
     }
     
-    public boolean gravar(){
-        return new Exemplar_EmprestimoDAL().gravar(this);
+    public boolean gravar(Conexao con){
+        return new Exemplar_EmprestimoDAL().gravar(con, this);
     }
 }

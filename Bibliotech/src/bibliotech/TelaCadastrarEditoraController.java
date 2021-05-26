@@ -2,6 +2,7 @@ package bibliotech;
 
 import bd.entidades.Editora;
 import bd.util.Banco;
+import bd.util.Conexao;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -50,6 +51,7 @@ public class TelaCadastrarEditoraController implements Initializable {
     @FXML
     private void evtCadastrar(ActionEvent event) {
         Editora e = new Editora(txNome.getText(), txCnpj.getText());
+        Conexao con = Banco.getCon();
         
         if(txNome.getText().isEmpty() || txCnpj.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -57,7 +59,7 @@ public class TelaCadastrarEditoraController implements Initializable {
             alert.showAndWait();
         }
         else if(txCodigo.getText().isEmpty()){
-            if(!e.gravar()){
+            if(!e.gravar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -65,7 +67,7 @@ public class TelaCadastrarEditoraController implements Initializable {
         }
         else{  //alterar
             e.setCodigo(Integer.parseInt(txCodigo.getText()));
-            if(!e.alterar()){
+            if(!e.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
