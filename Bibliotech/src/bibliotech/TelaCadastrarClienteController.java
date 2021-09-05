@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 
 public class TelaCadastrarClienteController implements Initializable {
 
-    static TelaCadastrarClienteController instancia;
+    public static TelaCadastrarClienteController instancia;
     @FXML
     private TextField txCodigo;
     @FXML

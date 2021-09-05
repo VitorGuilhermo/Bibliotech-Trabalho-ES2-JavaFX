@@ -107,6 +107,9 @@ public class Titulo {
     public Titulo pesquisar(Conexao con){
         return new TituloDAL().get(con, codigo);
     }
+    public List<Titulo> pesquisarFiltro(Conexao con, String filtro){
+        return new TituloDAL().get(con, filtro);
+    }
     public void decrementaQtdeExemplar(Conexao con){
         Titulo t = this.pesquisar(con);
         new TituloDAL().alterarQtdeExemplares(con, t.getCodigo(), t.getQtdeExemplares()-1);

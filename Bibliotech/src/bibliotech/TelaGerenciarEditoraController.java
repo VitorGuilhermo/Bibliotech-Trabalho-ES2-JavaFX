@@ -3,6 +3,7 @@ package bibliotech;
 import bd.entidades.Editora;
 import bd.util.Banco;
 import bd.util.Conexao;
+import controller.ControllerGerenciarEditora;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -25,7 +26,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class TelaGerenciarEditoraController implements Initializable {
-    static TelaGerenciarEditoraController instancia;
     @FXML
     private TextField txFiltro;
     @FXML
@@ -38,103 +38,40 @@ public class TelaGerenciarEditoraController implements Initializable {
     private TableColumn<Editora, String> colCnpj;
 
 
-    public TelaGerenciarEditoraController() {
-    }
-    public static TelaGerenciarEditoraController retorna(){
-        if (instancia == null){
-            instancia = new TelaGerenciarEditoraController();
-            return (instancia);
-        }
-        return null;
-    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colCnpj.setCellValueFactory(new PropertyValueFactory<>("cnpj"));
         
-        carregarTabela("");
+        ControllerGerenciarEditora.carregarTabela(tabela, "");
     }    
-
-    private void carregarTabela(String filtro){
-        Editora e = new Editora();
-        Conexao con = Banco.getCon();
-        List<Editora> editoras = e.buscar(con, filtro);
-        tabela.setItems(FXCollections.observableArrayList(editoras));
-    }
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        String filtro = "upper(edt_nome) like '%#%'";
-        
-        filtro = filtro.replace("#", txFiltro.getText().toUpperCase());
-        
-        if(txFiltro.getText().isEmpty())
-            carregarTabela("");
-        else
-            carregarTabela(filtro);
+        ControllerGerenciarEditora.buscar(tabela, txFiltro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        txFiltro.getScene().getWindow().hide();
+        ControllerGerenciarEditora.cancelar( txFiltro.getScene().getWindow() );
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exclusão de uma Editora");
-        alert.setHeaderText("Confirma exclusão?");
-        alert.setContentText("Tem certeza que deseja excluir a editora: "+tabela.getSelectionModel().getSelectedItem().getNome()+" ?");
-        Optional<ButtonType> result =  alert.showAndWait();
-        
-        if(result.get() == ButtonType.OK){
-            Conexao con = Banco.getCon();
-            Editora e = tabela.getSelectionModel().getSelectedItem();
-            e.excluir(con);
-            carregarTabela("");
-        }
+        if(tabela.getSelectionModel().getSelectedItem() != null)
+            ControllerGerenciarEditora.excluir(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        if(TelaCadastrarEditoraController.retorna() != null){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarEditora.fxml"));
-            Parent root = (Parent) loader.load();
-            TelaCadastrarEditoraController ctr = loader.getController();
-            ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(), tabela.getSelectionModel().getSelectedItem().getCnpj());
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle("Alterar Editora");
-            stage.getIcons().add(new Image("img/icone.png"));
-            stage.showAndWait();
-
-            TelaCadastrarEditoraController.instancia = null;
-            carregarTabela("");
-        }
+        if(tabela.getSelectionModel().getSelectedItem() != null)
+            new ControllerGerenciarEditora().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        if(TelaCadastrarEditoraController.retorna() != null){
-            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarEditora.fxml"));
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle("Cadastrar Editora");
-            stage.getIcons().add(new Image("img/icone.png"));
-            stage.showAndWait();
-
-            TelaCadastrarEditoraController.instancia = null;
-            carregarTabela("");
-        }
+        new ControllerGerenciarEditora().novo(tabela);
     }
     
 }

@@ -8,6 +8,7 @@ import bd.entidades.Genero;
 import bd.entidades.Titulo;
 import bd.util.Banco;
 import bd.util.Conexao;
+import controller.ControllerGerenciarTitulo;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -31,7 +32,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class TelaGerenciarTituloController implements Initializable {
-    static TelaGerenciarTituloController instancia;
     @FXML
     private TextField txFiltro;
     @FXML
@@ -49,16 +49,7 @@ public class TelaGerenciarTituloController implements Initializable {
     @FXML
     private TableColumn<Titulo, Genero> colGenero;
 
-    
-    public TelaGerenciarTituloController() {
-    }
-    public static TelaGerenciarTituloController retorna(){
-        if (instancia == null){
-            instancia = new TelaGerenciarTituloController();
-            return (instancia);
-        }
-        return null;
-    }
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
@@ -68,105 +59,33 @@ public class TelaGerenciarTituloController implements Initializable {
         colDataImp.setCellValueFactory(new PropertyValueFactory<>("dataPubli"));
         colQtdeExe.setCellValueFactory(new PropertyValueFactory<>("qtdeExemplares"));
         
-        carregarTabela("");
+        ControllerGerenciarTitulo.carregarTabela(tabela, "");
     }    
-
-    private void carregarTabela(String filtro){
-        TituloDAL dal = new TituloDAL();
-        Conexao con = Banco.getCon();
-        List<Titulo> titulos = dal.get(con, filtro);
-        tabela.setItems(FXCollections.observableArrayList(titulos));
-    }
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        String filtro = "upper(tit_nome) like '%#%'";
-        
-        filtro = filtro.replace("#", txFiltro.getText().toUpperCase());
-        
-        if(txFiltro.getText().isEmpty())
-            carregarTabela("");
-        else
-            carregarTabela(filtro);
+        ControllerGerenciarTitulo.buscar(tabela, txFiltro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        txFiltro.getScene().getWindow().hide();
+        ControllerGerenciarTitulo.cancelar( txFiltro.getScene().getWindow() );
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        if(TelaCadastrarTituloController.retorna() != null){
-            Conexao con = Banco.getCon();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarTitulo.fxml"));
-            Parent root = (Parent) loader.load();
-            TelaCadastrarTituloController ctr = loader.getController();
-
-            ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome(), new Autor_Titulo().buscar(con, "titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()),
-                tabela.getSelectionModel().getSelectedItem().getGenero(), new Assunto_Titulo().buscar(con, "titulo_tit_cod="+tabela.getSelectionModel().getSelectedItem().getCodigo()), tabela.getSelectionModel().getSelectedItem().getEditora(),
-                tabela.getSelectionModel().getSelectedItem().getQtdeExemplares(), tabela.getSelectionModel().getSelectedItem().getDataPubli(), tabela.getSelectionModel().getSelectedItem().getDataReg());
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle("Alterar Título");
-            stage.getIcons().add(new Image("img/icone.png"));
-            stage.showAndWait();
-
-            TelaCadastrarTituloController.instancia = null;
-            carregarTabela("");
-        }
+        if(tabela.getSelectionModel().getSelectedItem() != null)
+            new ControllerGerenciarTitulo().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        if(TelaCadastrarTituloController.retorna() != null){
-            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarTitulo.fxml"));
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle("Cadastrar Título");
-            stage.getIcons().add(new Image("img/icone.png"));
-            stage.showAndWait();
-
-            TelaCadastrarTituloController.instancia = null;
-            carregarTabela("");
-        }
+        new ControllerGerenciarTitulo().novo(tabela);
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        if(tabela.getSelectionModel().getSelectedItem() != null){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Exclusão de um Título");
-            alert.setHeaderText("Confirma exclusão?");
-            alert.setContentText("Tem certeza que deseja excluir o título: "+tabela.getSelectionModel().getSelectedItem().getNome()+" ?");
-            Optional<ButtonType> result =  alert.showAndWait();
-            
-            
-            if(result.get() == ButtonType.OK){
-                Conexao con = Banco.getCon();
-                Titulo t = tabela.getSelectionModel().getSelectedItem();
-                if(t.getQtdeExemplares() == 0){
-                    new Autor_Titulo().excluir(con, t.getCodigo());
-                    new Assunto_Titulo().excluir(con, t.getCodigo());
-                    t.excluir(con, t.getCodigo());
-                    carregarTabela("");
-                }
-                else{
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Falha");
-                    alert.setHeaderText("Erro: Não é possível excluir títulos com quantidades de exemplares maiores que 0!");
-                    alert.setContentText("Erro na exclusão!");
-                }
-            }
-        }
+        ControllerGerenciarTitulo.excluir(tabela, tabela.getSelectionModel().getSelectedItem());
     }
     
 }

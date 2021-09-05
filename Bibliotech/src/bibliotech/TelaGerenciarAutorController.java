@@ -3,6 +3,7 @@ package bibliotech;
 import bd.entidades.Autor;
 import bd.util.Banco;
 import bd.util.Conexao;
+import controller.ControllerGerenciarAutor;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -25,8 +26,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class TelaGerenciarAutorController implements Initializable {
-    
-    static TelaGerenciarAutorController instancia;
     @FXML
     private TextField txFiltro;
     @FXML
@@ -37,103 +36,39 @@ public class TelaGerenciarAutorController implements Initializable {
     private TableColumn<Autor, String> colNome;
 
 
-    public TelaGerenciarAutorController() {
-    }
-    public static TelaGerenciarAutorController retorna(){
-        if (instancia == null){
-            instancia = new TelaGerenciarAutorController();
-            return (instancia);
-        }
-        return null;
-    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         
-        carregarTabela("");
+        ControllerGerenciarAutor.carregarTabela(tabela, "");
     }    
 
-     private void carregarTabela(String filtro){
-        Conexao con = Banco.getCon();
-        Autor a = new Autor();
-        
-        List<Autor> autores = a.buscar(con, filtro);
-        tabela.setItems(FXCollections.observableArrayList(autores));
-    }
-     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        String filtro = "upper(aut_nome) like '%#%'";
-        
-        filtro = filtro.replace("#", txFiltro.getText().toUpperCase());
-        
-        if(txFiltro.getText().isEmpty())
-            carregarTabela("");
-        else
-            carregarTabela(filtro);
+        ControllerGerenciarAutor.buscar(tabela, txFiltro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        txFiltro.getScene().getWindow().hide();
+        ControllerGerenciarAutor.cancelar( txFiltro.getScene().getWindow() );
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exclusão de um Autor");
-        alert.setHeaderText("Confirma exclusão?");
-        alert.setContentText("Tem certeza que deseja excluir o/a autor(a): "+tabela.getSelectionModel().getSelectedItem().getNome()+" ?");
-        Optional<ButtonType> result =  alert.showAndWait();
-        
-        if(result.get() == ButtonType.OK){
-            Conexao con = Banco.getCon();
-            Autor a = tabela.getSelectionModel().getSelectedItem();
-            a.excluir(con);
-            carregarTabela("");
-        }
+        if(tabela.getSelectionModel().getSelectedItem() != null)
+            ControllerGerenciarAutor.excluir(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        if(TelaCadastrarAutorController.retorna() != null){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaCadastrarAutor.fxml"));
-            Parent root = (Parent) loader.load();
-            TelaCadastrarAutorController ctr = loader.getController();
-            ctr.setDados(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome());
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle("Alterar Autor");
-            stage.getIcons().add(new Image("img/icone.png"));
-            stage.showAndWait();
-
-            TelaCadastrarAutorController.instancia = null;
-            carregarTabela("");
-        }
+        if(tabela.getSelectionModel().getSelectedItem() != null)
+            new ControllerGerenciarAutor().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        if(TelaCadastrarAutorController.retorna() != null){
-            Parent root = FXMLLoader.load(getClass().getResource("TelaCadastrarAutor.fxml"));
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle("Cadastrar Autor");
-            stage.getIcons().add(new Image("img/icone.png"));
-            stage.showAndWait();
-
-            TelaCadastrarAutorController.instancia = null;
-            carregarTabela("");
-        }
+        new ControllerGerenciarAutor().novo(tabela);
     }
     
 }

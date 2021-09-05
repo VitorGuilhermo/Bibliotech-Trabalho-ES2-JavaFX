@@ -1,6 +1,7 @@
 package bibliotech;
 
 import bd.util.Banco;
+import controller.ControllerLogin;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
@@ -19,7 +20,7 @@ public class Bibliotech extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        if(TelaLoginController.retorna() != null){
+        if(ControllerLogin.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("TelaLogin.fxml"));
 
             Scene scene = new Scene(root);

@@ -3,6 +3,7 @@ package bibliotech;
 import bd.entidades.Autor;
 import bd.util.Banco;
 import bd.util.Conexao;
+import controller.ControllerCadastrarAutor;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -13,8 +14,6 @@ import javafx.scene.control.TextField;
 
 
 public class TelaCadastrarAutorController implements Initializable {
-    
-    static TelaCadastrarAutorController instancia;
     @FXML
     private TextField txCodigo;
     @FXML
@@ -25,15 +24,7 @@ public class TelaCadastrarAutorController implements Initializable {
         txNome.setText(nome);
     }
 
-    public TelaCadastrarAutorController() {
-    }
-    public static TelaCadastrarAutorController retorna(){
-        if (instancia == null){
-            instancia = new TelaCadastrarAutorController();
-            return (instancia);
-        }
-        return null;
-    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -41,34 +32,12 @@ public class TelaCadastrarAutorController implements Initializable {
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        txCodigo.getScene().getWindow().hide();
+        ControllerCadastrarAutor.cancelar( txCodigo.getScene().getWindow() );
     }
 
     @FXML
     private void evtCadastrar(ActionEvent event) {
-        Autor a = new Autor(txNome.getText());
-        Conexao con = Banco.getCon();
-        if(txNome.getText().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro: Campo NOME vazio");
-            alert.showAndWait();
-        }
-        else if(txCodigo.getText().isEmpty()){
-            if(!a.gravar(con)){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
-                alert.showAndWait();
-            }
-        }
-        else{  //alterar
-            a.setCodigo(Integer.parseInt(txCodigo.getText()));
-            if(!a.alterar(con)){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
-                alert.showAndWait();
-            }
-        }
-        txCodigo.getScene().getWindow().hide();
+        ControllerCadastrarAutor.cadastrar(txCodigo, txNome);
     }
     
 }

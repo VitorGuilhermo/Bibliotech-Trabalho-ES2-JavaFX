@@ -6,6 +6,7 @@ import bd.entidades.Exemplar;
 import bd.entidades.Titulo;
 import bd.util.Banco;
 import bd.util.Conexao;
+import controller.ControllerRetirarLivroCont;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,12 +25,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
- * FXML Controller class
  *
- * @author Windows 10
+ * @author Vitor Guilhermo
  */
 public class TelaRetirarLivroContController implements Initializable {
-    static TelaRetirarLivroContController instancia;
     @FXML
     private TableView<Exemplar> tabela;
     @FXML
@@ -42,80 +41,26 @@ public class TelaRetirarLivroContController implements Initializable {
     private TextField txDtPubl;
     @FXML
     private TextArea taMotivo;
-    private Bibliotecario bibliotecario;
     private int codTit;
     
-    
-    
-    
-    public TelaRetirarLivroContController() {
-    }
-    public static TelaRetirarLivroContController retorna(){
-        if (instancia == null){
-            instancia = new TelaRetirarLivroContController();
-            return (instancia);
-        }
-        return null;
-    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCod.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colSituacao.setCellValueFactory(new PropertyValueFactory<>("situacao"));
-    }    
-
-    public void setDados(Titulo titulo, Bibliotecario bib){
-        codTit = titulo.getCodigo();
-        txTitulo.setText(titulo.getNome());
-        txDtPubl.setText(""+titulo.getDataReg());
-        bibliotecario = bib;
-        carregarTabela("titulo.tit_cod="+titulo.getCodigo());
     }
-    private void carregarTabela(String filtro){
-        Exemplar ex = new Exemplar();
-        Conexao con = Banco.getCon();
-        List<Exemplar> exemplares = ex.buscaExemplares(con, filtro);
-        tabela.setItems(FXCollections.observableArrayList(exemplares));
+    public void setDados(Titulo titulo){
+        codTit = titulo.getCodigo();
+        new ControllerRetirarLivroCont().setDados(tabela, txTitulo, txDtPubl, titulo);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        txTitulo.getScene().getWindow().hide();
+        ControllerRetirarLivroCont.cancelar( txTitulo.getScene().getWindow() );
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        if(tabela.getSelectionModel().getSelectedItem() != null && !taMotivo.getText().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Exclusão de um Exemplar");
-            alert.setHeaderText("Confirma exclusão?");
-            alert.setContentText("Tem certeza que deseja excluir o exemplar: "+tabela.getSelectionModel().getSelectedItem().getTitulo().getNome()+" ?");
-            Optional<ButtonType> result =  alert.showAndWait();
-
-            
-            if(result.get() == ButtonType.OK){
-                Conexao con = Banco.getCon();
-                Titulo tit = new Titulo();
-                tit.setCodigo(codTit);
-                if(tit.pesquisar(con).getQtdeExemplares() > 0){
-                    //primeiro da a baixa
-                    Baixa baixa = new Baixa(txTitulo.getText(), LocalDate.now(), taMotivo.getText(), bibliotecario);
-                    baixa.gravar(con);
-                    //exclui o exemplar
-                    Exemplar exe = new Exemplar(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().isSituacao(), tabela.getSelectionModel().getSelectedItem().getTitulo());
-                    exe.excluir(con);
-                    //diminui quantidade de exemplares do titulo
-                    tit.decrementaQtdeExemplar(con);
-                    //atualiza tabela
-                    carregarTabela("titulo.tit_cod=" + tit.getCodigo());
-                    taMotivo.clear();  
-                }
-                else{
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Erro: não é possível excluir um título com 0 exemplares");
-                    alert.showAndWait();
-                }
-            }
-        }
+        new ControllerRetirarLivroCont().excluir(tabela, taMotivo, txTitulo, tabela.getSelectionModel().getSelectedItem(), codTit);
     }
     
 }
