@@ -1,23 +1,16 @@
 package bibliotech;
 
-import bd.entidades.Cliente;
-import bd.entidades.Emprestimo;
 import bd.entidades.Exemplar;
-import bd.entidades.Exemplar_Emprestimo;
-import bd.util.Banco;
-import bd.util.Conexao;
 import controller.ControllerEfetuarEmprestimo;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -60,6 +53,25 @@ public class TelaEfetuarEmprestimoController implements Initializable {
         cbFiltro.getSelectionModel().select(1);
         
         ControllerEfetuarEmprestimo.carregaTabela(tabela, "");
+        colSituacao.setCellFactory(column -> {
+            return new TableCell<Exemplar, Boolean>() {
+                @Override
+                protected void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty); //This is mandatory
+
+                    if (item == null || empty) { //If the cell is empty
+                        setText(null);
+                        setStyle("");
+                    } 
+                    else {
+                        if(item)
+                            setText("Indisponível"); //Put the String data in the cell
+                        else
+                            setText("Disponível");
+                    }
+                }
+            };
+        });
     }    
     
     @FXML

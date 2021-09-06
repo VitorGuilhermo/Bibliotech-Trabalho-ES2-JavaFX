@@ -1,34 +1,29 @@
 package bibliotech;
 
-import bd.entidades.Baixa;
-import bd.entidades.Bibliotecario;
 import bd.entidades.Exemplar;
 import bd.entidades.Titulo;
-import bd.util.Banco;
-import bd.util.Conexao;
 import controller.ControllerRetirarLivroCont;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 /**
  *
  * @author Vitor Guilhermo
  */
 public class TelaRetirarLivroContController implements Initializable {
+
     @FXML
     private TableView<Exemplar> tabela;
     @FXML
@@ -42,25 +37,46 @@ public class TelaRetirarLivroContController implements Initializable {
     @FXML
     private TextArea taMotivo;
     private int codTit;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCod.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colSituacao.setCellValueFactory(new PropertyValueFactory<>("situacao"));
+
+        colSituacao.setCellFactory(column -> {
+            return new TableCell<Exemplar, Boolean>() {
+                @Override
+                protected void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty); //This is mandatory
+
+                    if (item == null || empty) { //If the cell is empty
+                        setText(null);
+                        setStyle("");
+                    } 
+                    else {
+                        if(item)
+                            setText("Indisponível"); //Put the String data in the cell
+                        else
+                            setText("Disponível");
+                    }
+                }
+            };
+        });
     }
-    public void setDados(Titulo titulo){
+
+    public void setDados(Titulo titulo) {
         codTit = titulo.getCodigo();
         new ControllerRetirarLivroCont().setDados(tabela, txTitulo, txDtPubl, titulo);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerRetirarLivroCont.cancelar( txTitulo.getScene().getWindow() );
+        ControllerRetirarLivroCont.cancelar(txTitulo.getScene().getWindow());
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
         new ControllerRetirarLivroCont().excluir(tabela, taMotivo, txTitulo, tabela.getSelectionModel().getSelectedItem(), codTit);
     }
-    
+
 }
