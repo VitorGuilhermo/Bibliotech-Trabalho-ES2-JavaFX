@@ -1,21 +1,16 @@
 package bibliotech;
 
-import bd.entidades.Cliente;
-import bd.util.Banco;
-import bd.util.Conexao;
+import controller.ControllerCadastrarCliente;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class TelaCadastrarClienteController implements Initializable {
-
-    public static TelaCadastrarClienteController instancia;
     @FXML
     private TextField txCodigo;
     @FXML
@@ -31,16 +26,7 @@ public class TelaCadastrarClienteController implements Initializable {
     @FXML
     private DatePicker dpDataNasc;
 
-
-    public TelaCadastrarClienteController() {
-    }
-    public static TelaCadastrarClienteController retorna(){
-        if (instancia == null){
-            instancia = new TelaCadastrarClienteController();
-            return (instancia);
-        }
-        return null;
-    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -63,29 +49,7 @@ public class TelaCadastrarClienteController implements Initializable {
 
     @FXML
     private void evtCadastrar(ActionEvent event) {
-        Cliente c = new Cliente(txNome.getText(), txDocumento.getText(), txEndereco.getText(), txTelefone.getText(), txSexo.getText(), dpDataNasc.getValue());
-        Conexao con = Banco.getCon();
-        if(txNome.getText().isEmpty() || txDocumento.getText().isEmpty() || txEndereco.getText().isEmpty() || txTelefone.getText().isEmpty() || txSexo.getText().isEmpty() || dpDataNasc.getValue()== null){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro: Algum campo está vazio");
-            alert.showAndWait();
-        }
-        else if(txCodigo.getText().isEmpty()){
-            if(!c.gravar(con)){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
-                alert.showAndWait();
-            }
-        }
-        else{  //alterar
-            c.setCodigo(Integer.parseInt(txCodigo.getText()));
-            if(!c.alterar(con)){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
-                alert.showAndWait();
-            }
-        }
-        txCodigo.getScene().getWindow().hide();
+        ControllerCadastrarCliente.cadastrar(txCodigo, txNome, txDocumento, txEndereco, txTelefone, txSexo, dpDataNasc);
     }
     
 }

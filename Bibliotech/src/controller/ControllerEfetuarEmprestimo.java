@@ -56,7 +56,7 @@ public class ControllerEfetuarEmprestimo {
     }
     
     public void novoCliente() throws IOException {
-        if(TelaCadastrarClienteController.retorna() != null){
+        if(ControllerCadastrarCliente.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarCliente.fxml"));
 
             Scene scene = new Scene(root);
@@ -68,7 +68,7 @@ public class ControllerEfetuarEmprestimo {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            TelaCadastrarClienteController.instancia = null;
+            ControllerCadastrarCliente.instancia = null;
         }
     }
     

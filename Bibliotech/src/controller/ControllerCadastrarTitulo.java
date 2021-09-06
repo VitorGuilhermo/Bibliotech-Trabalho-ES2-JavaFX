@@ -9,8 +9,8 @@ import bd.entidades.Genero;
 import bd.entidades.Titulo;
 import bd.util.Banco;
 import bd.util.Conexao;
-import bibliotech.TelaCadastrarGeneroController;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
@@ -60,6 +60,16 @@ public class ControllerCadastrarTitulo {
         else if(ControllerCadastrarTitulo.validaIgualdadeCB(cbAutor1, cbAutor2, cbAutor3, cbAssunto1, cbAssunto2, cbAssunto3)){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erro: O campo de Autor ou Assunto apresentam dados repetidos");
+            alert.showAndWait();
+        }
+        else if(dtDataPubl.getValue().isAfter(LocalDate.now()) || dtDataRegistro.getValue().isAfter(LocalDate.now())){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro: A data não pode ser futura!");
+            alert.showAndWait();
+        }
+        else if(dtDataPubl.getValue().isAfter(dtDataRegistro.getValue())){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro: A data de publicação do livro não pode ser posterior a data de registro!");
             alert.showAndWait();
         }
         else if(txCodigo.getText().isEmpty()){

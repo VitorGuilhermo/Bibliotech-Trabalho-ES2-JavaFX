@@ -1,6 +1,5 @@
 package bibliotech;
 
-import bd.entidades.Bibliotecario;
 import bd.util.Banco;
 import bd.util.Conexao;
 import controller.ControllerHomeBib;
@@ -17,8 +16,7 @@ import javafx.scene.control.Label;
  *
  * @author Vitor Guilhermo
  */
-public class TelaPrincipalController implements Initializable {
-    
+public class TelaPrincipalController implements Initializable {   
     @FXML
     private Label lblNomeUser;
 

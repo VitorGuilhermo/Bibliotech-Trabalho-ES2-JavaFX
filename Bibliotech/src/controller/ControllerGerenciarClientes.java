@@ -44,7 +44,7 @@ public class ControllerGerenciarClientes {
     }
     
     public void novo(TableView tabela) throws IOException {
-        if(TelaCadastrarClienteController.retorna() != null){
+        if(ControllerCadastrarCliente.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarCliente.fxml"));
 
             Scene scene = new Scene(root);
@@ -56,13 +56,13 @@ public class ControllerGerenciarClientes {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            TelaCadastrarClienteController.instancia = null;
+            ControllerCadastrarCliente.instancia = null;
             carregarTabela(tabela, "");
         }
     }
     
     public void alterar(TableView tabela, Cliente c) throws IOException {
-        if(TelaCadastrarClienteController.retorna() != null){
+        if(ControllerCadastrarCliente.retorna() != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaCadastrarCliente.fxml"));
             Parent root = (Parent) loader.load();
             TelaCadastrarClienteController ctr = loader.getController();
@@ -81,7 +81,7 @@ public class ControllerGerenciarClientes {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            TelaCadastrarClienteController.instancia = null;
+            ControllerCadastrarCliente.instancia = null;
             carregarTabela(tabela, "");
         }
     }

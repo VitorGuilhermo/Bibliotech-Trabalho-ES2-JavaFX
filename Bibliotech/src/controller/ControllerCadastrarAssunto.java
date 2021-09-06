@@ -13,8 +13,7 @@ import javafx.stage.Window;
  */
 public class ControllerCadastrarAssunto {
     public static ControllerCadastrarAssunto instancia;
-    
-    
+     
     public ControllerCadastrarAssunto() {
     }
     public static ControllerCadastrarAssunto retorna(){
