@@ -12,11 +12,15 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/bibliotech/TelaLoginController.java</file>
-            <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/bibliotech/TelaEfetuarEmprestimoController.java</file>
-            <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/controller/ControllerLogin.java</file>
+            <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/bd/dal/ReservaDAO.java</file>
             <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/controller/ControllerHomeBib.java</file>
+            <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/bibliotech/TelaCadastrarClienteController.java</file>
+            <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/bibliotech/TelaCadastrarEditoraController.java</file>
+            <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/bibliotech/TelaCadastrarTituloController.java</file>
             <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/bibliotech/TelaPrincipalController.java</file>
+            <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/controller/ControllerEfetuarEmprestimo.java</file>
+            <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/bd/entidades/Reserva.java</file>
+            <file>file:/C:/Users/Windows%2010/Desktop/Trabalho%20ES3/Bibliotech-Trabalho-ES2-JavaFX/Bibliotech/src/controller/ControllerGerenciarClientes.java</file>
         </group>
     </open-files>
 </project-private>

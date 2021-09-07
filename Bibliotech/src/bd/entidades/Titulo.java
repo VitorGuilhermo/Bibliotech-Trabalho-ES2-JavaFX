@@ -1,12 +1,14 @@
 package bd.entidades;
 
+import bd.dal.ReservaDAO;
 import bd.dal.TituloDAL;
+import bd.util.Banco;
 import bd.util.Conexao;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Titulo {
+public class Titulo implements Observable {
     private int codigo;
     private String nome;
     private Genero genero;
@@ -16,6 +18,8 @@ public class Titulo {
     private LocalDate dataReg;
     private List<Autor> autores;
     private List<Assunto> assuntos;
+    
+    public List<Observer> observers;
     
     public Titulo() {
         this(0, "", new Genero(), new Editora(), 0, LocalDate.now(), LocalDate.now(), new ArrayList<Autor>(), new ArrayList<Assunto>());
@@ -33,6 +37,7 @@ public class Titulo {
         this.dataReg = dataReg;
         this.autores = autores;
         this.assuntos = assuntos;
+        this.observers = new ArrayList<>();
     }
 
     
@@ -129,6 +134,30 @@ public class Titulo {
     @Override
     public String toString() {
         return nome;
+    }
+
+    // Design Patern: Observer
+    @Override
+    public void addObserver(Observer ob) {
+        observers.add(ob);
+    }
+
+    @Override
+    public void removeObserver(Observer ob) {
+        observers.remove(ob);
+    }
+
+    @Override
+    public List<Observer> notifyObservers() {
+        List <Reserva> reservas;
+        Conexao con = Banco.getCon();
+        reservas = new ReservaDAO().get(con, getCodigo());
+                
+        for(Reserva r : reservas) {
+            Cliente c = r.getCliente();
+            addObserver(c);
+        }
+        return observers;
     }
     
 }

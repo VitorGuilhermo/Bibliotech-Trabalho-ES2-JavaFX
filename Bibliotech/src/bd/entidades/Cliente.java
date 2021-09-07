@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.swing.text.MaskFormatter;
 
-public class Cliente {
+public class Cliente implements Observer {
 
     private int codigo;
     private String nome, documento, endereco, telefone;
@@ -148,6 +148,11 @@ public class Cliente {
     @Override
     public String toString() {
         return nome;
+    }
+
+    @Override
+    public void update(String msg) {
+        System.out.println("Mensagem recebida: "+msg);
     }
 
 }

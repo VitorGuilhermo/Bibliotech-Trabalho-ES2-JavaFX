@@ -2,6 +2,7 @@ package controller;
 
 import bd.entidades.Baixa;
 import bd.entidades.Exemplar;
+import bd.entidades.Observer;
 import bd.entidades.Titulo;
 import bd.util.Banco;
 import bd.util.Conexao;
@@ -70,6 +71,18 @@ public class ControllerRetirarLivroCont {
                     //atualiza tabela
                     carregarTabela(tabela, "titulo.tit_cod=" + tit.getCodigo());
                     taMotivo.clear();  
+                    
+                    if (tabela.getItems().isEmpty()){
+                        List<Observer> observers = tit.notifyObservers();
+                        String msg = "";
+                        for(Observer o : observers)
+                            msg += "Notificando "+o+" ...\n"; 
+                        
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Notificando usuários da exclusão do título reservado");
+                        alert.setContentText(msg);
+                        alert.showAndWait();
+                    }
                 }
                 else{
                     alert = new Alert(Alert.AlertType.ERROR);
