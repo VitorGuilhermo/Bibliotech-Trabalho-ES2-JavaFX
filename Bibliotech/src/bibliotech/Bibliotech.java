@@ -20,7 +20,7 @@ public class Bibliotech extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        if(ControllerLogin.retorna() != null){
+        if(ControllerLogin.getInstance() == null && ControllerLogin.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("TelaLogin.fxml"));
 
             Scene scene = new Scene(root);
@@ -29,6 +29,7 @@ public class Bibliotech extends Application {
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
+            ControllerLogin.removeInstancia();
         }
     }
 

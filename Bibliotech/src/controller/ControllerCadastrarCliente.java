@@ -14,16 +14,20 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerCadastrarCliente {
-    public static ControllerCadastrarCliente instancia;
+    private static ControllerCadastrarCliente instancia;
     
-    public ControllerCadastrarCliente() {
+    private ControllerCadastrarCliente() {
     }
     public static ControllerCadastrarCliente retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerCadastrarCliente();
-            return (instancia);
-        }
-        return null;
+        return instancia;
+    }
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerCadastrarCliente getInstance() {
+        return instancia;
     }
     
     public static void cadastrar(TextField txCodigo, TextField txNome, TextField txDocumento, TextField txEndereco, TextField txTelefone, TextField txSexo, DatePicker dpDataNasc) {

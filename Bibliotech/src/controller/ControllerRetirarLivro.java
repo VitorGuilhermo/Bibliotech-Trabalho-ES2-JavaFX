@@ -23,19 +23,22 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerRetirarLivro {
-    public static ControllerRetirarLivro instancia;
+    private static ControllerRetirarLivro instancia;
     public static Bibliotecario bib;
     
-    public ControllerRetirarLivro() {
+    private ControllerRetirarLivro() {
     }
     public static ControllerRetirarLivro retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerRetirarLivro();
-            return (instancia);
-        }
-        return null;
+        return instancia;
     }
-    
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerRetirarLivro getInstance() {
+        return instancia;
+    }
     
     public static void carregarTabela(TableView tabela, String filtro, String contSql){
         Titulo t = new Titulo();
@@ -46,7 +49,7 @@ public class ControllerRetirarLivro {
     
     
     public void confirmar(TableView tabela, Titulo tit) throws IOException {
-        if(ControllerRetirarLivroCont.retorna() != null){
+        if(ControllerRetirarLivroCont.getInstance() == null && ControllerRetirarLivroCont.retorna() != null){
             if(tabela.getSelectionModel().getSelectedItem() != null){
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaRetirarLivroCont.fxml"));
                 Parent root = (Parent) loader.load();
@@ -65,7 +68,7 @@ public class ControllerRetirarLivro {
 
                 carregarTabela(tabela, "", "");
             }
-            ControllerRetirarLivroCont.instancia = null;
+            ControllerRetirarLivroCont.removeInstancia();
         }
     }
     

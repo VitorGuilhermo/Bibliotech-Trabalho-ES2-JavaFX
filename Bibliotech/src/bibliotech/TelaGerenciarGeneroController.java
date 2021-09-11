@@ -53,12 +53,12 @@ public class TelaGerenciarGeneroController implements Initializable {
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
         if(tabela.getSelectionModel().getSelectedItem() != null)
-            new ControllerGerenciarGenero().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
+            ControllerGerenciarGenero.retorna().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        new ControllerGerenciarGenero().novo(tabela);
+        ControllerGerenciarGenero.retorna().novo(tabela);
     }
     
 }

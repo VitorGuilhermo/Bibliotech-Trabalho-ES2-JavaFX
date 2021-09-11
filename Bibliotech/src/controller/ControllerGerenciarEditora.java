@@ -24,18 +24,21 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerGerenciarEditora {
-    public static ControllerGerenciarEditora instancia;
+    private static ControllerGerenciarEditora instancia;
     
-    public ControllerGerenciarEditora() {
+    private ControllerGerenciarEditora() {
     }
     public static ControllerGerenciarEditora retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerGerenciarEditora();
-            return (instancia);
-        }
-        return null;
+        return instancia;
     }
-    
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerGerenciarEditora getInstance() {
+        return instancia;
+    }
     
     public static void carregarTabela(TableView tabela, String filtro){
         Editora e = new Editora();
@@ -45,7 +48,7 @@ public class ControllerGerenciarEditora {
     }
     
     public void novo(TableView tabela) throws IOException {
-        if(ControllerCadastrarEditora.retorna() != null){
+        if(ControllerCadastrarEditora.getInstance() == null && ControllerCadastrarEditora.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarEditora.fxml"));
 
             Scene scene = new Scene(root);
@@ -57,13 +60,13 @@ public class ControllerGerenciarEditora {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            ControllerCadastrarEditora.instancia = null;
+            ControllerCadastrarEditora.removeInstancia();
             carregarTabela(tabela, "");
         }
     }
     
     public void alterar(TableView tabela, Editora e) throws IOException {
-        if(ControllerCadastrarEditora.retorna() != null){
+        if(ControllerCadastrarEditora.getInstance() == null && ControllerCadastrarEditora.retorna() != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaCadastrarEditora.fxml"));
             Parent root = (Parent) loader.load();
             TelaCadastrarEditoraController ctr = loader.getController();
@@ -78,7 +81,7 @@ public class ControllerGerenciarEditora {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            ControllerCadastrarEditora.instancia = null;
+            ControllerCadastrarEditora.removeInstancia();
             carregarTabela(tabela, "");
         }
     }

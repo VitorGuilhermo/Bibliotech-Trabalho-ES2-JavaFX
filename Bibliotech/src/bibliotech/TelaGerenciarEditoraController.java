@@ -1,29 +1,17 @@
 package bibliotech;
 
 import bd.entidades.Editora;
-import bd.util.Banco;
-import bd.util.Conexao;
 import controller.ControllerGerenciarEditora;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 public class TelaGerenciarEditoraController implements Initializable {
     @FXML
@@ -66,12 +54,12 @@ public class TelaGerenciarEditoraController implements Initializable {
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
         if(tabela.getSelectionModel().getSelectedItem() != null)
-            new ControllerGerenciarEditora().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
+            ControllerGerenciarEditora.retorna().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        new ControllerGerenciarEditora().novo(tabela);
+        ControllerGerenciarEditora.retorna().novo(tabela);
     }
     
 }

@@ -29,13 +29,13 @@ public class TelaLoginController implements Initializable {
     
     @FXML
     private void evtSair(ActionEvent event) {
-        ControllerLogin c = new ControllerLogin();
+        ControllerLogin c = ControllerLogin.retorna();
         c.sair( txDocumento.getScene().getWindow() );
     }
 
     @FXML
     private void evtEntrar(ActionEvent event) throws IOException {
-        ControllerLogin c = new ControllerLogin();
+        ControllerLogin c = ControllerLogin.retorna();
         c.entrar( txDocumento, txSenha, txDocumento.getText(), txSenha.getText()) ;
     }
     

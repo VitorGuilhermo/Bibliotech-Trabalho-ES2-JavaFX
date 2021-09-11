@@ -22,16 +22,20 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerLogin {
-    static ControllerLogin instancia;
+    private static ControllerLogin instancia;
     
-    public ControllerLogin() {
+    private ControllerLogin() {
     }
     public static ControllerLogin retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerLogin();
-            return (instancia);
-        }
-        return null;
+        return instancia;
+    }
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerLogin getInstance() {
+        return instancia;
     }
     
     
@@ -54,7 +58,7 @@ public class ControllerLogin {
                 TelaPrincipalController ctr = loader.getController();
                 SingletonBibliotecario.getInstance(aux);
                 ctr.setDados();
-                
+
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
 
@@ -64,24 +68,27 @@ public class ControllerLogin {
                 stage.setOnCloseRequest(e->{Banco.getCon().desconectar();});
                 stage.show();
 
-                sair(btnDoc.getScene().getWindow());
+                ControllerHomeBib.removeInstancia();
             }
             else if(cli != null){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaPrincipalCliente.fxml"));
-                Parent root = (Parent) loader.load();
-                TelaPrincipalClienteController ctr = loader.getController();
-                ctr.setDados(cli.getNome());
+                if(ControllerHomeCliente.getInstance() == null && ControllerHomeCliente.retorna() != null) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaPrincipalCliente.fxml"));
+                    Parent root = (Parent) loader.load();
+                    TelaPrincipalClienteController ctr = loader.getController();
+                    ctr.setDados(cli.getNome());
 
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
 
-                stage.setTitle("Bibliotech");
-                stage.getIcons().add(new Image("img/icone.png"));
-                stage.setScene(scene);
-                stage.setOnCloseRequest(e->{Banco.getCon().desconectar();});
-                stage.show();
+                    stage.setTitle("Bibliotech");
+                    stage.getIcons().add(new Image("img/icone.png"));
+                    stage.setScene(scene);
+                    stage.setOnCloseRequest(e->{Banco.getCon().desconectar();});
+                    stage.show();
 
-                sair(btnDoc.getScene().getWindow());
+                    ControllerHomeCliente.removeInstancia();
+                    sair(btnDoc.getScene().getWindow());
+                }
             }
             else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);

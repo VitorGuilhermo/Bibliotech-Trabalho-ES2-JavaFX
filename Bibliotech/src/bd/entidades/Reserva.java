@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Reserva {
     private int codigo;
-    private LocalDate data;  //
+    private LocalDate data;
     private Cliente cliente;
     private Titulo titulo;
     
@@ -17,7 +17,7 @@ public class Reserva {
     }
 
     public Reserva(LocalDate data, Cliente cliente, Titulo titulo) {
-        this(0, LocalDate.now(), new Cliente(), new Titulo());
+        this(0, data, cliente, titulo);
     }
 
     public Reserva(int codigo, LocalDate data, Cliente cliente, Titulo titulo) {
@@ -69,8 +69,8 @@ public class Reserva {
         return new ReservaDAO().get(con, id);
     }
     
-//    public boolean excluir(Conexao con){
-//        return new ReservaDAO().apagar(con, codigo);
-//    }
+    public boolean excluir(Conexao con){
+        return new ReservaDAO().apagarPorTitulo(con, titulo.getCodigo());
+    }
     
 }

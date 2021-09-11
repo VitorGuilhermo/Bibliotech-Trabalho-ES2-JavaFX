@@ -1,8 +1,10 @@
 package controller;
 
 import bd.entidades.Baixa;
+import bd.entidades.Cliente;
 import bd.entidades.Exemplar;
 import bd.entidades.Observer;
+import bd.entidades.Reserva;
 import bd.entidades.Titulo;
 import bd.util.Banco;
 import bd.util.Conexao;
@@ -22,16 +24,20 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerRetirarLivroCont {
-    public static ControllerRetirarLivroCont instancia;
+    private static ControllerRetirarLivroCont instancia;
     
-    public ControllerRetirarLivroCont() {
+    private ControllerRetirarLivroCont() {
     }
     public static ControllerRetirarLivroCont retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerRetirarLivroCont();
-            return (instancia);
-        }
-        return null;
+        return instancia;
+    }
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerRetirarLivroCont getInstance() {
+        return instancia;
     }
     
     public static void carregarTabela(TableView tabela, String filtro){
@@ -73,7 +79,10 @@ public class ControllerRetirarLivroCont {
                     taMotivo.clear();  
                     
                     if (tabela.getItems().isEmpty()){
-                        List<Observer> observers = tit.notifyObservers();
+                        //exclui o exemplar da reserva do cliente
+                        Reserva res = new Reserva(LocalDate.now(), new Cliente(), tit);
+                        res.excluir(con);
+                        /*List<Observer> observers = tit.notifyObservers();
                         String msg = "";
                         for(Observer o : observers)
                             msg += "Notificando "+o+" ...\n"; 
@@ -81,7 +90,7 @@ public class ControllerRetirarLivroCont {
                         alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Notificando usuários da exclusão do título reservado");
                         alert.setContentText(msg);
-                        alert.showAndWait();
+                        alert.showAndWait();*/
                     }
                 }
                 else{

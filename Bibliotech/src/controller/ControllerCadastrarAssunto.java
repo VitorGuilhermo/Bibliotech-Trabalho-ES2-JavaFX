@@ -12,16 +12,20 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerCadastrarAssunto {
-    public static ControllerCadastrarAssunto instancia;
+    private static ControllerCadastrarAssunto instancia;
      
-    public ControllerCadastrarAssunto() {
+    private ControllerCadastrarAssunto() {
     }
     public static ControllerCadastrarAssunto retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerCadastrarAssunto();
-            return (instancia);
-        }
-        return null;
+        return instancia;
+    }
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerCadastrarAssunto getInstance() {
+        return instancia;
     }
     
     public static void cadastrar(TextField txCod, TextField txNome) {

@@ -6,7 +6,6 @@ import bd.entidades.Exemplar;
 import bd.entidades.Exemplar_Emprestimo;
 import bd.util.Banco;
 import bd.util.Conexao;
-import bibliotech.TelaCadastrarClienteController;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,21 +28,24 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerEfetuarEmprestimo {
-    public static ControllerEfetuarEmprestimo instancia;
+    private static ControllerEfetuarEmprestimo instancia;
     private static List<Exemplar> exemplares = new ArrayList<>();
     private static int qtdeLivrosJaEmprestados;
     
     
-    public ControllerEfetuarEmprestimo() {
+    private ControllerEfetuarEmprestimo() {
     }
     public static ControllerEfetuarEmprestimo retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerEfetuarEmprestimo();
-            return (instancia);
-        }
-        return null;
+        return instancia;
     }
-    
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerEfetuarEmprestimo getInstance() {
+        return instancia;
+    }
     
     public static void carregaTabela(TableView tabela, String filtro){
         Exemplar e = new Exemplar();
@@ -56,7 +58,7 @@ public class ControllerEfetuarEmprestimo {
     }
     
     public void novoCliente() throws IOException {
-        if(ControllerCadastrarCliente.retorna() != null){
+        if(ControllerCadastrarCliente.getInstance() == null && ControllerCadastrarCliente.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarCliente.fxml"));
 
             Scene scene = new Scene(root);
@@ -68,7 +70,7 @@ public class ControllerEfetuarEmprestimo {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            ControllerCadastrarCliente.instancia = null;
+            ControllerCadastrarCliente.removeInstancia();
         }
     }
     

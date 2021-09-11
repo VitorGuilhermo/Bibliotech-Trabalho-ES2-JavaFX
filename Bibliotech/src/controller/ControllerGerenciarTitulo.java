@@ -2,11 +2,14 @@ package controller;
 
 import bd.entidades.Assunto_Titulo;
 import bd.entidades.Autor_Titulo;
+import bd.entidades.Cliente;
+import bd.entidades.Reserva;
 import bd.entidades.Titulo;
 import bd.util.Banco;
 import bd.util.Conexao;
 import bibliotech.TelaCadastrarTituloController;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -27,16 +30,20 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerGerenciarTitulo {
-    public static ControllerGerenciarTitulo instancia;
+    private static ControllerGerenciarTitulo instancia;
     
-    public ControllerGerenciarTitulo() {
+    private ControllerGerenciarTitulo() {
     }
     public static ControllerGerenciarTitulo retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerGerenciarTitulo();
-            return (instancia);
-        }
-        return null;
+        return instancia;
+    }
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerGerenciarTitulo getInstance() {
+        return instancia;
     }
     
     public static void carregarTabela(TableView tabela, String filtro){
@@ -57,7 +64,7 @@ public class ControllerGerenciarTitulo {
     }
     
     public void novo(TableView tabela) throws IOException {
-        if(ControllerCadastrarTitulo.retorna() != null){
+        if(ControllerCadastrarTitulo.getInstance() == null && ControllerCadastrarTitulo.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarTitulo.fxml"));
 
             Scene scene = new Scene(root);
@@ -69,13 +76,13 @@ public class ControllerGerenciarTitulo {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            ControllerCadastrarTitulo.instancia = null;
+            ControllerCadastrarTitulo.removeInstancia();
             carregarTabela(tabela, "");
         }
     }
     
     public void alterar(TableView tabela, Titulo tit) throws IOException {
-        if(ControllerCadastrarTitulo.retorna() != null){
+        if(ControllerCadastrarTitulo.getInstance() == null && ControllerCadastrarTitulo.retorna() != null){
             Conexao con = Banco.getCon();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaCadastrarTitulo.fxml"));
             Parent root = (Parent) loader.load();
@@ -94,7 +101,7 @@ public class ControllerGerenciarTitulo {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            ControllerCadastrarTitulo.instancia = null;
+            ControllerCadastrarTitulo.removeInstancia();
             carregarTabela(tabela, "");
         }
     }
@@ -113,6 +120,9 @@ public class ControllerGerenciarTitulo {
                 if(tit.getQtdeExemplares() == 0){
                     new Autor_Titulo().excluir(con, tit.getCodigo());
                     new Assunto_Titulo().excluir(con, tit.getCodigo());
+                    //exclui o exemplar da reserva do cliente
+                    Reserva res = new Reserva(LocalDate.now(), new Cliente(), tit);
+                    res.excluir(con);
                     tit.excluir(con, tit.getCodigo());
                     carregarTabela(tabela, "");
                 }

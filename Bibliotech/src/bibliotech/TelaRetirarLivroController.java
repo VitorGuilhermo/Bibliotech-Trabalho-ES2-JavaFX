@@ -71,7 +71,7 @@ public class TelaRetirarLivroController implements Initializable {
 
     @FXML
     private void evtConfirmar(ActionEvent event) throws IOException {
-        new ControllerRetirarLivro().confirmar(tabela, tabela.getSelectionModel().getSelectedItem());
+        ControllerRetirarLivro.retorna().confirmar(tabela, tabela.getSelectionModel().getSelectedItem());
     }
     
 }

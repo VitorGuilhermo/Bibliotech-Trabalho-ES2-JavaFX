@@ -24,18 +24,21 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerGerenciarAutor {
-    public static ControllerGerenciarAutor instancia;
+    private static ControllerGerenciarAutor instancia;
     
-    public ControllerGerenciarAutor() {
+    private ControllerGerenciarAutor() {
     }
     public static ControllerGerenciarAutor retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerGerenciarAutor();
-            return (instancia);
-        }
-        return null;
+        return instancia;
     }
-    
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerGerenciarAutor getInstance() {
+        return instancia;
+    }
     
     public static void carregarTabela(TableView tabela, String filtro){
         Conexao con = Banco.getCon();
@@ -46,7 +49,7 @@ public class ControllerGerenciarAutor {
     }
     
     public void novo(TableView tabela) throws IOException {
-       if(ControllerCadastrarAutor.retorna() != null){
+       if(ControllerCadastrarAutor.getInstance() == null && ControllerCadastrarAutor.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarAutor.fxml"));
 
             Scene scene = new Scene(root);
@@ -58,13 +61,13 @@ public class ControllerGerenciarAutor {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            ControllerCadastrarAutor.instancia = null;
+            ControllerCadastrarAutor.removeInstancia();
             carregarTabela(tabela, "");
         } 
     }
     
     public void alterar(TableView tabela, Autor autor) throws IOException {
-        if(ControllerCadastrarAutor.retorna() != null){
+        if(ControllerCadastrarAutor.getInstance() == null && ControllerCadastrarAutor.retorna() != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaCadastrarAutor.fxml"));
             Parent root = (Parent) loader.load();
             TelaCadastrarAutorController ctr = loader.getController();
@@ -79,7 +82,7 @@ public class ControllerGerenciarAutor {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            ControllerCadastrarAutor.instancia = null;
+            ControllerCadastrarAutor.removeInstancia();
             carregarTabela(tabela, "");
         }
     }

@@ -2,13 +2,6 @@ package controller;
 
 import bd.entidades.Bibliotecario;
 import bd.util.Banco;
-import bibliotech.GerenciarAssuntoController;
-import bibliotech.TelaEfetuarEmprestimoController;
-import bibliotech.TelaGerenciarAutorController;
-import bibliotech.TelaGerenciarClienteController;
-import bibliotech.TelaGerenciarEditoraController;
-import bibliotech.TelaGerenciarGeneroController;
-import bibliotech.TelaGerenciarTituloController;
 import bibliotech.TelaRetirarLivroController;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -28,18 +21,22 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author Vitor Guilhermo
  */
 public class ControllerHomeBib {
-    static ControllerHomeBib instancia;
+    private static ControllerHomeBib instancia;
     private Bibliotecario bib;
     
     
-    public ControllerHomeBib() {
+    private ControllerHomeBib() {
     }
     public static ControllerHomeBib retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerHomeBib();
-            return (instancia);
-        }
-        return null;
+        return instancia;
+    }
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerHomeBib getInstance() {
+        return instancia;
     }
    
 
@@ -48,7 +45,7 @@ public class ControllerHomeBib {
     }
     
     public void manipularTitulo() throws IOException {
-        if(ControllerGerenciarTitulo.retorna() != null){
+        if(ControllerGerenciarTitulo.getInstance() == null && ControllerGerenciarTitulo.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaGerenciarTitulo.fxml"));
 
             Scene scene = new Scene(root);
@@ -60,11 +57,11 @@ public class ControllerHomeBib {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
             
-            ControllerGerenciarTitulo.instancia = null;
+            ControllerGerenciarTitulo.removeInstancia();
         }
     }
     public void manipularAssunto() throws IOException {
-        if(ControllerGerenciarAssunto.retorna() != null){
+        if(ControllerGerenciarAssunto.getInstance() == null && ControllerGerenciarAssunto.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/GerenciarAssunto.fxml"));
 
             Scene scene = new Scene(root);
@@ -76,12 +73,12 @@ public class ControllerHomeBib {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
             
-            ControllerGerenciarAssunto.instancia = null;
+            ControllerGerenciarAssunto.removeInstancia();
         }
     }
     
     public void manipularEditora() throws IOException {
-        if(ControllerGerenciarEditora.retorna() != null){
+        if(ControllerGerenciarEditora.getInstance() == null && ControllerGerenciarEditora.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaGerenciarEditora.fxml"));
 
             Scene scene = new Scene(root);
@@ -93,12 +90,12 @@ public class ControllerHomeBib {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
             
-            ControllerGerenciarEditora.instancia = null;
+            ControllerGerenciarEditora.removeInstancia();
         }
     }
     
     public void manipularAutor() throws IOException {
-        if(ControllerGerenciarAutor.retorna() != null){
+        if(ControllerGerenciarAutor.getInstance() == null && ControllerGerenciarAutor.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaGerenciarAutor.fxml"));
 
             Scene scene = new Scene(root);
@@ -110,12 +107,12 @@ public class ControllerHomeBib {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
             
-            ControllerGerenciarAutor.instancia = null;
+            ControllerGerenciarAutor.removeInstancia();
         }
     }
     
     public void manipularGenero() throws IOException {
-        if(ControllerGerenciarGenero.retorna() != null){
+        if(ControllerGerenciarGenero.getInstance() == null && ControllerGerenciarGenero.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaGerenciarGenero.fxml"));
 
             Scene scene = new Scene(root);
@@ -127,12 +124,12 @@ public class ControllerHomeBib {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
             
-            ControllerGerenciarGenero.instancia = null;
+            ControllerGerenciarGenero.removeInstancia();
         }
     }
    
     public void manipularCliente() throws IOException {
-        if(ControllerGerenciarClientes.retorna() != null){
+        if(ControllerGerenciarClientes.getInstance() == null && ControllerGerenciarClientes.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaGerenciarCliente.fxml"));
 
             Scene scene = new Scene(root);
@@ -144,12 +141,12 @@ public class ControllerHomeBib {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
             
-            ControllerGerenciarClientes.instancia = null;
+            ControllerGerenciarClientes.removeInstancia();
         }
     }
    
     public void retirarLivro() throws IOException {
-        if(ControllerRetirarLivro.retorna() != null){
+        if(ControllerRetirarLivro.getInstance() == null && ControllerRetirarLivro.retorna() != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaRetirarLivro.fxml"));
             Parent root = (Parent) loader.load();
             TelaRetirarLivroController ctr = loader.getController();
@@ -165,12 +162,12 @@ public class ControllerHomeBib {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
             
-            ControllerRetirarLivro.instancia = null;
+            ControllerRetirarLivro.removeInstancia();
         }
     }
     
     public void efetuarEmprestimo() throws IOException {
-        if(ControllerEfetuarEmprestimo.retorna() != null){
+        if(ControllerEfetuarEmprestimo.getInstance() == null && ControllerEfetuarEmprestimo.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaEfetuarEmprestimo.fxml"));
 
             Scene scene = new Scene(root);
@@ -182,7 +179,7 @@ public class ControllerHomeBib {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
             
-            ControllerEfetuarEmprestimo.instancia = null;
+            ControllerEfetuarEmprestimo.removeInstancia();
         }
     }
     

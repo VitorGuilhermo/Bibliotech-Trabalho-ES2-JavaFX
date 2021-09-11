@@ -52,12 +52,12 @@ public class GerenciarAssuntoController implements Initializable {
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
         if(tabela.getSelectionModel().getSelectedItem() != null)
-            new ControllerGerenciarAssunto().alterar(tabela, tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome());
+            ControllerGerenciarAssunto.retorna().alterar(tabela, tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getNome());
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        new ControllerGerenciarAssunto().novo(tabela);
+        ControllerGerenciarAssunto.retorna().novo(tabela);
     }
     
 }

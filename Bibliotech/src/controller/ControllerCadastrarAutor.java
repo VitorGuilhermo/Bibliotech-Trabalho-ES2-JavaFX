@@ -12,16 +12,20 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerCadastrarAutor {
-    public static ControllerCadastrarAutor instancia;
+    private static ControllerCadastrarAutor instancia;
     
-    public ControllerCadastrarAutor() {
+    private ControllerCadastrarAutor() {
     }
     public static ControllerCadastrarAutor retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerCadastrarAutor();
-            return (instancia);
-        }
-        return null;
+        return instancia;
+    }
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerCadastrarAutor getInstance() {
+        return instancia;
     }
     
     

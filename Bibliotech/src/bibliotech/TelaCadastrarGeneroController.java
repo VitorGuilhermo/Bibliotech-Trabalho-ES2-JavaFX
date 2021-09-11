@@ -27,12 +27,14 @@ public class TelaCadastrarGeneroController implements Initializable {
     
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerCadastrarGenero.cancelar( txCodigo.getScene().getWindow() );
+        ControllerCadastrarGenero c = ControllerCadastrarGenero.retorna();
+        c.cancelar( txCodigo.getScene().getWindow() );
     }
 
     @FXML
     private void evtCadastrar(ActionEvent event) {
-        ControllerCadastrarGenero.cadastrar(txNome, txCodigo);
+        ControllerCadastrarGenero c = ControllerCadastrarGenero.retorna();
+        c.cadastrar(txNome, txCodigo);
     }
     
 }

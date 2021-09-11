@@ -112,16 +112,16 @@ public class TelaCadastrarTituloController implements Initializable {
 
     @FXML
     private void evtNovoAutor(ActionEvent event) throws IOException {
-        new ControllerCadastrarTitulo().novoAutor(cbAutor1, cbAutor2, cbAutor3);
+        ControllerCadastrarTitulo.retorna().novoAutor(cbAutor1, cbAutor2, cbAutor3);
     }
 
     @FXML
     private void evtNovoGenero(ActionEvent event) throws IOException {
-        new ControllerCadastrarTitulo().novoGenero(cbGenero);
+        ControllerCadastrarTitulo.retorna().novoGenero(cbGenero);
     }
 
     @FXML
     private void evtNovoAssunto(ActionEvent event) throws IOException {
-        new ControllerCadastrarTitulo().novoAssunto(cbAssunto1, cbAssunto2, cbAssunto3);
+        ControllerCadastrarTitulo.retorna().novoAssunto(cbAssunto1, cbAssunto2, cbAssunto3);
     }
 }

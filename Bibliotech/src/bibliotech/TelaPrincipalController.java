@@ -33,62 +33,62 @@ public class TelaPrincipalController implements Initializable {
     
     @FXML
     private void evtManipularTitulo(ActionEvent event) throws IOException {
-        new ControllerHomeBib().manipularTitulo();
+        ControllerHomeBib.retorna().manipularTitulo();
     }
 
     @FXML
     private void evtManipularAssunto(ActionEvent event) throws IOException {
-        new ControllerHomeBib().manipularAssunto();
+        ControllerHomeBib.retorna().manipularAssunto();
     }
 
     @FXML
     private void evtManipularEditora(ActionEvent event) throws IOException {
-        new ControllerHomeBib().manipularEditora();
+        ControllerHomeBib.retorna().manipularEditora();
     }
 
     @FXML
     private void evtManipularAutor(ActionEvent event) throws IOException {
-        new ControllerHomeBib().manipularAutor();
+        ControllerHomeBib.retorna().manipularAutor();
     }
 
     @FXML
     private void evtManipularGenero(ActionEvent event) throws IOException {
-        new ControllerHomeBib().manipularGenero();
+        ControllerHomeBib.retorna().manipularGenero();
     }
 
     @FXML
     private void evtManipularCliente(ActionEvent event) throws IOException {
-        new ControllerHomeBib().manipularCliente();
+        ControllerHomeBib.retorna().manipularCliente();
     }
 
     @FXML
     private void evtRetirarLivro(ActionEvent event) throws IOException {
-        new ControllerHomeBib().retirarLivro();
+        ControllerHomeBib.retorna().retirarLivro();
     }
 
     @FXML
     private void evtEfetuarEmprestimo(ActionEvent event) throws IOException {
-        new ControllerHomeBib().efetuarEmprestimo();
+        ControllerHomeBib.retorna().efetuarEmprestimo();
     }
 
     @FXML
     private void evtRelExemp(ActionEvent event) {
-        new ControllerHomeBib().gerarRelatorio("select titulo.tit_nome, exemplar.exe_cod, exemplar.exe_situacao from exemplar inner join titulo on exemplar.tit_cod = titulo.tit_cod", "MyReports/rel_exemplares.jasper");
+        ControllerHomeBib.retorna().gerarRelatorio("select titulo.tit_nome, exemplar.exe_cod, exemplar.exe_situacao from exemplar inner join titulo on exemplar.tit_cod = titulo.tit_cod", "MyReports/rel_exemplares.jasper");
     }
 
     @FXML
     private void evtRelTitulo(ActionEvent event) {
-        new ControllerHomeBib().gerarRelatorio("select titulo.tit_cod, titulo.tit_nome, genero.gen_nome, editora.edt_nome, titulo.tit_datapublic, titulo.tit_qtdeexe from titulo, genero, editora where genero.gen_cod = titulo.gen_cod and editora.edt_cod = titulo.edt_cod order by titulo.tit_nome", "MyReports/rel_titulo.jasper");
+        ControllerHomeBib.retorna().gerarRelatorio("select titulo.tit_cod, titulo.tit_nome, genero.gen_nome, editora.edt_nome, titulo.tit_datapublic, titulo.tit_qtdeexe from titulo, genero, editora where genero.gen_cod = titulo.gen_cod and editora.edt_cod = titulo.edt_cod order by titulo.tit_nome", "MyReports/rel_titulo.jasper");
     }
 
     @FXML
     private void evtRelAutor(ActionEvent event) {
-        new ControllerHomeBib().gerarRelatorio("select * from autor order by autor.aut_nome", "MyReports/rel_autor.jasper");
+        ControllerHomeBib.retorna().gerarRelatorio("select * from autor order by autor.aut_nome", "MyReports/rel_autor.jasper");
     }
 
     @FXML
     private void evtRelAssunto(ActionEvent event) {
-        new ControllerHomeBib().gerarRelatorio("select distinct assunto.ast_nome, titulo.tit_cod, titulo.tit_nome, titulo.tit_datapublic from titulo inner join assunto_titulo on titulo.tit_cod = assunto_titulo.titulo_tit_cod inner join assunto on assunto.ast_cod = assunto_titulo.assunto_asn_cod order by titulo.tit_nome", "MyReports/rel_tit_ast.jasper");
+        ControllerHomeBib.retorna().gerarRelatorio("select distinct assunto.ast_nome, titulo.tit_cod, titulo.tit_nome, titulo.tit_datapublic from titulo inner join assunto_titulo on titulo.tit_cod = assunto_titulo.titulo_tit_cod inner join assunto on assunto.ast_cod = assunto_titulo.assunto_asn_cod order by titulo.tit_nome", "MyReports/rel_tit_ast.jasper");
     }
     
 }

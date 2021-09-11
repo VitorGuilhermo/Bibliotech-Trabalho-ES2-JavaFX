@@ -24,16 +24,20 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerGerenciarClientes {
-    public static ControllerGerenciarClientes instancia;
+    private static ControllerGerenciarClientes instancia;
     
-    public ControllerGerenciarClientes() {
+    private ControllerGerenciarClientes() {
     }
     public static ControllerGerenciarClientes retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerGerenciarClientes();
-            return (instancia);
-        }
-        return null;
+        return instancia;
+    }
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerGerenciarClientes getInstance() {
+        return instancia;
     }
     
     public static void carregarTabela(TableView tabela, String filtro){
@@ -44,7 +48,7 @@ public class ControllerGerenciarClientes {
     }
     
     public void novo(TableView tabela) throws IOException {
-        if(ControllerCadastrarCliente.retorna() != null){
+        if(ControllerCadastrarCliente.getInstance() == null && ControllerCadastrarCliente.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarCliente.fxml"));
 
             Scene scene = new Scene(root);
@@ -56,13 +60,13 @@ public class ControllerGerenciarClientes {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            ControllerCadastrarCliente.instancia = null;
+            ControllerCadastrarCliente.removeInstancia();
             carregarTabela(tabela, "");
         }
     }
     
     public void alterar(TableView tabela, Cliente c) throws IOException {
-        if(ControllerCadastrarCliente.retorna() != null){
+        if(ControllerCadastrarCliente.getInstance() == null && ControllerCadastrarCliente.retorna() != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaCadastrarCliente.fxml"));
             Parent root = (Parent) loader.load();
             TelaCadastrarClienteController ctr = loader.getController();
@@ -81,7 +85,7 @@ public class ControllerGerenciarClientes {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            ControllerCadastrarCliente.instancia = null;
+            ControllerCadastrarCliente.removeInstancia();
             carregarTabela(tabela, "");
         }
     }

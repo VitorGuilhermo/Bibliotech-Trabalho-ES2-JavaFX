@@ -63,17 +63,17 @@ public class TelaRetirarLivroContController implements Initializable {
 
     public void setDados(Titulo titulo) {
         codTit = titulo.getCodigo();
-        new ControllerRetirarLivroCont().setDados(tabela, txTitulo, txDtPubl, titulo);
+        ControllerRetirarLivroCont.retorna().setDados(tabela, txTitulo, txDtPubl, titulo);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerRetirarLivroCont.cancelar(txTitulo.getScene().getWindow());
+        ControllerRetirarLivroCont.retorna().cancelar(txTitulo.getScene().getWindow());
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        new ControllerRetirarLivroCont().excluir(tabela, taMotivo, txTitulo, tabela.getSelectionModel().getSelectedItem(), codTit);
+        ControllerRetirarLivroCont.retorna().excluir(tabela, taMotivo, txTitulo, tabela.getSelectionModel().getSelectedItem(), codTit);
     }
 
 }

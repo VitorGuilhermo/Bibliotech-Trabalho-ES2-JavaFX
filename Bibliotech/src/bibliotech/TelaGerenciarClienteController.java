@@ -66,12 +66,12 @@ public class TelaGerenciarClienteController implements Initializable {
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
         if(tabela.getSelectionModel().getSelectedItem() != null)
-            new ControllerGerenciarClientes().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
+            ControllerGerenciarClientes.retorna().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        new ControllerGerenciarClientes().novo(tabela);
+        ControllerGerenciarClientes.retorna().novo(tabela);
     }
 
     @FXML

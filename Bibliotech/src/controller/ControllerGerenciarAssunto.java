@@ -24,16 +24,20 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerGerenciarAssunto {
-    public static ControllerGerenciarAssunto instancia;
+    private static ControllerGerenciarAssunto instancia;
     
-    public ControllerGerenciarAssunto() {
+    private ControllerGerenciarAssunto() {
     }
     public static ControllerGerenciarAssunto retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerGerenciarAssunto();
-            return (instancia);
-        }
-        return null;
+        return instancia;
+    }
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerGerenciarAssunto getInstance() {
+        return instancia;
     }
     
     
@@ -46,7 +50,7 @@ public class ControllerGerenciarAssunto {
     }
     
     public void alterar(TableView tabela, int cod, String nome) throws IOException {
-         if(ControllerCadastrarAssunto.retorna() != null){
+         if(ControllerCadastrarAssunto.getInstance() == null && ControllerCadastrarAssunto.retorna() != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaCadastrarAssunto.fxml"));
             Parent root = (Parent) loader.load();
             TelaCadastrarAssuntoController ctr = loader.getController();
@@ -61,13 +65,13 @@ public class ControllerGerenciarAssunto {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
             
-            ControllerCadastrarAssunto.instancia = null;
+            ControllerCadastrarAssunto.removeInstancia();
             carregarTabela(tabela, "");
         }
     }
     
     public void novo(TableView tabela) throws IOException {
-        if(ControllerCadastrarAssunto.retorna() != null){
+        if(ControllerCadastrarAssunto.getInstance() == null && ControllerCadastrarAssunto.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarAssunto.fxml"));
 
             Scene scene = new Scene(root);
@@ -79,7 +83,7 @@ public class ControllerGerenciarAssunto {
             stage.getIcons().add(new Image("img/icone.png"));
             stage.showAndWait();
 
-            ControllerCadastrarAssunto.instancia = null;
+            ControllerCadastrarAssunto.removeInstancia();
             carregarTabela(tabela, "");
         }
     }

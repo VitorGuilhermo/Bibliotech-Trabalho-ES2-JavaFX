@@ -7,12 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservaDAO {
-    public boolean gravarReserva(Conexao con, Reserva r)
-    {
+    public boolean gravarReserva(Conexao con, Reserva r){
         String sql = "insert into reserva values (default, #1, #2, #3)";
         sql = sql.replace("#1", ""+r.getData());
         sql = sql.replace("#2", ""+r.getCliente().getCodigo());
         sql = sql.replace("#3", ""+r.getTitulo().getCodigo());
+        return con.manipular(sql);
+    }
+    
+    public boolean apagarPorTitulo(Conexao con, int id){
+        String sql = "delete from reserva where tit_cod="+id;
         return con.manipular(sql);
     }
     

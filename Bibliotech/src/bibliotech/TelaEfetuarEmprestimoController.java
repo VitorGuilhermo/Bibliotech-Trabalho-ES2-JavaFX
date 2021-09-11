@@ -76,7 +76,7 @@ public class TelaEfetuarEmprestimoController implements Initializable {
     
     @FXML
     private void evtNovoCliente(ActionEvent event) throws IOException {
-        new ControllerEfetuarEmprestimo().novoCliente();
+        ControllerEfetuarEmprestimo.retorna().novoCliente();
     }
 
     @FXML
@@ -96,17 +96,17 @@ public class TelaEfetuarEmprestimoController implements Initializable {
 
     @FXML
     private void evtFinalizar(ActionEvent event) {
-        new ControllerEfetuarEmprestimo().finalizar(txCodigo);
+        ControllerEfetuarEmprestimo.retorna().finalizar(txCodigo);
     }
 
     @FXML
     private void evtRemoverExe(ActionEvent event) {
-        new ControllerEfetuarEmprestimo().removerExe(listaExe);
+        ControllerEfetuarEmprestimo.retorna().removerExe(listaExe);
     }
 
     @FXML
     private void evtBuscar(ActionEvent event) {
-        new ControllerEfetuarEmprestimo().buscarCli(cbFiltro, txFiltro, txCodigo, txNome, txDocumento);
+        ControllerEfetuarEmprestimo.retorna().buscarCli(cbFiltro, txFiltro, txCodigo, txNome, txDocumento);
     }
     
 }

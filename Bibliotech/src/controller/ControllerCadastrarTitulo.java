@@ -30,16 +30,20 @@ import javafx.stage.Window;
  * @author Vitor Guilhermo
  */
 public class ControllerCadastrarTitulo {
-    public static ControllerCadastrarTitulo instancia;
+    private static ControllerCadastrarTitulo instancia;
     
-    public ControllerCadastrarTitulo() {
+    private ControllerCadastrarTitulo() {
     }
     public static ControllerCadastrarTitulo retorna(){
-        if (instancia == null){
+        if (instancia == null)
             instancia = new ControllerCadastrarTitulo();
-            return (instancia);
-        }
-        return null;
+        return instancia;
+    }
+    public static void removeInstancia() {
+        instancia = null;
+    }
+    public static ControllerCadastrarTitulo getInstance() {
+        return instancia;
     }
     
     
@@ -117,7 +121,7 @@ public class ControllerCadastrarTitulo {
     
     
     public void novoAutor(ComboBox<Autor> cbAutor1, ComboBox<Autor> cbAutor2, ComboBox<Autor> cbAutor3) throws IOException {
-        if(ControllerCadastrarAutor.retorna() != null){
+        if(ControllerCadastrarAutor.getInstance() == null && ControllerCadastrarAutor.retorna() != null){
             Conexao con = Banco.getCon();
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarAutor.fxml"));
 
@@ -129,7 +133,7 @@ public class ControllerCadastrarTitulo {
             stage.setTitle("Cadastrar Autor");
             stage.showAndWait();
 
-            ControllerCadastrarAutor.instancia = null;
+            ControllerCadastrarAutor.removeInstancia();
             cbAutor1.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
             cbAutor2.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
             cbAutor3.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
@@ -137,7 +141,7 @@ public class ControllerCadastrarTitulo {
     }
     
     public void novoGenero(ComboBox<Genero> cbGenero) throws IOException {
-        if(ControllerCadastrarGenero.retorna() != null){
+        if(ControllerCadastrarGenero.getInstance() == null && ControllerCadastrarGenero.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarGenero.fxml"));
 
             Scene scene = new Scene(root);
@@ -148,14 +152,14 @@ public class ControllerCadastrarTitulo {
             stage.setTitle("Cadastrar Gênero");
             stage.showAndWait();
 
-            ControllerCadastrarGenero.instancia = null;
+            ControllerCadastrarGenero.removeInstancia();
             Conexao con = Banco.getCon();
             cbGenero.setItems(FXCollections.observableArrayList(new Genero().buscar(con, "")));
         }
     }
     
     public void novoAssunto(ComboBox<Assunto> cbAssunto1, ComboBox<Assunto> cbAssunto2, ComboBox<Assunto> cbAssunto3) throws IOException {
-        if(ControllerCadastrarAssunto.retorna() != null){
+        if(ControllerCadastrarAssunto.getInstance() == null && ControllerCadastrarAssunto.retorna() != null){
             Conexao con = Banco.getCon();
             
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarAssunto.fxml"));
@@ -168,7 +172,7 @@ public class ControllerCadastrarTitulo {
             stage.setTitle("Cadastrar Assunto");
             stage.showAndWait();
 
-            ControllerCadastrarAssunto.instancia = null;
+            ControllerCadastrarAssunto.removeInstancia();
             cbAssunto1.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
             cbAssunto2.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
             cbAssunto3.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
