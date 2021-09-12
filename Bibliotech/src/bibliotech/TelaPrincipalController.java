@@ -72,6 +72,11 @@ public class TelaPrincipalController implements Initializable {
     }
 
     @FXML
+    private void evtAdicionarExemplar(ActionEvent event) throws IOException {
+        ControllerHomeBib.retorna().adicionarExemplar();
+    }
+    
+    @FXML
     private void evtRelExemp(ActionEvent event) {
         ControllerHomeBib.retorna().gerarRelatorio("select titulo.tit_nome, exemplar.exe_cod, exemplar.exe_situacao from exemplar inner join titulo on exemplar.tit_cod = titulo.tit_cod", "MyReports/rel_exemplares.jasper");
     }
@@ -90,5 +95,7 @@ public class TelaPrincipalController implements Initializable {
     private void evtRelAssunto(ActionEvent event) {
         ControllerHomeBib.retorna().gerarRelatorio("select distinct assunto.ast_nome, titulo.tit_cod, titulo.tit_nome, titulo.tit_datapublic from titulo inner join assunto_titulo on titulo.tit_cod = assunto_titulo.titulo_tit_cod inner join assunto on assunto.ast_cod = assunto_titulo.assunto_asn_cod order by titulo.tit_nome", "MyReports/rel_tit_ast.jasper");
     }
+
+    
     
 }

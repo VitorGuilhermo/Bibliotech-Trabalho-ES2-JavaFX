@@ -69,6 +69,7 @@ public class ControllerLogin {
                 stage.show();
 
                 ControllerHomeBib.removeInstancia();
+                sair(btnDoc.getScene().getWindow());
             }
             else if(cli != null){
                 if(ControllerHomeCliente.getInstance() == null && ControllerHomeCliente.retorna() != null) {

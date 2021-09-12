@@ -131,6 +131,7 @@ public class ControllerGerenciarTitulo {
                     alert.setTitle("Falha");
                     alert.setHeaderText("Erro: Não é possível excluir títulos com quantidades de exemplares maiores que 0!");
                     alert.setContentText("Erro na exclusão!");
+                    alert.showAndWait();
                 }
             }
         }

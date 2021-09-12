@@ -183,6 +183,23 @@ public class ControllerHomeBib {
         }
     }
     
+    public void adicionarExemplar() throws IOException {
+        if(ControllerAdicionarExemplar.getInstance() == null && ControllerAdicionarExemplar.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaAdicionarExemplar.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Adicionar novos exemplares");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+            
+            ControllerAdicionarExemplar.removeInstancia();
+        }
+    }
+    
     public void gerarRelatorio(String sql, String relat) { //GERAÇÃO DE RELATÓRIOS
         try {  
             ResultSet rs = Banco.getCon().consultar(sql); 

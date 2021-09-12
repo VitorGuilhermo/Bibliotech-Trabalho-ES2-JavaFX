@@ -151,8 +151,8 @@ public class Cliente implements Observer {
     }
 
     @Override
-    public void update(String msg) {
-        System.out.println("Mensagem recebida: "+msg);
+    public String update() {
+        return "Notificando "+this.nome+" da chegada do título desejado...\n";
     }
 
 }

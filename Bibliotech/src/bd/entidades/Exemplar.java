@@ -42,6 +42,9 @@ public class Exemplar {
         this.titulo = titulo;
     }
     
+    public boolean gravar(Conexao con){
+        return new ExemplarDAL().gravar(con, this);
+    }
     public List<Exemplar> buscaExemplares(Conexao con, String filtro){
         return new ExemplarDAL().getExemplares(con, filtro);
     }

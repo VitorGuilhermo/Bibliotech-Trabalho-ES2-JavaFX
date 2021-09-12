@@ -3,7 +3,6 @@ package controller;
 import bd.entidades.Baixa;
 import bd.entidades.Cliente;
 import bd.entidades.Exemplar;
-import bd.entidades.Observer;
 import bd.entidades.Reserva;
 import bd.entidades.Titulo;
 import bd.util.Banco;
@@ -82,15 +81,6 @@ public class ControllerRetirarLivroCont {
                         //exclui o exemplar da reserva do cliente
                         Reserva res = new Reserva(LocalDate.now(), new Cliente(), tit);
                         res.excluir(con);
-                        /*List<Observer> observers = tit.notifyObservers();
-                        String msg = "";
-                        for(Observer o : observers)
-                            msg += "Notificando "+o+" ...\n"; 
-                        
-                        alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Notificando usuários da exclusão do título reservado");
-                        alert.setContentText(msg);
-                        alert.showAndWait();*/
                     }
                 }
                 else{

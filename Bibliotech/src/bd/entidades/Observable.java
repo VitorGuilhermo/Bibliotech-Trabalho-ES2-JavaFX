@@ -1,7 +1,5 @@
 package bd.entidades;
 
-import java.util.List;
-
 /**
  *
  * @author Vitor Guilhermo
@@ -9,5 +7,5 @@ import java.util.List;
 public interface Observable {
     public void addObserver(Observer ob);
     public void removeObserver(Observer ob);
-    public List<Observer> notifyObservers();
+    public String notifyObservers();
 }

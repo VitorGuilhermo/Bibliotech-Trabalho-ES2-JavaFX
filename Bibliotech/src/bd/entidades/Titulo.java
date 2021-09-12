@@ -115,6 +115,10 @@ public class Titulo implements Observable {
     public List<Titulo> pesquisarFiltro(Conexao con, String filtro){
         return new TituloDAL().get(con, filtro);
     }
+    public void incrementaQtdeExemplar(Conexao con, int qtde){
+        Titulo t = this.pesquisar(con);
+        new TituloDAL().alterarQtdeExemplares(con, t.getCodigo(), t.getQtdeExemplares()+qtde);
+    }
     public void decrementaQtdeExemplar(Conexao con){
         Titulo t = this.pesquisar(con);
         new TituloDAL().alterarQtdeExemplares(con, t.getCodigo(), t.getQtdeExemplares()-1);
@@ -148,16 +152,20 @@ public class Titulo implements Observable {
     }
 
     @Override
-    public List<Observer> notifyObservers() {
-        List <Reserva> reservas;
+    public String notifyObservers() {
         Conexao con = Banco.getCon();
-        reservas = new ReservaDAO().get(con, getCodigo());
-                
+        List <Reserva> reservas = new ReservaDAO().get(con, getCodigo());
+        String msg="";    
+        
         for(Reserva r : reservas) {
             Cliente c = r.getCliente();
             addObserver(c);
         }
-        return observers;
+        for(Observer ob : observers){
+            //chama o update do observer
+            msg += ob.update();
+        }
+        return msg;
     }
     
 }
