@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ReservaDAO {
     public boolean gravarReserva(Conexao con, Reserva r){
-        String sql = "insert into reserva values (default, #1, #2, #3)";
+        String sql = "insert into reserva values (default, '#1', #2, #3)";
         sql = sql.replace("#1", ""+r.getData());
         sql = sql.replace("#2", ""+r.getCliente().getCodigo());
         sql = sql.replace("#3", ""+r.getTitulo().getCodigo());

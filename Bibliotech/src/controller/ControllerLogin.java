@@ -77,7 +77,8 @@ public class ControllerLogin {
                     Parent root = (Parent) loader.load();
                     TelaPrincipalClienteController ctr = loader.getController();
                     ctr.setDados(cli.getNome());
-
+                    SingletonCliente.getInstance(cli);
+                    
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
 

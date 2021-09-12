@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #eeeef3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bibliotech.TelaPrincipalClienteController">
    <top>
       <VBox prefHeight="92.0" prefWidth="1000.0" style="-fx-background-color: #fefefe;" BorderPane.alignment="CENTER">
@@ -28,8 +27,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="CONTROLE">
                   <items>
+                        <MenuItem mnemonicParsing="false" onAction="#evtReservarLivro" text="Reservar livro" />
                     <MenuItem mnemonicParsing="false" text="Renovar empréstimo" />
-                        <MenuItem mnemonicParsing="false" text="Reservar livro" />
                         <MenuItem mnemonicParsing="false" text="Cancelar reserva" />
                   </items>
                 </Menu>

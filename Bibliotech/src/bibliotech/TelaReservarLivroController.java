@@ -3,8 +3,7 @@ package bibliotech;
 import bd.entidades.Editora;
 import bd.entidades.Genero;
 import bd.entidades.Titulo;
-import controller.ControllerAdicionarExemplar;
-import java.io.IOException;
+import controller.ControllerReservarLivro;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -20,7 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @author Vitor Guilhermo
  */
-public class TelaAdicionarExemplarController implements Initializable {
+public class TelaReservarLivroController implements Initializable {
 
     @FXML
     private TextField txFiltro;
@@ -39,6 +38,7 @@ public class TelaAdicionarExemplarController implements Initializable {
     @FXML
     private TableColumn<Titulo, Integer> colQtdeExe;
 
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
@@ -48,23 +48,23 @@ public class TelaAdicionarExemplarController implements Initializable {
         colDataImp.setCellValueFactory(new PropertyValueFactory<>("dataPubli"));
         colQtdeExe.setCellValueFactory(new PropertyValueFactory<>("qtdeExemplares"));
         
-        ControllerAdicionarExemplar.carregarTabela(tabela, "");
+        ControllerReservarLivro.carregarTabela(tabela, "");
     }    
 
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerAdicionarExemplar.buscar(tabela, txFiltro);
+        ControllerReservarLivro.buscar(tabela, txFiltro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerAdicionarExemplar.cancelar( txFiltro.getScene().getWindow() );
+        ControllerReservarLivro.cancelar( txFiltro.getScene().getWindow() );
     }
 
     @FXML
-    private void evtAdicionar(ActionEvent event) throws IOException {
+    private void evtReservar(ActionEvent event) {
         if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerAdicionarExemplar.retorna().adicionar(tabela, tabela.getSelectionModel().getSelectedItem());
+            ControllerReservarLivro.reservar(tabela.getSelectionModel().getSelectedItem());
     }
     
 }
