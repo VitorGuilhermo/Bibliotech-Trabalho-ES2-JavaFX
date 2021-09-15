@@ -4,6 +4,7 @@ import bd.entidades.Cliente;
 import bd.entidades.Emprestimo;
 import bd.entidades.Exemplar;
 import bd.entidades.Exemplar_Emprestimo;
+import bd.entidades.Multa;
 import bd.util.Banco;
 import bd.util.Conexao;
 import java.io.IOException;
@@ -118,7 +119,7 @@ public class ControllerEfetuarEmprestimo {
                     emp.setCodigo(Banco.getCon().getMaxPK("emprestimo", "emp_cod"));
                     for(Exemplar e : exemplares){
                         boolean flag;                    
-                        Exemplar_Emprestimo exempEmp = new Exemplar_Emprestimo(LocalDate.now().plusDays(7), 0., e, emp);
+                        Exemplar_Emprestimo exempEmp = new Exemplar_Emprestimo(LocalDate.now().plusDays(7), new Multa(), e, emp);
                         flag = exempEmp.gravar(con);
                         if(!flag)
                             erro = false;

@@ -200,6 +200,23 @@ public class ControllerHomeBib {
         }
     }
     
+    public void gerarMulta() throws IOException {
+        if(ControllerGerarMulta.getInstance() == null && ControllerGerarMulta.retorna() != null){
+            Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaGerarMultaController.fxml"));
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Gerar multa de empréstimos atrasados");
+            stage.getIcons().add(new Image("img/icone.png"));
+            stage.showAndWait();
+            
+            ControllerGerarMulta.removeInstancia();
+        }
+    }
+    
     public void gerarRelatorio(String sql, String relat) { //GERAÇÃO DE RELATÓRIOS
         try {  
             ResultSet rs = Banco.getCon().consultar(sql); 

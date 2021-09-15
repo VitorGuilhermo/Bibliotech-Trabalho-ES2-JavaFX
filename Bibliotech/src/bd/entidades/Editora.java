@@ -11,6 +11,7 @@ public class Editora {
     private int codigo;
     private String nome;
     private String cnpj;
+    private Strategy tipoEditora;
 
     
     public Editora() {
@@ -72,6 +73,19 @@ public class Editora {
     @Override
     public String toString() {
         return nome;
+    }
+    
+    // Design Pattern Strategy
+    
+    public Strategy getTipoEditora() {
+        return tipoEditora;
+    }
+    public void setTipoEditora(Strategy tipoEditora) {
+        this.tipoEditora = tipoEditora;
+    }
+    
+    public double calculaMulta(int dias){
+        return tipoEditora.calculaMulta(dias);
     }
     
     

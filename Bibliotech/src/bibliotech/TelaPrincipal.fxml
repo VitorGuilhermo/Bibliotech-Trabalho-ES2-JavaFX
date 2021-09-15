@@ -32,6 +32,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#evtEfetuarEmprestimo" text="Efetuar empréstimo de livros" />
                         <MenuItem mnemonicParsing="false" onAction="#evtRetirarLivro" text="Retirar livro do acervo da biblioteca" />
                         <MenuItem mnemonicParsing="false" onAction="#evtAdicionarExemplar" text="Adicionar novos exemplares" />
+                        <MenuItem mnemonicParsing="false" onAction="#evtGerarMulta" text="Gerar Multa" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="RELATÓRIOS">

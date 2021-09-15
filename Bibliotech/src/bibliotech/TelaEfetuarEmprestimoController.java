@@ -91,7 +91,7 @@ public class TelaEfetuarEmprestimoController implements Initializable {
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        txCodigo.getScene().getWindow().hide();
+        ControllerEfetuarEmprestimo.cancelar( txCodigo.getScene().getWindow() );
     }
 
     @FXML

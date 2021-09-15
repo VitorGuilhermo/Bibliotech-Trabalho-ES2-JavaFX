@@ -3,24 +3,25 @@ package bd.entidades;
 import bd.dal.Exemplar_EmprestimoDAL;
 import bd.util.Conexao;
 import java.time.LocalDate;
+import java.util.List;
 
 
 public class Exemplar_Emprestimo {
     private int codigo;
     private LocalDate dataDevolucaoR;
-    private double multa;
+    private Multa multa;
     private Exemplar exemplar;
     private Emprestimo emprestimo;
 
     
     
     public Exemplar_Emprestimo() {
-        this(0, LocalDate.now(), 0., new Exemplar(), new Emprestimo());
+        this(0, LocalDate.now(), new Multa(), new Exemplar(), new Emprestimo());
     }
-    public Exemplar_Emprestimo(LocalDate dataDevolucaoR, double multa, Exemplar exemplar, Emprestimo emprestimo) {
+    public Exemplar_Emprestimo(LocalDate dataDevolucaoR, Multa multa, Exemplar exemplar, Emprestimo emprestimo) {
         this(0, dataDevolucaoR, multa, exemplar, emprestimo);
     }
-    public Exemplar_Emprestimo(int codigo, LocalDate dataDevolucaoR, double multa, Exemplar exemplar, Emprestimo emprestimo) {
+    public Exemplar_Emprestimo(int codigo, LocalDate dataDevolucaoR, Multa multa, Exemplar exemplar, Emprestimo emprestimo) {
         this.codigo = codigo;
         this.dataDevolucaoR = dataDevolucaoR;
         this.multa = multa;
@@ -41,10 +42,10 @@ public class Exemplar_Emprestimo {
     public void setDataDevolucaoR(LocalDate dataDevolucaoR) {
         this.dataDevolucaoR = dataDevolucaoR;
     }
-    public double getMulta() {
+    public Multa getMulta() {
         return multa;
     }
-    public void setMulta(double multa) {
+    public void setMulta(Multa multa) {
         this.multa = multa;
     }
     public Exemplar getExemplar() {
@@ -62,5 +63,11 @@ public class Exemplar_Emprestimo {
     
     public boolean gravar(Conexao con){
         return new Exemplar_EmprestimoDAL().gravar(con, this);
+    }
+    public boolean alteraMulta(Conexao con) {
+        return new Exemplar_EmprestimoDAL().alterarMulta(con, this);
+    } 
+    public List<Exemplar_Emprestimo> buscar(Conexao con, String filtro) {
+        return new Exemplar_EmprestimoDAL().get(con, filtro);
     }
 }

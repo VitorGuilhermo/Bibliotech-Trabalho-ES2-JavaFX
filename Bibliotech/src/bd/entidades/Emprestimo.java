@@ -71,5 +71,8 @@ public class Emprestimo {
     public boolean gravar(Conexao con){
         return new EmprestimoDAL().gravar(con, this);
     }
+    public List<Emprestimo> buscarPorCodigoCliente(Conexao con){
+        return new EmprestimoDAL().getPorCodigoCliente(con, cliente.getCodigo());
+    }
     
 }
