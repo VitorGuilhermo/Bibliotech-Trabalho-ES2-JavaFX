@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit;
 public class Multa {
     private int codigo;
     private double valor;
-
+    private Strategy tipoEditora;
     
     public Multa() {
         this(0, 0.);
@@ -40,25 +40,40 @@ public class Multa {
         return ""+valor;
     }
     
-    public void calculaValorMulta(String tipoEditora, LocalDate dataInicial, LocalDate dataFinal) {
-        Strategy tipoEdit;
-        
-        if(tipoEditora.equals("Saraiva")){
-             tipoEdit = new EditoraSaraiva();
-        }
-        else if(tipoEditora.equals("Pearson")){
-            tipoEdit = new EditoraPearson();
-        }
-        else{
-            tipoEdit = new EditoraGenerica();
-        }
-        
-        Editora editora = new Editora();
-        editora.setTipoEditora(tipoEdit);
-        
-        //calcula quantidade de dias atrasados
+    
+    
+    // Design Pattern Strategy
+    
+    public Strategy getTipoEditora() {
+        return tipoEditora;
+    }
+    
+    public void calculaMulta(String nome, LocalDate dataInicial, LocalDate dataFinal){
         int dias = (int) dataInicial.until(dataFinal, ChronoUnit.DAYS);
         
-        this.valor = editora.calculaMulta(dias);
+        tipoEditora = new EditoraSaraiva();
+        tipoEditora.calculaMulta(this, nome, dias);
     }
+    
+//    public void calculaValorMulta(String tipoEditora, LocalDate dataInicial, LocalDate dataFinal) {
+//        Strategy tipoEdit;
+//        
+//        if(tipoEditora.equals("Saraiva")){
+//             tipoEdit = new EditoraSaraiva();
+//        }
+//        else if(tipoEditora.equals("Pearson")){
+//            tipoEdit = new EditoraPearson();
+//        }
+//        else{
+//            tipoEdit = new EditoraGenerica();
+//        }
+//        
+//        Editora editora = new Editora();
+//        editora.setTipoEditora(tipoEdit);
+//        
+//        //calcula quantidade de dias atrasados
+//        int dias = (int) dataInicial.until(dataFinal, ChronoUnit.DAYS);
+//        
+//        this.valor = editora.calculaMulta(dias);
+//    }
 }

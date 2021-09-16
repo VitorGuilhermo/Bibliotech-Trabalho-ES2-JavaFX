@@ -93,7 +93,7 @@ public class ControllerGerarMulta {
         String tipoEditora = tit.getEditora().getNome();
         
         Multa m = new Multa();
-        m.calculaValorMulta(tipoEditora, tabela.getSelectionModel().getSelectedItem().getEmprestimo().getData(), tabela.getSelectionModel().getSelectedItem().getEmprestimo().getDataDevolucaoP());
+        m.calculaMulta(tit.getEditora().getNome(), tabela.getSelectionModel().getSelectedItem().getEmprestimo().getData(), tabela.getSelectionModel().getSelectedItem().getEmprestimo().getDataDevolucaoP());
 
         Exemplar_Emprestimo ee = new Exemplar_Emprestimo();
         ee.setCodigo(tabela.getSelectionModel().getSelectedItem().getCodigo());

@@ -4,10 +4,17 @@ package bd.entidades;
  * @author Vitor Guilhermo
  */
 public class EditoraSaraiva implements Strategy {
-
+    private Strategy tipoEdit;
+    
     @Override
-    public double calculaMulta(int dias) {
-        return 0.75 * dias;
+    public void calculaMulta(Multa m, String nome, int dias) {
+        if(nome.equals("Saraiva")){
+            m.setValor(dias * 0.75);
+        }
+        else{
+            tipoEdit = new EditoraPearson();
+            tipoEdit.calculaMulta(m, nome, dias);
+        }
     }
     
 }
