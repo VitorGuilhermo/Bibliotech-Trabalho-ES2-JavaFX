@@ -1,7 +1,8 @@
-package bd.entidades;
+ package bd.entidades;
 
 import bd.dal.ClienteDAL;
 import bd.util.Conexao;
+import controller.ControllerAdicionarExemplarCont;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
@@ -151,8 +152,8 @@ public class Cliente implements Observer {
     }
 
     @Override
-    public String update() {
-        return "Notificando "+this.nome+" da chegada do título desejado...\n";
+    public void update() {
+        ControllerAdicionarExemplarCont.getInstance().addMensagem("Notificando "+this.nome+"...\n");
     }
 
 }

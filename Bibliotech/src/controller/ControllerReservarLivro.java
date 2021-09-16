@@ -1,5 +1,6 @@
 package controller;
 
+import bd.dal.ObservadoresDAO;
 import bd.entidades.Cliente;
 import bd.entidades.Reserva;
 import bd.entidades.Titulo;
@@ -63,6 +64,7 @@ public class ControllerReservarLivro {
         if(result.get() == ButtonType.OK){
             Cliente cli = SingletonCliente.getInstance();
             Reserva res = new Reserva(LocalDate.now(), cli, tit);
+            tit.addObserver(Banco.getCon(), cli.getCodigo());
             
             Conexao con = Banco.getCon();
             if( res.gravar(con) ){

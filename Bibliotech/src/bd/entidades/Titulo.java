@@ -1,5 +1,6 @@
 package bd.entidades;
 
+import bd.dal.ObservadoresDAO;
 import bd.dal.ReservaDAO;
 import bd.dal.TituloDAL;
 import bd.util.Banco;
@@ -37,7 +38,9 @@ public class Titulo implements Observable {
         this.dataReg = dataReg;
         this.autores = autores;
         this.assuntos = assuntos;
-        this.observers = new ArrayList<>();
+        
+        //chama a DAL ListaObserversDAL. que a partir do código do titulo, retornara uma lista de observer
+        this.observers = new ObservadoresDAO().get(Banco.getCon(), codigo);
     }
 
     
@@ -142,8 +145,8 @@ public class Titulo implements Observable {
 
     // Design Patern: Observer
     @Override
-    public void addObserver(Observer ob) {
-        observers.add(ob);
+    public void addObserver(Conexao con, int codCliente) {
+        new ObservadoresDAO().gravar(con, codCliente, codigo);
     }
 
     @Override
@@ -152,20 +155,11 @@ public class Titulo implements Observable {
     }
 
     @Override
-    public String notifyObservers() {
-        Conexao con = Banco.getCon();
-        List <Reserva> reservas = new ReservaDAO().get(con, getCodigo());
-        String msg="";    
-        
-        for(Reserva r : reservas) {
-            Cliente c = r.getCliente();
-            addObserver(c);
-        }
+    public void notifyObservers() {
         for(Observer ob : observers){
             //chama o update do observer
-            msg += ob.update();
+            ob.update();
         }
-        return msg;
     }
     
 }

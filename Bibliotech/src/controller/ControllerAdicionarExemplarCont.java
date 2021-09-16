@@ -4,6 +4,8 @@ import bd.entidades.Exemplar;
 import bd.entidades.Titulo;
 import bd.util.Banco;
 import bd.util.Conexao;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.control.Alert;
 import javafx.stage.Window;
 
@@ -13,6 +15,7 @@ import javafx.stage.Window;
  */
 public class ControllerAdicionarExemplarCont {
     private static ControllerAdicionarExemplarCont instancia;
+    private static List<String> mensagens = new ArrayList<>();
     
     private ControllerAdicionarExemplarCont() {
     }
@@ -26,6 +29,10 @@ public class ControllerAdicionarExemplarCont {
     }
     public static ControllerAdicionarExemplarCont getInstance() {
         return instancia;
+    }
+    
+    public void addMensagem(String msg){
+        mensagens.add(msg);
     }
     
     
@@ -46,14 +53,19 @@ public class ControllerAdicionarExemplarCont {
             //muda a qtde de exemplar na entidade titulo
             tit.incrementaQtdeExemplar(con, qtde);
             
-            //notifica os clientes que tinha esse titulo reserva de sua chegada
-            String msg = "";
-            msg = tit.notifyObservers();          
-                        
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Notificando usuários da chegada do título reservado");
-            alert.setContentText(msg);
-            alert.showAndWait();
+            //notifica os clientes que tinham esse titulo reservado de sua chegada
+            tit.notifyObservers();
+            if(!mensagens.isEmpty()){
+                String msg="";
+                for(String m : mensagens)
+                    msg += m;
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Notificando usuários da chegada do título reservado");
+                alert.setContentText(msg);
+                alert.showAndWait();
+                
+                mensagens.clear();
+            }
         }
         cancelar(janela);
     }
