@@ -23,7 +23,7 @@ import javafx.stage.Window;
  *
  * @author Vitor Guilhermo
  */
-public class ControllerGerenciarClientes {
+public class ControllerGerenciarClientes extends ControllerGerenciar {
     private static ControllerGerenciarClientes instancia;
     
     private ControllerGerenciarClientes() {
@@ -40,7 +40,7 @@ public class ControllerGerenciarClientes {
         return instancia;
     }
     
-    public static void carregarTabela(TableView tabela, String filtro){
+    public void carregarTabela(TableView tabela, String filtro){
         Cliente c = new Cliente();
         Conexao con = Banco.getCon();
         List<Cliente> clientes = c.buscar(con, filtro);
@@ -90,18 +90,7 @@ public class ControllerGerenciarClientes {
         }
     }
     
-    public static void buscar(TableView tabela, TextField txFiltrar) {
-        String filtro = "upper(cli_nome) like '%#%'";
-        
-        filtro = filtro.replace("#", txFiltrar.getText().toUpperCase());
-        
-        if(txFiltrar.getText().isEmpty())
-            carregarTabela(tabela, "");
-        else
-            carregarTabela(tabela, filtro);
-    }
-    
-    public static void desativar(TableView tabela, Cliente c) {
+    public void desativar(TableView tabela, Cliente c) {
         if(tabela.getSelectionModel().getSelectedItem() != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Desativação de um Cliente");
@@ -117,7 +106,7 @@ public class ControllerGerenciarClientes {
         }
     }
     
-    public static void excluir(TableView tabela, Cliente c) {
+    public void excluir(TableView tabela, Cliente c) {
         if(tabela.getSelectionModel().getSelectedItem() != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exclusão de um Cliente");
@@ -131,9 +120,5 @@ public class ControllerGerenciarClientes {
                 carregarTabela(tabela, "");
             }
         }
-    }
-    
-    public static void cancelar(Window janela) {
-        janela.hide();
     }
 }

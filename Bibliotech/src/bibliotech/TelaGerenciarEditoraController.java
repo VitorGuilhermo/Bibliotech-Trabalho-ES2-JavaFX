@@ -32,23 +32,23 @@ public class TelaGerenciarEditoraController implements Initializable {
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colCnpj.setCellValueFactory(new PropertyValueFactory<>("cnpj"));
         
-        ControllerGerenciarEditora.carregarTabela(tabela, "");
+        ControllerGerenciarEditora.getInstance().carregarTabela(tabela, "");
     }    
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarEditora.buscar(tabela, txFiltro);
+        ControllerGerenciarEditora.getInstance().buscar(tabela, txFiltro, "edt_nome");
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarEditora.cancelar( txFiltro.getScene().getWindow() );
+        ControllerGerenciarEditora.getInstance().cancelar( txFiltro.getScene().getWindow() );
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
         if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarEditora.excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+            ControllerGerenciarEditora.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML

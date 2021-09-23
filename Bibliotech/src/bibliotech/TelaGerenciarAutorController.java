@@ -29,23 +29,23 @@ public class TelaGerenciarAutorController implements Initializable {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         
-        ControllerGerenciarAutor.carregarTabela(tabela, "");
+        ControllerGerenciarAutor.getInstance().carregarTabela(tabela, "");
     }    
 
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarAutor.buscar(tabela, txFiltro);
+        ControllerGerenciarAutor.getInstance().buscar(tabela, txFiltro, "aut_nome");
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarAutor.cancelar( txFiltro.getScene().getWindow() );
+        ControllerGerenciarAutor.getInstance().cancelar( txFiltro.getScene().getWindow() );
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
         if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarAutor.excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+            ControllerGerenciarAutor.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML

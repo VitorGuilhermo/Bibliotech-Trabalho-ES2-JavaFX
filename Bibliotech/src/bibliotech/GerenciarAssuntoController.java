@@ -30,23 +30,23 @@ public class GerenciarAssuntoController implements Initializable {
         colCod.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         
-        ControllerGerenciarAssunto.carregarTabela(tabela, "");
+        ControllerGerenciarAssunto.getInstance().carregarTabela(tabela, "");
     }    
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarAssunto.buscar(tabela, txFiltro);
+        ControllerGerenciarAssunto.getInstance().buscar(tabela, txFiltro, "ast_nome");
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarAssunto.cancelar( txFiltro.getScene().getWindow() );
+        ControllerGerenciarAssunto.getInstance().cancelar( txFiltro.getScene().getWindow() );
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
         if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarAssunto.excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+            ControllerGerenciarAssunto.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML

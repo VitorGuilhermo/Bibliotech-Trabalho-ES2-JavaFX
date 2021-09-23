@@ -14,16 +14,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  *
  * @author Vitor Guilhermo
  */
-public class ControllerGerenciarAutor {
+public class ControllerGerenciarAutor extends ControllerGerenciar {
     private static ControllerGerenciarAutor instancia;
     
     private ControllerGerenciarAutor() {
@@ -40,7 +38,7 @@ public class ControllerGerenciarAutor {
         return instancia;
     }
     
-    public static void carregarTabela(TableView tabela, String filtro){
+    public void carregarTabela(TableView tabela, String filtro){
         Conexao con = Banco.getCon();
         Autor a = new Autor();
         
@@ -87,18 +85,7 @@ public class ControllerGerenciarAutor {
         }
     }
     
-    public static void buscar(TableView tabela, TextField txFiltro) {
-        String filtro = "upper(aut_nome) like '%#%'";
-        
-        filtro = filtro.replace("#", txFiltro.getText().toUpperCase());
-        
-        if(txFiltro.getText().isEmpty())
-            carregarTabela(tabela, "");
-        else
-            carregarTabela(tabela, filtro);
-    }
-    
-    public static void excluir(TableView tabela, Autor a) {
+    public void excluir(TableView tabela, Autor a) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exclusão de um Autor");
         alert.setHeaderText("Confirma exclusão?");
@@ -110,9 +97,5 @@ public class ControllerGerenciarAutor {
             a.excluir(con);
             carregarTabela(tabela, "");
         }
-    }
-    
-    public static void cancelar(Window janela) {
-        janela.hide();
     }
 }

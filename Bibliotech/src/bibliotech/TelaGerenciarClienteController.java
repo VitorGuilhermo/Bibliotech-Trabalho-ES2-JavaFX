@@ -44,23 +44,23 @@ public class TelaGerenciarClienteController implements Initializable {
         colTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         colDtNasc.setCellValueFactory(new PropertyValueFactory<>("dataNasc"));
         
-        ControllerGerenciarClientes.carregarTabela(tabela, "");
+        ControllerGerenciarClientes.getInstance().carregarTabela(tabela, "");
     }    
     
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarClientes.buscar(tabela, txFiltrar);
+        ControllerGerenciarClientes.getInstance().buscar(tabela, txFiltrar, "cli_nome");
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarClientes.cancelar( txFiltrar.getScene().getWindow() );
+        ControllerGerenciarClientes.getInstance().cancelar( txFiltrar.getScene().getWindow() );
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        ControllerGerenciarClientes.excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+        ControllerGerenciarClientes.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -76,7 +76,7 @@ public class TelaGerenciarClienteController implements Initializable {
 
     @FXML
     private void evtDesativar(ActionEvent event) {
-        ControllerGerenciarClientes.desativar(tabela, tabela.getSelectionModel().getSelectedItem());
+        ControllerGerenciarClientes.getInstance().desativar(tabela, tabela.getSelectionModel().getSelectedItem());
     }
     
 }

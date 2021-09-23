@@ -30,24 +30,24 @@ public class TelaGerenciarGeneroController implements Initializable {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         
-        ControllerGerenciarGenero.carregarTabela(tabela, "");
+        ControllerGerenciarGenero.getInstance().carregarTabela(tabela, "");
     }    
     
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarGenero.buscar(tabela, txFiltro);
+        ControllerGerenciarGenero.getInstance().buscar(tabela, txFiltro, "gen_nome");
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarGenero.cancelar( txFiltro.getScene().getWindow() );
+        ControllerGerenciarGenero.getInstance().cancelar( txFiltro.getScene().getWindow() );
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
         if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarGenero.excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+            ControllerGerenciarGenero.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
     }
 
     @FXML

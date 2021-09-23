@@ -29,7 +29,7 @@ import javafx.stage.Window;
  *
  * @author Vitor Guilhermo
  */
-public class ControllerGerenciarTitulo {
+public class ControllerGerenciarTitulo extends ControllerGerenciar {
     private static ControllerGerenciarTitulo instancia;
     
     private ControllerGerenciarTitulo() {
@@ -46,22 +46,12 @@ public class ControllerGerenciarTitulo {
         return instancia;
     }
     
-    public static void carregarTabela(TableView tabela, String filtro){
+    public void carregarTabela(TableView tabela, String filtro){
         Conexao con = Banco.getCon();
         List<Titulo> titulos = new Titulo().pesquisarFiltro(con, filtro);
         tabela.setItems(FXCollections.observableArrayList( titulos ));
     }
     
-    public static void buscar(TableView tabela, TextField txFiltro) {
-        String filtro = "upper(tit_nome) like '%#%'";
-        
-        filtro = filtro.replace("#", txFiltro.getText().toUpperCase());
-        
-        if(txFiltro.getText().isEmpty())
-            carregarTabela(tabela, "");
-        else
-            carregarTabela(tabela, filtro);
-    }
     
     public void novo(TableView tabela) throws IOException {
         if(ControllerCadastrarTitulo.getInstance() == null && ControllerCadastrarTitulo.retorna() != null){
@@ -106,7 +96,7 @@ public class ControllerGerenciarTitulo {
         }
     }
     
-    public static void excluir(TableView tabela, Titulo tit) {
+    public void excluir(TableView tabela, Titulo tit) {
         if(tabela.getSelectionModel().getSelectedItem() != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exclusão de um Título");
@@ -135,9 +125,5 @@ public class ControllerGerenciarTitulo {
                 }
             }
         }
-    }
-    
-    public static void cancelar(Window janela) {
-        janela.hide();
     }
 }

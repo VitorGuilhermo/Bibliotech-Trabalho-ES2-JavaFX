@@ -44,17 +44,17 @@ public class TelaGerenciarTituloController implements Initializable {
         colDataImp.setCellValueFactory(new PropertyValueFactory<>("dataPubli"));
         colQtdeExe.setCellValueFactory(new PropertyValueFactory<>("qtdeExemplares"));
         
-        ControllerGerenciarTitulo.carregarTabela(tabela, "");
+        ControllerGerenciarTitulo.getInstance().carregarTabela(tabela, "");
     }    
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarTitulo.buscar(tabela, txFiltro);
+        ControllerGerenciarTitulo.getInstance().buscar(tabela, txFiltro, "tit_nome");
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarTitulo.cancelar( txFiltro.getScene().getWindow() );
+        ControllerGerenciarTitulo.getInstance().cancelar( txFiltro.getScene().getWindow() );
     }
 
     @FXML
@@ -70,7 +70,7 @@ public class TelaGerenciarTituloController implements Initializable {
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        ControllerGerenciarTitulo.excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+        ControllerGerenciarTitulo.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
     }
     
 }

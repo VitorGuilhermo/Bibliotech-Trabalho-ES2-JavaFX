@@ -14,16 +14,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  *
  * @author Vitor Guilhermo
  */
-public class ControllerGerenciarEditora {
+public class ControllerGerenciarEditora extends ControllerGerenciar {
     private static ControllerGerenciarEditora instancia;
     
     private ControllerGerenciarEditora() {
@@ -40,13 +38,14 @@ public class ControllerGerenciarEditora {
         return instancia;
     }
     
-    public static void carregarTabela(TableView tabela, String filtro){
+    public void carregarTabela(TableView tabela, String filtro){
         Editora e = new Editora();
         Conexao con = Banco.getCon();
         List<Editora> editoras = e.buscar(con, filtro);
         tabela.setItems(FXCollections.observableArrayList(editoras));
     }
     
+    @Override
     public void novo(TableView tabela) throws IOException {
         if(ControllerCadastrarEditora.getInstance() == null && ControllerCadastrarEditora.retorna() != null){
             Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarEditora.fxml"));
@@ -86,18 +85,7 @@ public class ControllerGerenciarEditora {
         }
     }
     
-    public static void buscar(TableView tabela, TextField txFiltro) {
-        String filtro = "upper(edt_nome) like '%#%'";
-        
-        filtro = filtro.replace("#", txFiltro.getText().toUpperCase());
-        
-        if(txFiltro.getText().isEmpty())
-            carregarTabela(tabela, "");
-        else
-            carregarTabela(tabela, filtro);
-    }
-    
-    public static void excluir(TableView tabela, Editora e) {
+    public void excluir(TableView tabela, Editora e) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exclusão de uma Editora");
         alert.setHeaderText("Confirma exclusão?");
@@ -109,9 +97,5 @@ public class ControllerGerenciarEditora {
             e.excluir(con);
             carregarTabela(tabela, "");
         }
-    }
-    
-    public static void cancelar(Window janela) {
-        janela.hide();
     }
 }

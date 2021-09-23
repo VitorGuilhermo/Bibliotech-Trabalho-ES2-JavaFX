@@ -23,7 +23,7 @@ import javafx.stage.Window;
  *
  * @author Vitor Guilhermo
  */
-public class ControllerGerenciarGenero {
+public class ControllerGerenciarGenero extends ControllerGerenciar {
     private static ControllerGerenciarGenero instancia;
     
     private ControllerGerenciarGenero() {
@@ -40,7 +40,7 @@ public class ControllerGerenciarGenero {
         return instancia;
     }
     
-    public static void carregarTabela(TableView tabela, String filtro){
+    public void carregarTabela(TableView tabela, String filtro){
         Genero g = new Genero();
         Conexao con = Banco.getCon();
         List<Genero> generos = g.buscar(con, filtro);
@@ -86,18 +86,7 @@ public class ControllerGerenciarGenero {
         }
     }
     
-    public static void buscar(TableView tabela, TextField txFiltro) {
-        String filtro = "upper(gen_nome) like '%#%'";
-        
-        filtro = filtro.replace("#", txFiltro.getText().toUpperCase());
-        
-        if(txFiltro.getText().isEmpty())
-            carregarTabela(tabela, "");
-        else
-            carregarTabela(tabela, filtro);
-    }
-    
-    public static void excluir(TableView tabela, Genero g) {
+    public void excluir(TableView tabela, Genero g) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exclusão de um Gênero");
         alert.setHeaderText("Confirma exclusão?");
@@ -109,9 +98,5 @@ public class ControllerGerenciarGenero {
             g.excluir(con);
             carregarTabela(tabela, "");
         }
-    }
-    
-    public static void cancelar(Window janela) {
-        janela.hide();
     }
 }

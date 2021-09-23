@@ -13,8 +13,7 @@ public class Banco
     private static Conexao con=null;
 
     private Banco() {
-    }    
-    
+    }     
     public static boolean conectarBanco(){
         if(con == null){
             con = new Conexao();
