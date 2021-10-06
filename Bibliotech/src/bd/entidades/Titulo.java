@@ -1,7 +1,6 @@
 package bd.entidades;
 
 import bd.dal.ObservadoresDAO;
-import bd.dal.ReservaDAO;
 import bd.dal.TituloDAL;
 import bd.util.Banco;
 import bd.util.Conexao;

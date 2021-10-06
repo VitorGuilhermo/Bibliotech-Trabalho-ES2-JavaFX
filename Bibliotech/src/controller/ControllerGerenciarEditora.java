@@ -64,12 +64,12 @@ public class ControllerGerenciarEditora extends ControllerGerenciar {
         }
     }
     
-    public void alterar(TableView tabela, Editora e) throws IOException {
+    public void alterar(TableView tabela, int cod, String nome, String cnpj) throws IOException {
         if(ControllerCadastrarEditora.getInstance() == null && ControllerCadastrarEditora.retorna() != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaCadastrarEditora.fxml"));
             Parent root = (Parent) loader.load();
             TelaCadastrarEditoraController ctr = loader.getController();
-            ctr.setDados(e.getCodigo(), e.getNome(), e.getCnpj());
+            ctr.setDados(cod, nome, cnpj);
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -85,16 +85,20 @@ public class ControllerGerenciarEditora extends ControllerGerenciar {
         }
     }
     
-    public void excluir(TableView tabela, Editora e) {
+    public void excluir(TableView tabela, int cod, String nome) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exclusão de uma Editora");
         alert.setHeaderText("Confirma exclusão?");
-        alert.setContentText("Tem certeza que deseja excluir a editora: "+e.getNome()+" ?");
+        alert.setContentText("Tem certeza que deseja excluir a editora: "+nome+" ?");
         Optional<ButtonType> result =  alert.showAndWait();
         
         if(result.get() == ButtonType.OK){
             Conexao con = Banco.getCon();
+            
+            Editora e = new Editora();
+            e.setCodigo(cod);
             e.excluir(con);
+            
             carregarTabela(tabela, "");
         }
     }

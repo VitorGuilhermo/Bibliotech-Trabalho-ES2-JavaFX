@@ -63,8 +63,10 @@ public class TelaReservarLivroController implements Initializable {
 
     @FXML
     private void evtReservar(ActionEvent event) {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerReservarLivro.reservar(tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Titulo t = tabela.getSelectionModel().getSelectedItem();
+            ControllerReservarLivro.reservar(t.getCodigo(), t.getNome());
+        }
     }
     
 }

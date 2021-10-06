@@ -86,16 +86,19 @@ public class ControllerGerenciarAssunto extends ControllerGerenciar {
         }
     }
     
-    public void excluir(TableView tabela, Assunto assunto) {
+    public void excluir(TableView tabela, int cod, String nome) {
         Conexao con = Banco.getCon();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exclusão de um Assunto");
         alert.setHeaderText("Confirma exclusão?");
-        alert.setContentText("Tem certeza que deseja excluir o assunto: "+assunto.getNome()+" ?");
+        alert.setContentText("Tem certeza que deseja excluir o assunto: "+nome+" ?");
         Optional<ButtonType> result =  alert.showAndWait();
         
         if(result.get() == ButtonType.OK){
-            assunto.excluir(con);
+            Assunto a = new Assunto();
+            a.setCodigo(cod);
+            a.excluir(con);
+            
             carregarTabela(tabela, "");
         }
     }

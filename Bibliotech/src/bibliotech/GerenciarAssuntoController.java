@@ -45,8 +45,10 @@ public class GerenciarAssuntoController implements Initializable {
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarAssunto.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Assunto a = tabela.getSelectionModel().getSelectedItem();
+            ControllerGerenciarAssunto.getInstance().excluir(tabela, a.getCodigo(), a.getNome());
+        }
     }
 
     @FXML

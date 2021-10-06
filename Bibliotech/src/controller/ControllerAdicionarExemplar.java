@@ -5,6 +5,7 @@ import bd.util.Banco;
 import bd.util.Conexao;
 import bibliotech.TelaAdicionarExemplarContController;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
@@ -55,13 +56,13 @@ public class ControllerAdicionarExemplar {
             carregarTabela(tabela, filtro);
     }
     
-    public void adicionar(TableView tabela, Titulo tit) throws IOException {
+    public void adicionar(TableView tabela, int cod, String nome, LocalDate dtp, int qtde) throws IOException {
         if(ControllerAdicionarExemplarCont.getInstance() == null && ControllerAdicionarExemplarCont.retorna() != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaAdicionarExemplarCont.fxml"));
             Parent root = (Parent) loader.load();
             TelaAdicionarExemplarContController ctr = loader.getController();
 
-            ctr.setDados(tit.getCodigo(), tit.getNome(), tit.getDataPubli(), tit.getQtdeExemplares());
+            ctr.setDados(cod, nome, dtp, qtde);
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();

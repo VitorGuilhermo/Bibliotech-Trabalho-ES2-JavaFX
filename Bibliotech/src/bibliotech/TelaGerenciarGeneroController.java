@@ -46,14 +46,18 @@ public class TelaGerenciarGeneroController implements Initializable {
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarGenero.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Genero g = tabela.getSelectionModel().getSelectedItem();
+            ControllerGerenciarGenero.getInstance().excluir(tabela, g.getCodigo(), g.getNome());
+        }
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarGenero.retorna().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Genero g = tabela.getSelectionModel().getSelectedItem();
+            ControllerGerenciarGenero.retorna().alterar(tabela, g.getCodigo(), g.getNome());
+        }
     }
 
     @FXML

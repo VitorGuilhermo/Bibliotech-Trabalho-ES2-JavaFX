@@ -3,6 +3,8 @@ package controller;
 import bd.entidades.Assunto_Titulo;
 import bd.entidades.Autor_Titulo;
 import bd.entidades.Cliente;
+import bd.entidades.Editora;
+import bd.entidades.Genero;
 import bd.entidades.Reserva;
 import bd.entidades.Titulo;
 import bd.util.Banco;
@@ -19,10 +21,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 
 /**
@@ -71,16 +71,16 @@ public class ControllerGerenciarTitulo extends ControllerGerenciar {
         }
     }
     
-    public void alterar(TableView tabela, Titulo tit) throws IOException {
+    public void alterar(TableView tabela, int cod, String nome, Genero gen, Editora edt, int qtde, LocalDate dtp, LocalDate dtr) throws IOException {
         if(ControllerCadastrarTitulo.getInstance() == null && ControllerCadastrarTitulo.retorna() != null){
             Conexao con = Banco.getCon();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaCadastrarTitulo.fxml"));
             Parent root = (Parent) loader.load();
             TelaCadastrarTituloController ctr = loader.getController();
 
-            ctr.setDados(tit.getCodigo(), tit.getNome(), new Autor_Titulo().buscar(con, "titulo_tit_cod="+tit.getCodigo()),
-                tit.getGenero(), new Assunto_Titulo().buscar(con, "titulo_tit_cod="+tit.getCodigo()), tit.getEditora(),
-                tit.getQtdeExemplares(), tit.getDataPubli(), tit.getDataReg());
+            ctr.setDados(cod, nome, new Autor_Titulo().buscar(con, "titulo_tit_cod="+cod),
+                gen, new Assunto_Titulo().buscar(con, "titulo_tit_cod="+cod), edt,
+                qtde, dtp, dtr);
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -96,24 +96,26 @@ public class ControllerGerenciarTitulo extends ControllerGerenciar {
         }
     }
     
-    public void excluir(TableView tabela, Titulo tit) {
+    public void excluir(TableView tabela, int cod, String nome, int qtde) {
         if(tabela.getSelectionModel().getSelectedItem() != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exclusão de um Título");
             alert.setHeaderText("Confirma exclusão?");
-            alert.setContentText("Tem certeza que deseja excluir o título: "+tit.getNome()+" ?");
+            alert.setContentText("Tem certeza que deseja excluir o título: "+nome+" ?");
             Optional<ButtonType> result =  alert.showAndWait();
             
             
             if(result.get() == ButtonType.OK){
                 Conexao con = Banco.getCon();
-                if(tit.getQtdeExemplares() == 0){
-                    new Autor_Titulo().excluir(con, tit.getCodigo());
-                    new Assunto_Titulo().excluir(con, tit.getCodigo());
-                    //exclui o exemplar da reserva do cliente
+                if(qtde == 0){
+                    new Autor_Titulo().excluir(con, cod);
+                    new Assunto_Titulo().excluir(con, cod);
+                    //exclui o exemplar da reserva do cliente   
+                    Titulo tit = new Titulo();
+                    tit.setCodigo(cod);
                     Reserva res = new Reserva(LocalDate.now(), new Cliente(), tit);
                     res.excluir(con);
-                    tit.excluir(con, tit.getCodigo());
+                    tit.excluir(con, cod);
                     carregarTabela(tabela, "");
                 }
                 else{

@@ -63,8 +63,10 @@ public class TelaAdicionarExemplarController implements Initializable {
 
     @FXML
     private void evtAdicionar(ActionEvent event) throws IOException {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerAdicionarExemplar.retorna().adicionar(tabela, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Titulo t = tabela.getSelectionModel().getSelectedItem();
+            ControllerAdicionarExemplar.retorna().adicionar(tabela, t.getCodigo(), t.getNome(), t.getDataPubli(), t.getQtdeExemplares());
+        }
     }
     
 }

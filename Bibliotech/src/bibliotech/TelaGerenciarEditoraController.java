@@ -47,14 +47,18 @@ public class TelaGerenciarEditoraController implements Initializable {
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarEditora.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Editora e = tabela.getSelectionModel().getSelectedItem();
+            ControllerGerenciarEditora.getInstance().excluir(tabela, e.getCodigo(), e.getNome());
+        }
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarEditora.retorna().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Editora e = tabela.getSelectionModel().getSelectedItem();
+            ControllerGerenciarEditora.retorna().alterar(tabela, e.getCodigo(), e.getNome(), e.getCnpj());
+        }
     }
 
     @FXML

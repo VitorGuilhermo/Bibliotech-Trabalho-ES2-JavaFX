@@ -102,12 +102,14 @@ public class TelaCadastrarTituloController implements Initializable {
     
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerCadastrarTitulo.cancelar( txCodigo.getScene().getWindow() );
+        txCodigo.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtCadastrar(ActionEvent event) {
-        ControllerCadastrarTitulo.cadastrar(txCodigo, txTitulo, cbGenero, cbEditora, spQtdeExem, dtDataPubl, dtDataRegistro, cbAutor1, cbAutor2, cbAutor3, cbAssunto1, cbAssunto2, cbAssunto3);
+        ControllerCadastrarTitulo.getInstance().cadastrar(txCodigo.getText(), txTitulo.getText(), cbGenero.getValue(), cbEditora.getValue(), spQtdeExem.getValue(), dtDataPubl.getValue(), dtDataRegistro.getValue(), cbAutor1.getValue(), cbAutor2.getValue(), cbAutor3.getValue(), cbAssunto1.getValue(), cbAssunto2.getValue(), cbAssunto3.getValue());
+        
+        evtCancelar(event);
     }
 
     @FXML

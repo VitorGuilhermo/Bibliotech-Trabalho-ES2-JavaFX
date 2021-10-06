@@ -1,6 +1,5 @@
 package controller;
 
-import bd.dal.ObservadoresDAO;
 import bd.entidades.Cliente;
 import bd.entidades.Reserva;
 import bd.entidades.Titulo;
@@ -55,13 +54,15 @@ public class ControllerReservarLivro {
             carregarTabela(tabela, filtro);
     }
     
-    public static void reservar(Titulo tit) {
+    public static void reservar(int cod, String nome) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Reserva de um título");
-        alert.setHeaderText("Tem certeza que deseja reservar o título: "+tit.getNome()+" ?");
+        alert.setHeaderText("Tem certeza que deseja reservar o título: "+nome+" ?");
         Optional<ButtonType> result =  alert.showAndWait();
    
         if(result.get() == ButtonType.OK){
+            Titulo tit = new Titulo();
+            tit.setCodigo(cod);
             Cliente cli = SingletonCliente.getInstance();
             Reserva res = new Reserva(LocalDate.now(), cli, tit);
             tit.addObserver(Banco.getCon(), cli.getCodigo());

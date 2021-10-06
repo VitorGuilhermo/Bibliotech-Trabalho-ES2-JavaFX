@@ -59,8 +59,10 @@ public class TelaGerenciarTituloController implements Initializable {
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarTitulo.retorna().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Titulo t = tabela.getSelectionModel().getSelectedItem();
+            ControllerGerenciarTitulo.retorna().alterar(tabela, t.getCodigo(), t.getNome(), t.getGenero(), t.getEditora(), t.getQtdeExemplares(), t.getDataPubli(), t.getDataReg());   
+        }
     }
 
     @FXML
@@ -70,7 +72,8 @@ public class TelaGerenciarTituloController implements Initializable {
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        ControllerGerenciarTitulo.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+        Titulo t = tabela.getSelectionModel().getSelectedItem();
+        ControllerGerenciarTitulo.getInstance().excluir(tabela, t.getCodigo(), t.getNome(), t.getQtdeExemplares());
     }
     
 }

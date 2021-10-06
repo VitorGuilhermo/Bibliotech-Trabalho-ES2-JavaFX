@@ -14,10 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  *
@@ -65,12 +63,12 @@ public class ControllerGerenciarGenero extends ControllerGerenciar {
         }
     }
     
-    public void alterar(TableView tabela, Genero g) throws IOException {
+    public void alterar(TableView tabela, int cod, String nome) throws IOException {
         if(ControllerCadastrarGenero.getInstance() == null && ControllerCadastrarGenero.retorna() != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaCadastrarGenero.fxml"));
             Parent root = (Parent) loader.load();
             TelaCadastrarGeneroController ctr = loader.getController();
-            ctr.setDados(g.getCodigo(), g.getNome());
+            ctr.setDados(cod, nome);
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -86,16 +84,20 @@ public class ControllerGerenciarGenero extends ControllerGerenciar {
         }
     }
     
-    public void excluir(TableView tabela, Genero g) {
+    public void excluir(TableView tabela, int cod, String nome) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exclusão de um Gênero");
         alert.setHeaderText("Confirma exclusão?");
-        alert.setContentText("Tem certeza que deseja excluir o gênero: "+g.getNome()+" ?");
+        alert.setContentText("Tem certeza que deseja excluir o gênero: "+nome+" ?");
         Optional<ButtonType> result =  alert.showAndWait();
         
         if(result.get() == ButtonType.OK){
             Conexao con = Banco.getCon();
+            
+            Genero g = new Genero();
+            g.setCodigo(cod);
             g.excluir(con);
+            
             carregarTabela(tabela, "");
         }
     }

@@ -38,7 +38,7 @@ public class ControllerGerenciarAutor extends ControllerGerenciar {
         return instancia;
     }
     
-    public void carregarTabela(TableView tabela, String filtro){
+    public void carregarTabela(TableView tabela, String filtro){    //FAZER AQ RETORNAR UMA LISTA
         Conexao con = Banco.getCon();
         Autor a = new Autor();
         
@@ -64,12 +64,12 @@ public class ControllerGerenciarAutor extends ControllerGerenciar {
         } 
     }
     
-    public void alterar(TableView tabela, Autor autor) throws IOException {
+    public void alterar(TableView tabela, int cod, String nome) throws IOException {
         if(ControllerCadastrarAutor.getInstance() == null && ControllerCadastrarAutor.retorna() != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bibliotech/TelaCadastrarAutor.fxml"));
             Parent root = (Parent) loader.load();
             TelaCadastrarAutorController ctr = loader.getController();
-            ctr.setDados(autor.getCodigo(), autor.getNome());
+            ctr.setDados(cod, nome);
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -85,16 +85,20 @@ public class ControllerGerenciarAutor extends ControllerGerenciar {
         }
     }
     
-    public void excluir(TableView tabela, Autor a) {
+    public void excluir(TableView tabela, int cod, String nome) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exclusão de um Autor");
         alert.setHeaderText("Confirma exclusão?");
-        alert.setContentText("Tem certeza que deseja excluir o/a autor(a): "+a.getNome()+" ?");
+        alert.setContentText("Tem certeza que deseja excluir o/a autor(a): "+nome+" ?");
         Optional<ButtonType> result =  alert.showAndWait();
         
         if(result.get() == ButtonType.OK){
             Conexao con = Banco.getCon();
+            
+            Autor a = new Autor();
+            a.setCodigo(cod);
             a.excluir(con);
+            
             carregarTabela(tabela, "");
         }
     }

@@ -40,18 +40,22 @@ public class TelaGerenciarAutorController implements Initializable {
     @FXML
     private void evtCancelar(ActionEvent event) {
         ControllerGerenciarAutor.getInstance().cancelar( txFiltro.getScene().getWindow() );
-    }
+    }   
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarAutor.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Autor a = tabela.getSelectionModel().getSelectedItem();
+            ControllerGerenciarAutor.getInstance().excluir(tabela, a.getCodigo(), a.getNome());
+        }
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarAutor.retorna().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Autor a = tabela.getSelectionModel().getSelectedItem();
+            ControllerGerenciarAutor.retorna().alterar(tabela, a.getCodigo(), a.getNome());
+        }
     }
 
     @FXML

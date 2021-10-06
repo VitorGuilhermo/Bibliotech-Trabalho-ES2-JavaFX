@@ -4,8 +4,6 @@ import bd.entidades.Autor;
 import bd.util.Banco;
 import bd.util.Conexao;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
-import javafx.stage.Window;
 
 /**
  *
@@ -29,15 +27,15 @@ public class ControllerCadastrarAutor {
     }
     
     
-    public static void cadastrar(TextField txCodigo, TextField txNome) {
-        Autor a = new Autor(txNome.getText());
+    public static void cadastrar(String txCodigo, String txNome) {
+        Autor a = new Autor(txNome);
         Conexao con = Banco.getCon();
-        if(txNome.getText().isEmpty()){
+        if(txNome.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erro: Campo NOME vazio");
             alert.showAndWait();
         }
-        else if(txCodigo.getText().isEmpty()){
+        else if(txCodigo.isEmpty()){
             if(!a.gravar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
@@ -45,17 +43,12 @@ public class ControllerCadastrarAutor {
             }
         }
         else{  //alterar
-            a.setCodigo(Integer.parseInt(txCodigo.getText()));
+            a.setCodigo(Integer.parseInt(txCodigo));
             if(!a.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
             }
         }
-        cancelar( txCodigo.getScene().getWindow() );
-    }
-    
-    public static void cancelar(Window janela) {
-        janela.hide();
     }
 }

@@ -60,13 +60,16 @@ public class TelaGerenciarClienteController implements Initializable {
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        ControllerGerenciarClientes.getInstance().excluir(tabela, tabela.getSelectionModel().getSelectedItem());
+        Cliente c = tabela.getSelectionModel().getSelectedItem();
+        ControllerGerenciarClientes.getInstance().excluir(tabela, c.getCodigo(), c.getNome(), c.getDocumento());
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerenciarClientes.retorna().alterar(tabela, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            Cliente c = tabela.getSelectionModel().getSelectedItem();
+            ControllerGerenciarClientes.retorna().alterar(tabela, c.getCodigo(), c.getNome(), c.getDocumento(), c.getEndereco(), c.getTelefone(), c.getSexo(), c.getDataNasc());
+        }
     }
 
     @FXML
@@ -76,7 +79,8 @@ public class TelaGerenciarClienteController implements Initializable {
 
     @FXML
     private void evtDesativar(ActionEvent event) {
-        ControllerGerenciarClientes.getInstance().desativar(tabela, tabela.getSelectionModel().getSelectedItem());
+        Cliente c = tabela.getSelectionModel().getSelectedItem();
+        ControllerGerenciarClientes.getInstance().desativar(tabela, c.getCodigo(), c.getNome(), c.getDocumento());
     }
     
 }

@@ -44,14 +44,15 @@ public class TelaCadastrarClienteController implements Initializable {
     
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerCadastrarCliente c = ControllerCadastrarCliente.retorna();
-        c.cancelar( txCodigo.getScene().getWindow() );
+        txCodigo.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtCadastrar(ActionEvent event) {
         ControllerCadastrarCliente c = ControllerCadastrarCliente.retorna();
-        c.cadastrar(txCodigo, txNome, txDocumento, txEndereco, txTelefone, txSexo, dpDataNasc);
+        c.cadastrar(txCodigo.getText(), txNome.getText(), txDocumento.getText(), txEndereco.getText(), txTelefone.getText(), txSexo.getText(), dpDataNasc.getValue());
+        
+        evtCancelar(event);
     }
     
 }

@@ -31,14 +31,15 @@ public class TelaCadastrarEditoraController implements Initializable {
     
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerCadastrarEditora c = ControllerCadastrarEditora.retorna();
-        c.cancelar( txCodigo.getScene().getWindow() );
+        txCodigo.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtCadastrar(ActionEvent event) {
         ControllerCadastrarEditora c = ControllerCadastrarEditora.retorna();
-        c.cadastrar(txCodigo, txNome, txCnpj);
+        c.cadastrar(txCodigo.getText(), txNome.getText(), txCnpj.getText());
+        
+        evtCancelar(event);
     }
     
 }

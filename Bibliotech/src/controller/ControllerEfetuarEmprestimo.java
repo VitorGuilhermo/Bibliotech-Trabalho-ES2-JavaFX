@@ -79,8 +79,8 @@ public class ControllerEfetuarEmprestimo {
         if(tabela.getSelectionModel().getSelectedItem() != null){
             if(exemplares.size()+qtdeLivrosJaEmprestados < 5){
                if(!exemplares.contains(e)){
-                exemplares.add(e);
-                carregaListaExemplares(listaExe);
+                    exemplares.add(e);
+                    carregaListaExemplares(listaExe);
                 }
                 else{
                     Alert alert = new Alert(Alert.AlertType.ERROR);

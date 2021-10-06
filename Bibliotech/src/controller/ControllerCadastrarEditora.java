@@ -4,8 +4,6 @@ import bd.entidades.Editora;
 import bd.util.Banco;
 import bd.util.Conexao;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
-import javafx.stage.Window;
 
 /**
  *
@@ -28,16 +26,16 @@ public class ControllerCadastrarEditora {
         return instancia;
     }
     
-    public static void cadastrar(TextField txCodigo, TextField txNome, TextField txCnpj) {
-        Editora e = new Editora(txNome.getText(), txCnpj.getText());
+    public static void cadastrar(String txCodigo, String txNome, String txCnpj) {
+        Editora e = new Editora(txNome, txCnpj);
         Conexao con = Banco.getCon();
         
-        if(txNome.getText().isEmpty() || txCnpj.getText().isEmpty()){
+        if(txNome.isEmpty() || txCnpj.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erro: Campo NOME ou CNPJ vazio");
             alert.showAndWait();
         }
-        else if(txCodigo.getText().isEmpty()){
+        else if(txCodigo.isEmpty()){
             if(!e.gravar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
@@ -45,17 +43,12 @@ public class ControllerCadastrarEditora {
             }
         }
         else{  //alterar
-            e.setCodigo(Integer.parseInt(txCodigo.getText()));
+            e.setCodigo(Integer.parseInt(txCodigo));
             if(!e.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
             }
         }
-        cancelar( txCodigo.getScene().getWindow() );
-    }
-    
-    public static void cancelar(Window janela) {
-        janela.hide();
     }
 }
