@@ -1,11 +1,16 @@
 package bibliotech;
 
 import bd.entidades.Cliente;
+import bd.util.Banco;
+import bd.util.Conexao;
+import controller.ControllerCadastrarCliente;
 import controller.ControllerGerenciarClientes;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,43 +49,68 @@ public class TelaGerenciarClienteController implements Initializable {
         colTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         colDtNasc.setCellValueFactory(new PropertyValueFactory<>("dataNasc"));
         
-        ControllerGerenciarClientes.getInstance().carregarTabela(tabela, "");
+        carregarTabela("");
     }    
+    
+    public void carregarTabela(String filtro){
+        Cliente c = new Cliente();
+        Conexao con = Banco.getCon();
+        
+        List<Cliente> clientes = c.buscar(con, filtro);
+        tabela.setItems(FXCollections.observableArrayList(clientes));
+    }
     
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarClientes.getInstance().buscar(tabela, txFiltrar, "cli_nome");
+        String filtro = ControllerGerenciarClientes.getInstance().buscar(txFiltrar.getText(), "cli_nome");
+        carregarTabela(filtro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarClientes.getInstance().cancelar( txFiltrar.getScene().getWindow() );
+        txFiltrar.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        Cliente c = tabela.getSelectionModel().getSelectedItem();
-        ControllerGerenciarClientes.getInstance().excluir(tabela, c.getCodigo(), c.getNome(), c.getDocumento());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            boolean excluiu;
+            Cliente c = tabela.getSelectionModel().getSelectedItem();
+            excluiu = ControllerGerenciarClientes.getInstance().excluir(c.getCodigo(), c.getNome(), c.getDocumento());
+            if(excluiu)
+                carregarTabela("");
+        }
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
         if(tabela.getSelectionModel().getSelectedItem() != null){
-            Cliente c = tabela.getSelectionModel().getSelectedItem();
-            ControllerGerenciarClientes.retorna().alterar(tabela, c.getCodigo(), c.getNome(), c.getDocumento(), c.getEndereco(), c.getTelefone(), c.getSexo(), c.getDataNasc());
+            if(ControllerCadastrarCliente.getInstance() == null && ControllerCadastrarCliente.retorna() != null){
+                Cliente c = tabela.getSelectionModel().getSelectedItem();
+                ControllerGerenciarClientes.getInstance().alterar(c.getCodigo(), c.getNome(), c.getDocumento(), c.getEndereco(), c.getTelefone(), c.getSexo(), c.getDataNasc());
+                carregarTabela("");
+            }
         }
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        ControllerGerenciarClientes.retorna().novo(tabela);
+        if(ControllerCadastrarCliente.getInstance() == null && ControllerCadastrarCliente.retorna() != null){    
+            ControllerGerenciarClientes.getInstance().novo();
+            carregarTabela("");
+        }
     }
 
     @FXML
     private void evtDesativar(ActionEvent event) {
-        Cliente c = tabela.getSelectionModel().getSelectedItem();
-        ControllerGerenciarClientes.getInstance().desativar(tabela, c.getCodigo(), c.getNome(), c.getDocumento());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            boolean desativou;
+            Cliente c = tabela.getSelectionModel().getSelectedItem();
+            desativou = ControllerGerenciarClientes.getInstance().desativar(c.getCodigo(), c.getNome(), c.getDocumento());
+            if(desativou)
+                carregarTabela("");
+        }
     }
     
 }

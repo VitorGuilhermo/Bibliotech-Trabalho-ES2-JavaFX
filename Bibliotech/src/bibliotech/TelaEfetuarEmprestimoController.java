@@ -1,10 +1,16 @@
 package bibliotech;
 
+import bd.entidades.Cliente;
 import bd.entidades.Exemplar;
+import bd.util.Banco;
+import bd.util.Conexao;
+import controller.ControllerCadastrarCliente;
 import controller.ControllerEfetuarEmprestimo;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -52,7 +58,8 @@ public class TelaEfetuarEmprestimoController implements Initializable {
         cbFiltro.getItems().add("Telefone");
         cbFiltro.getSelectionModel().select(1);
         
-        ControllerEfetuarEmprestimo.carregaTabela(tabela, "");
+        carregaTabela("");
+        
         colSituacao.setCellFactory(column -> {
             return new TableCell<Exemplar, Boolean>() {
                 @Override
@@ -74,39 +81,78 @@ public class TelaEfetuarEmprestimoController implements Initializable {
         });
     }    
     
+    public void carregaTabela(String filtro){
+        Exemplar e = new Exemplar();
+        Conexao con = Banco.getCon();
+        
+        List<Exemplar> exemplares = e.buscaExemplares(con, filtro);
+        tabela.setItems(FXCollections.observableArrayList(exemplares));
+    }
+    public void carregaListaExemplares(){
+        listaExe.setItems(FXCollections.observableArrayList( ControllerEfetuarEmprestimo.getInstance().getExemplares() ));
+    }
+    
     @FXML
     private void evtNovoCliente(ActionEvent event) throws IOException {
-        ControllerEfetuarEmprestimo.retorna().novoCliente();
+        if(ControllerCadastrarCliente.getInstance() == null && ControllerCadastrarCliente.retorna() != null){
+            ControllerEfetuarEmprestimo.retorna().novoCliente();
+        }
     }
 
     @FXML
     private void evtBuscarExe(ActionEvent event) {
-        ControllerEfetuarEmprestimo.buscarExe(tabela, txFiltroExe);
+        String filtro = ControllerEfetuarEmprestimo.getInstance().buscarExe(txFiltroExe.getText());
+        carregaTabela(filtro);
     }
 
     @FXML
     private void evtAdicionarExe(ActionEvent event) {
-        ControllerEfetuarEmprestimo.adicionarExe(tabela, listaExe, tabela.getSelectionModel().getSelectedItem());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            boolean adicionou;
+            adicionou = ControllerEfetuarEmprestimo.getInstance().adicionarExe(tabela.getSelectionModel().getSelectedItem());
+            if(adicionou)
+                carregaListaExemplares();
+        }
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerEfetuarEmprestimo.cancelar( txCodigo.getScene().getWindow() );
+        txCodigo.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtFinalizar(ActionEvent event) {
-        ControllerEfetuarEmprestimo.retorna().finalizar(txCodigo);
+        boolean gravou = ControllerEfetuarEmprestimo.retorna().finalizar(txCodigo.getText());
+        if(gravou)
+            txCodigo.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtRemoverExe(ActionEvent event) {
-        ControllerEfetuarEmprestimo.retorna().removerExe(listaExe);
+        if(listaExe.getSelectionModel().getSelectedItem() != null){
+            ControllerEfetuarEmprestimo.getInstance().removerExe(listaExe.getSelectionModel().getSelectedItem());
+            carregaListaExemplares();
+        }
     }
 
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerEfetuarEmprestimo.retorna().buscarCli(cbFiltro, txFiltro, txCodigo, txNome, txDocumento);
+        String sql = "cli_documento='";
+        String filtro = txFiltro.getText();
+        
+        if(cbFiltro.getSelectionModel().getSelectedItem().equals("Nome"))
+            sql = "cli_nome='";
+        else if(cbFiltro.getSelectionModel().getSelectedItem().equals("Telefone")){
+            sql = "cli_telefone='";
+            filtro = new Cliente().formataTelefone(txFiltro.getText());
+        }
+        else
+            filtro = new Cliente().formataCpf(txFiltro.getText());
+        
+        Cliente cli = ControllerEfetuarEmprestimo.retorna().buscarCli(sql, filtro);
+        txCodigo.setText(""+cli.getCodigo());
+        txNome.setText(cli.getNome());
+        txDocumento.setText(cli.formataCpf(cli.getDocumento()));
     }
     
 }

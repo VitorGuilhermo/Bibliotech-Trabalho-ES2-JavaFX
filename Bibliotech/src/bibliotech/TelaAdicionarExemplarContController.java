@@ -46,12 +46,13 @@ public class TelaAdicionarExemplarContController implements Initializable {
     
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerAdicionarExemplarCont.cancelar( txTitulo.getScene().getWindow() );
+        txTitulo.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtAdicionar(ActionEvent event) {
-        ControllerAdicionarExemplarCont.retorna().adicionar(txTitulo.getScene().getWindow(), cod, spQtde.getValue());
+        ControllerAdicionarExemplarCont.retorna().adicionar(cod, spQtde.getValue());
+        evtCancelar(event);
     }
     
 }

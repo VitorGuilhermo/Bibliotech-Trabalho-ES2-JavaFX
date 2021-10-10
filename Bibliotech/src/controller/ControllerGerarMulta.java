@@ -1,26 +1,14 @@
 package controller;
 
 import bd.entidades.Cliente;
-import bd.entidades.Editora;
-import bd.entidades.EditoraGenerica;
-import bd.entidades.EditoraPearson;
-import bd.entidades.EditoraSaraiva;
 import bd.entidades.Emprestimo;
 import bd.entidades.Exemplar_Emprestimo;
 import bd.entidades.Multa;
-import bd.entidades.Strategy;
-import bd.entidades.Titulo;
 import bd.util.Banco;
 import bd.util.Conexao;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.stage.Window;
 
 /**
  *
@@ -44,25 +32,17 @@ public class ControllerGerarMulta {
         return instancia;
     }
     
-    public static void carregaTabela(TableView tabela, String filtro){
-        Exemplar_Emprestimo ee = new Exemplar_Emprestimo();
-        Conexao con = Banco.getCon();
-        List<Exemplar_Emprestimo> exememplares_emp = ee.buscar(con, filtro);
-        tabela.setItems(FXCollections.observableArrayList(exememplares_emp));
-    }
     
-    public static void buscar(TableView tabela, ComboBox<String> cbFiltro, TextField txFiltro){
-        Exemplar_Emprestimo ee;
+    public String buscar(String cbFiltro, String filtro){
         Cliente cli = new Cliente();
         String sql="";
-        String filtro = txFiltro.getText();
         Conexao con = Banco.getCon();
         
         if(!filtro.isEmpty()){
-            if(cbFiltro.getSelectionModel().getSelectedItem().equals("Código Exemplar")){
+            if(cbFiltro.equals("Código Exemplar")){
                 sql = "exe_cod="+filtro;
             }
-            else if(cbFiltro.getSelectionModel().getSelectedItem().equals("Nome Cliente")){
+            else if(cbFiltro.equals("Nome Cliente")){
                 sql = "cli_nome='";
                 cli = cli.getCliente(con, sql+filtro+"'");
                 sql = "";
@@ -81,22 +61,18 @@ public class ControllerGerarMulta {
                 }
             }
         }
-        
-        if(txFiltro.getText().isEmpty())
-            carregaTabela(tabela, "");
+        if(filtro.isEmpty())
+            return "";
         else
-            carregaTabela(tabela, sql);  
+            return sql; 
     }
     
-    public static void gerarMulta(TableView<Exemplar_Emprestimo> tabela){
-        Titulo tit = tabela.getSelectionModel().getSelectedItem().getExemplar().getTitulo();
-        String tipoEditora = tit.getEditora().getNome();
-        
+    public boolean gerarMulta(int cod, String tipoEditora, LocalDate dataEmp, LocalDate dataDevolucao){
         Multa m = new Multa();
-        m.calculaMulta(tit.getEditora().getNome(), tabela.getSelectionModel().getSelectedItem().getEmprestimo().getData(), tabela.getSelectionModel().getSelectedItem().getEmprestimo().getDataDevolucaoP());
+        m.calculaMulta(tipoEditora, dataEmp, dataDevolucao);
 
         Exemplar_Emprestimo ee = new Exemplar_Emprestimo();
-        ee.setCodigo(tabela.getSelectionModel().getSelectedItem().getCodigo());
+        ee.setCodigo(cod);
         ee.setMulta( m );
         
         Conexao con = Banco.getCon();
@@ -106,17 +82,13 @@ public class ControllerGerarMulta {
             alert.setContentText("Multa gerada com sucesso!");
             alert.showAndWait();
             
-            carregaTabela(tabela, "");
+            return true;
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erro: não foi possível gerar a multa no momento...");
             alert.showAndWait();
         }
-        
-    }
-    
-    public static void cancelar(Window janela) {
-        janela.hide();
+        return false;
     }
 }

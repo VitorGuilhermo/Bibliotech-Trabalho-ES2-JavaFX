@@ -1,10 +1,15 @@
 package bibliotech;
 
 import bd.entidades.Editora;
+import bd.util.Banco;
+import bd.util.Conexao;
+import controller.ControllerCadastrarEditora;
 import controller.ControllerGerenciarEditora;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,38 +37,56 @@ public class TelaGerenciarEditoraController implements Initializable {
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colCnpj.setCellValueFactory(new PropertyValueFactory<>("cnpj"));
         
-        ControllerGerenciarEditora.getInstance().carregarTabela(tabela, "");
+        carregarTabela("");
     }    
+    
+    public void carregarTabela(String filtro){
+        Editora e = new Editora();
+        Conexao con = Banco.getCon();
+        
+        List<Editora> editoras = e.buscar(con, filtro);
+        tabela.setItems(FXCollections.observableArrayList(editoras));
+    }
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarEditora.getInstance().buscar(tabela, txFiltro, "edt_nome");
+        String filtro = ControllerGerenciarEditora.getInstance().buscar(txFiltro.getText(), "edt_nome");
+        carregarTabela(filtro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarEditora.getInstance().cancelar( txFiltro.getScene().getWindow() );
+        txFiltro.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
         if(tabela.getSelectionModel().getSelectedItem() != null){
+            boolean excluiu;
             Editora e = tabela.getSelectionModel().getSelectedItem();
-            ControllerGerenciarEditora.getInstance().excluir(tabela, e.getCodigo(), e.getNome());
+            excluiu = ControllerGerenciarEditora.getInstance().excluir(e.getCodigo(), e.getNome());
+            if(excluiu)
+                carregarTabela("");
         }
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
         if(tabela.getSelectionModel().getSelectedItem() != null){
-            Editora e = tabela.getSelectionModel().getSelectedItem();
-            ControllerGerenciarEditora.retorna().alterar(tabela, e.getCodigo(), e.getNome(), e.getCnpj());
+            if(ControllerCadastrarEditora.getInstance() == null && ControllerCadastrarEditora.retorna() != null){
+                Editora e = tabela.getSelectionModel().getSelectedItem();
+                ControllerGerenciarEditora.retorna().alterar(e.getCodigo(), e.getNome(), e.getCnpj());
+                carregarTabela("");
+            }
         }
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        ControllerGerenciarEditora.retorna().novo(tabela);
+        if(ControllerCadastrarEditora.getInstance() == null && ControllerCadastrarEditora.retorna() != null){
+            ControllerGerenciarEditora.retorna().novo();
+            carregarTabela("");
+        }
     }
     
 }

@@ -23,10 +23,7 @@ public abstract class ControllerGerenciar {
     
     public final void cancelar(Window janela) {
         janela.hide();
-    }
-    
-    public abstract void novo(TableView tabela) throws IOException;
-    
+    }    
     public abstract void carregarTabela(TableView tabela, String filtro);
      
 }

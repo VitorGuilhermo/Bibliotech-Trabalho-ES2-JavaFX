@@ -34,27 +34,21 @@ public class ControllerReservarLivro {
     }
     public static ControllerReservarLivro getInstance() {
         return instancia;
-    }
+    }    
     
     
-    public static void carregarTabela(TableView tabela, String filtro){
-        Conexao con = Banco.getCon();
-        List<Titulo> titulos = new Titulo().pesquisarFiltro(con, filtro);
-        tabela.setItems(FXCollections.observableArrayList( titulos ));
-    }
-    
-    public static void buscar(TableView tabela, TextField txFiltro) {
+    public String buscar(String txFiltro) {
         String filtro = "upper(tit_nome) like '%#%'";
         
-        filtro = filtro.replace("#", txFiltro.getText().toUpperCase());
+        filtro = filtro.replace("#", txFiltro.toUpperCase());
         
-        if(txFiltro.getText().isEmpty())
-            carregarTabela(tabela, "");
+        if(txFiltro.isEmpty())
+            return "";
         else
-            carregarTabela(tabela, filtro);
+            return filtro;
     }
     
-    public static void reservar(int cod, String nome) {
+    public void reservar(int cod, String nome) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Reserva de um título");
         alert.setHeaderText("Tem certeza que deseja reservar o título: "+nome+" ?");
@@ -81,10 +75,4 @@ public class ControllerReservarLivro {
             alert.showAndWait();
         }
     }
-    
-    public static void cancelar(Window janela) {
-        janela.hide();
-    }
-    
-    
 }

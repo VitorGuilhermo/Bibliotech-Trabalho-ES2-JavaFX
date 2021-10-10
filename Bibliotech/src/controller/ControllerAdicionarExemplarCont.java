@@ -36,7 +36,7 @@ public class ControllerAdicionarExemplarCont {
     }
     
     
-    public static void adicionar(Window janela, int cod, int qtde) {
+    public static void adicionar(int cod, int qtde) {
         Conexao con = Banco.getCon();
         
         Titulo aux = new Titulo();
@@ -67,10 +67,5 @@ public class ControllerAdicionarExemplarCont {
                 mensagens.clear();
             }
         }
-        cancelar(janela);
-    }
-    
-    public static void cancelar(Window janela) {
-        janela.hide();
     }
 }

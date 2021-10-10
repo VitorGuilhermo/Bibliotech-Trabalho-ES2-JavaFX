@@ -12,6 +12,7 @@ import bd.util.Conexao;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -116,63 +117,53 @@ public class ControllerCadastrarTitulo {
     }
     
     
-    public void novoAutor(ComboBox<Autor> cbAutor1, ComboBox<Autor> cbAutor2, ComboBox<Autor> cbAutor3) throws IOException {
-        if(ControllerCadastrarAutor.getInstance() == null && ControllerCadastrarAutor.retorna() != null){
-            Conexao con = Banco.getCon();
-            Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarAutor.fxml"));
+    public List<Autor> novoAutor() throws IOException {
+        Conexao con = Banco.getCon();
+        Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarAutor.fxml"));
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
 
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle("Cadastrar Autor");
-            stage.showAndWait();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("Cadastrar Autor");
+        stage.showAndWait();
 
-            ControllerCadastrarAutor.removeInstancia();
-            cbAutor1.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
-            cbAutor2.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
-            cbAutor3.setItems(FXCollections.observableArrayList(new Autor().buscar(con, "")));
-        }
+        ControllerCadastrarAutor.removeInstancia();
+        return new Autor().buscar(con, "");
     }
     
-    public void novoGenero(ComboBox<Genero> cbGenero) throws IOException {
-        if(ControllerCadastrarGenero.getInstance() == null && ControllerCadastrarGenero.retorna() != null){
-            Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarGenero.fxml"));
+    public List<Genero> novoGenero() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarGenero.fxml"));
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
 
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle("Cadastrar Gênero");
-            stage.showAndWait();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("Cadastrar Gênero");
+        stage.showAndWait();
 
-            ControllerCadastrarGenero.removeInstancia();
-            Conexao con = Banco.getCon();
-            cbGenero.setItems(FXCollections.observableArrayList(new Genero().buscar(con, "")));
-        }
+        ControllerCadastrarGenero.removeInstancia();
+        Conexao con = Banco.getCon();
+        return new Genero().buscar(con, "");
     }
     
-    public void novoAssunto(ComboBox<Assunto> cbAssunto1, ComboBox<Assunto> cbAssunto2, ComboBox<Assunto> cbAssunto3) throws IOException {
-        if(ControllerCadastrarAssunto.getInstance() == null && ControllerCadastrarAssunto.retorna() != null){
-            Conexao con = Banco.getCon();
-            
-            Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarAssunto.fxml"));
+    public List<Assunto> novoAssunto() throws IOException {
+        Conexao con = Banco.getCon();
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/bibliotech/TelaCadastrarAssunto.fxml"));
 
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle("Cadastrar Assunto");
-            stage.showAndWait();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
 
-            ControllerCadastrarAssunto.removeInstancia();
-            cbAssunto1.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
-            cbAssunto2.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
-            cbAssunto3.setItems(FXCollections.observableArrayList(new Assunto().buscar(con, "")));
-        }
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("Cadastrar Assunto");
+        stage.showAndWait();
+
+        ControllerCadastrarAssunto.removeInstancia();
+        return new Assunto().buscar(con, "");
     }
     
     public boolean validaIgualdadeCB(Autor cbAutor1, Autor cbAutor2, Autor cbAutor3, Assunto cbAssunto1, Assunto cbAssunto2, Assunto cbAssunto3){

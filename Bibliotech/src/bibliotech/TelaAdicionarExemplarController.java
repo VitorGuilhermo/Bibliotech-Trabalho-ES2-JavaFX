@@ -3,11 +3,16 @@ package bibliotech;
 import bd.entidades.Editora;
 import bd.entidades.Genero;
 import bd.entidades.Titulo;
+import bd.util.Banco;
+import bd.util.Conexao;
 import controller.ControllerAdicionarExemplar;
+import controller.ControllerAdicionarExemplarCont;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,24 +53,37 @@ public class TelaAdicionarExemplarController implements Initializable {
         colDataImp.setCellValueFactory(new PropertyValueFactory<>("dataPubli"));
         colQtdeExe.setCellValueFactory(new PropertyValueFactory<>("qtdeExemplares"));
         
-        ControllerAdicionarExemplar.carregarTabela(tabela, "");
+        carregarTabela("");
     }    
 
+    public void carregarTabela(String filtro){
+        Conexao con = Banco.getCon();
+        Titulo t = new Titulo();
+        
+        List<Titulo> titulos = t.pesquisarFiltro(con, filtro);
+        tabela.setItems(FXCollections.observableArrayList( titulos ));
+    }
+    
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerAdicionarExemplar.buscar(tabela, txFiltro);
+        String filtro;
+        filtro = ControllerAdicionarExemplar.getInstance().buscar(txFiltro.getText());
+        carregarTabela(filtro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerAdicionarExemplar.cancelar( txFiltro.getScene().getWindow() );
+        txFiltro.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtAdicionar(ActionEvent event) throws IOException {
         if(tabela.getSelectionModel().getSelectedItem() != null){
-            Titulo t = tabela.getSelectionModel().getSelectedItem();
-            ControllerAdicionarExemplar.retorna().adicionar(tabela, t.getCodigo(), t.getNome(), t.getDataPubli(), t.getQtdeExemplares());
+            if(ControllerAdicionarExemplarCont.getInstance() == null && ControllerAdicionarExemplarCont.retorna() != null){
+                Titulo t = tabela.getSelectionModel().getSelectedItem();
+                ControllerAdicionarExemplar.getInstance().adicionar(t.getCodigo(), t.getNome(), t.getDataPubli(), t.getQtdeExemplares());
+                carregarTabela("");
+            }
         }
     }
     

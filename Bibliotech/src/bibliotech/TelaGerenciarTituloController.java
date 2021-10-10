@@ -3,11 +3,16 @@ package bibliotech;
 import bd.entidades.Editora;
 import bd.entidades.Genero;
 import bd.entidades.Titulo;
+import bd.util.Banco;
+import bd.util.Conexao;
+import controller.ControllerCadastrarTitulo;
 import controller.ControllerGerenciarTitulo;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,36 +49,56 @@ public class TelaGerenciarTituloController implements Initializable {
         colDataImp.setCellValueFactory(new PropertyValueFactory<>("dataPubli"));
         colQtdeExe.setCellValueFactory(new PropertyValueFactory<>("qtdeExemplares"));
         
-        ControllerGerenciarTitulo.getInstance().carregarTabela(tabela, "");
+        carregarTabela("");
     }    
+    
+    public void carregarTabela(String filtro){
+        Conexao con = Banco.getCon();
+        Titulo t = new Titulo();
+        
+        List<Titulo> titulos = t.pesquisarFiltro(con, filtro);
+        tabela.setItems(FXCollections.observableArrayList( titulos ));
+    }
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarTitulo.getInstance().buscar(tabela, txFiltro, "tit_nome");
+        String filtro = ControllerGerenciarTitulo.getInstance().buscar(txFiltro.getText(), "tit_nome");
+        carregarTabela(filtro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarTitulo.getInstance().cancelar( txFiltro.getScene().getWindow() );
+        txFiltro.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
         if(tabela.getSelectionModel().getSelectedItem() != null){
-            Titulo t = tabela.getSelectionModel().getSelectedItem();
-            ControllerGerenciarTitulo.retorna().alterar(tabela, t.getCodigo(), t.getNome(), t.getGenero(), t.getEditora(), t.getQtdeExemplares(), t.getDataPubli(), t.getDataReg());   
+            if(ControllerCadastrarTitulo.getInstance() == null && ControllerCadastrarTitulo.retorna() != null){
+                Titulo t = tabela.getSelectionModel().getSelectedItem();
+                ControllerGerenciarTitulo.getInstance().alterar(t.getCodigo(), t.getNome(), t.getGenero(), t.getEditora(), t.getQtdeExemplares(), t.getDataPubli(), t.getDataReg());   
+                carregarTabela("");
+            }
         }
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        ControllerGerenciarTitulo.retorna().novo(tabela);
+        if(ControllerCadastrarTitulo.getInstance() == null && ControllerCadastrarTitulo.retorna() != null){
+            ControllerGerenciarTitulo.getInstance().novo();
+            carregarTabela("");
+        }
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        Titulo t = tabela.getSelectionModel().getSelectedItem();
-        ControllerGerenciarTitulo.getInstance().excluir(tabela, t.getCodigo(), t.getNome(), t.getQtdeExemplares());
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            boolean excluiu;
+            Titulo t = tabela.getSelectionModel().getSelectedItem();
+            excluiu = ControllerGerenciarTitulo.getInstance().excluir(t.getCodigo(), t.getNome(), t.getQtdeExemplares());
+            if(excluiu)
+                carregarTabela("");
+        }
     }
     
 }

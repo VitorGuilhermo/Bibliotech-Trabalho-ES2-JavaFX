@@ -3,12 +3,16 @@ package bibliotech;
 import bd.entidades.Cliente;
 import bd.entidades.Exemplar_Emprestimo;
 import bd.entidades.Multa;
+import bd.util.Banco;
+import bd.util.Conexao;
 import controller.ControllerGerarMulta;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -95,23 +99,36 @@ public class TelaGerarMultaControllerController implements Initializable {
         
         cbFiltro.getSelectionModel().select(0);
         
-        ControllerGerarMulta.carregaTabela(tabela, "");
+        carregaTabela("");
     }    
 
+    public void carregaTabela(String filtro){
+        Exemplar_Emprestimo ee = new Exemplar_Emprestimo();
+        Conexao con = Banco.getCon();
+        
+        List<Exemplar_Emprestimo> exememplares_emp = ee.buscar(con, filtro);
+        tabela.setItems(FXCollections.observableArrayList(exememplares_emp));
+    }
+    
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerarMulta.buscar(tabela, cbFiltro, txFiltro);
+        String filtro = ControllerGerarMulta.getInstance().buscar(cbFiltro.getSelectionModel().getSelectedItem(), txFiltro.getText());
+        carregaTabela(filtro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerarMulta.cancelar( txFiltro.getScene().getWindow() );
+        txFiltro.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtGerar(ActionEvent event) {
-        if(tabela.getSelectionModel().getSelectedItem() != null)
-            ControllerGerarMulta.gerarMulta(tabela);
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            boolean gravou;
+            gravou = ControllerGerarMulta.getInstance().gerarMulta(tabela.getSelectionModel().getSelectedItem().getCodigo(), tabela.getSelectionModel().getSelectedItem().getExemplar().getTitulo().getEditora().getNome(), tabela.getSelectionModel().getSelectedItem().getEmprestimo().getData(),  tabela.getSelectionModel().getSelectedItem().getEmprestimo().getDataDevolucaoP());
+            if(gravou)
+                carregaTabela("");
+        }
     }
     
 }

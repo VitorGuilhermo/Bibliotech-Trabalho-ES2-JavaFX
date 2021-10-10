@@ -1,10 +1,15 @@
 package bibliotech;
 
 import bd.entidades.Genero;
+import bd.util.Banco;
+import bd.util.Conexao;
+import controller.ControllerCadastrarGenero;
 import controller.ControllerGerenciarGenero;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,39 +35,56 @@ public class TelaGerenciarGeneroController implements Initializable {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         
-        ControllerGerenciarGenero.getInstance().carregarTabela(tabela, "");
+        carregarTabela("");
     }    
     
+    public void carregarTabela(String filtro){
+        Genero g = new Genero();
+        Conexao con = Banco.getCon();
+        
+        List<Genero> generos = g.buscar(con, filtro);
+        tabela.setItems(FXCollections.observableArrayList(generos));
+    }
     
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarGenero.getInstance().buscar(tabela, txFiltro, "gen_nome");
+        String filtro = ControllerGerenciarGenero.getInstance().buscar(txFiltro.getText(), "gen_nome");
+        carregarTabela(filtro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarGenero.getInstance().cancelar( txFiltro.getScene().getWindow() );
+        txFiltro.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
         if(tabela.getSelectionModel().getSelectedItem() != null){
+            boolean excluiu;
             Genero g = tabela.getSelectionModel().getSelectedItem();
-            ControllerGerenciarGenero.getInstance().excluir(tabela, g.getCodigo(), g.getNome());
+            excluiu = ControllerGerenciarGenero.getInstance().excluir(g.getCodigo(), g.getNome());
+            if(excluiu)
+                carregarTabela("");
         }
     }
 
     @FXML
     private void evtAlterar(ActionEvent event) throws IOException {
         if(tabela.getSelectionModel().getSelectedItem() != null){
-            Genero g = tabela.getSelectionModel().getSelectedItem();
-            ControllerGerenciarGenero.retorna().alterar(tabela, g.getCodigo(), g.getNome());
+            if(ControllerCadastrarGenero.getInstance() == null && ControllerCadastrarGenero.retorna() != null){
+                Genero g = tabela.getSelectionModel().getSelectedItem();
+                ControllerGerenciarGenero.retorna().alterar(g.getCodigo(), g.getNome());
+                carregarTabela("");
+            }
         }
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        ControllerGerenciarGenero.retorna().novo(tabela);
+        if(ControllerCadastrarGenero.getInstance() == null && ControllerCadastrarGenero.retorna() != null){
+            ControllerGerenciarGenero.retorna().novo();
+            carregarTabela("");
+        }
     }
     
 }

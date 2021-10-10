@@ -3,10 +3,14 @@ package bibliotech;
 import bd.entidades.Editora;
 import bd.entidades.Genero;
 import bd.entidades.Titulo;
+import bd.util.Banco;
+import bd.util.Conexao;
 import controller.ControllerReservarLivro;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,24 +52,33 @@ public class TelaReservarLivroController implements Initializable {
         colDataImp.setCellValueFactory(new PropertyValueFactory<>("dataPubli"));
         colQtdeExe.setCellValueFactory(new PropertyValueFactory<>("qtdeExemplares"));
         
-        ControllerReservarLivro.carregarTabela(tabela, "");
+        carregarTabela("");
     }    
 
+    public void carregarTabela(String filtro){
+        Conexao con = Banco.getCon();
+        Titulo t = new Titulo();
+        
+        List<Titulo> titulos = t.pesquisarFiltro(con, filtro);
+        tabela.setItems(FXCollections.observableArrayList( titulos ));
+    }
+    
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerReservarLivro.buscar(tabela, txFiltro);
+        String filtro = ControllerReservarLivro.getInstance().buscar(txFiltro.getText());
+        carregarTabela(filtro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerReservarLivro.cancelar( txFiltro.getScene().getWindow() );
+        txFiltro.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtReservar(ActionEvent event) {
         if(tabela.getSelectionModel().getSelectedItem() != null){
             Titulo t = tabela.getSelectionModel().getSelectedItem();
-            ControllerReservarLivro.reservar(t.getCodigo(), t.getNome());
+            ControllerReservarLivro.getInstance().reservar(t.getCodigo(), t.getNome());
         }
     }
     

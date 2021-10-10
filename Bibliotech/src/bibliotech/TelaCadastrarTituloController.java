@@ -6,6 +6,9 @@ import bd.entidades.Editora;
 import bd.entidades.Genero;
 import bd.util.Banco;
 import bd.util.Conexao;
+import controller.ControllerCadastrarAssunto;
+import controller.ControllerCadastrarAutor;
+import controller.ControllerCadastrarGenero;
 import controller.ControllerCadastrarTitulo;
 import java.io.IOException;
 import java.net.URL;
@@ -114,16 +117,29 @@ public class TelaCadastrarTituloController implements Initializable {
 
     @FXML
     private void evtNovoAutor(ActionEvent event) throws IOException {
-        ControllerCadastrarTitulo.retorna().novoAutor(cbAutor1, cbAutor2, cbAutor3);
+        if(ControllerCadastrarAutor.getInstance() == null && ControllerCadastrarAutor.retorna() != null){
+            List<Autor> autores = ControllerCadastrarTitulo.getInstance().novoAutor();
+            cbAutor1.setItems(FXCollections.observableArrayList(autores));
+            cbAutor2.setItems(FXCollections.observableArrayList(autores));
+            cbAutor3.setItems(FXCollections.observableArrayList(autores));
+        }
     }
 
     @FXML
     private void evtNovoGenero(ActionEvent event) throws IOException {
-        ControllerCadastrarTitulo.retorna().novoGenero(cbGenero);
+        if(ControllerCadastrarGenero.getInstance() == null && ControllerCadastrarGenero.retorna() != null){
+            List<Genero> generos = ControllerCadastrarTitulo.getInstance().novoGenero();
+            cbGenero.setItems(FXCollections.observableArrayList(generos));
+        }
     }
 
     @FXML
     private void evtNovoAssunto(ActionEvent event) throws IOException {
-        ControllerCadastrarTitulo.retorna().novoAssunto(cbAssunto1, cbAssunto2, cbAssunto3);
+        if(ControllerCadastrarAssunto.getInstance() == null && ControllerCadastrarAssunto.retorna() != null){
+            List<Assunto> assuntos = ControllerCadastrarTitulo.getInstance().novoAssunto();
+            cbAssunto1.setItems(FXCollections.observableArrayList(assuntos));
+            cbAssunto2.setItems(FXCollections.observableArrayList(assuntos));
+            cbAssunto3.setItems(FXCollections.observableArrayList(assuntos));
+        }
     }
 }

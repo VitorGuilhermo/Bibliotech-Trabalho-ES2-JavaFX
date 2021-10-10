@@ -1,10 +1,15 @@
 package bibliotech;
 
 import bd.entidades.Autor;
+import bd.util.Banco;
+import bd.util.Conexao;
+import controller.ControllerCadastrarAutor;
 import controller.ControllerGerenciarAutor;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,24 +34,35 @@ public class TelaGerenciarAutorController implements Initializable {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         
-        ControllerGerenciarAutor.getInstance().carregarTabela(tabela, "");
+        carregarTabela("");
     }    
 
+    public void carregarTabela(String filtro){    //FAZER AQ RETORNAR UMA LISTA
+        Conexao con = Banco.getCon();
+        Autor a = new Autor();
+        
+        List<Autor> autores = a.buscar(con, filtro);
+        tabela.setItems(FXCollections.observableArrayList(autores));
+    }
+    
     @FXML
     private void evtBuscar(ActionEvent event) {
-        ControllerGerenciarAutor.getInstance().buscar(tabela, txFiltro, "aut_nome");
+        String filtro = ControllerGerenciarAutor.getInstance().buscar(txFiltro.getText(), "aut_nome");
+        carregarTabela(filtro);
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerGerenciarAutor.getInstance().cancelar( txFiltro.getScene().getWindow() );
+        txFiltro.getScene().getWindow().hide();
     }   
 
     @FXML
     private void evtExcluir(ActionEvent event) {
         if(tabela.getSelectionModel().getSelectedItem() != null){
             Autor a = tabela.getSelectionModel().getSelectedItem();
-            ControllerGerenciarAutor.getInstance().excluir(tabela, a.getCodigo(), a.getNome());
+            boolean excluiu = ControllerGerenciarAutor.getInstance().excluir(tabela, a.getCodigo(), a.getNome());
+            if(excluiu)
+                carregarTabela("");
         }
     }
 
@@ -54,13 +70,19 @@ public class TelaGerenciarAutorController implements Initializable {
     private void evtAlterar(ActionEvent event) throws IOException {
         if(tabela.getSelectionModel().getSelectedItem() != null){
             Autor a = tabela.getSelectionModel().getSelectedItem();
-            ControllerGerenciarAutor.retorna().alterar(tabela, a.getCodigo(), a.getNome());
+            if (ControllerCadastrarAutor.getInstance() == null && ControllerCadastrarAutor.retorna() != null) {
+                ControllerGerenciarAutor.retorna().alterar(a.getCodigo(), a.getNome());
+                carregarTabela("");
+            }
         }
     }
 
     @FXML
     private void evtNovo(ActionEvent event) throws IOException {
-        ControllerGerenciarAutor.retorna().novo(tabela);
+        if(ControllerCadastrarAutor.getInstance() == null && ControllerCadastrarAutor.retorna() != null){
+            ControllerGerenciarAutor.retorna().novo();
+            carregarTabela("");
+        }
     }
     
 }

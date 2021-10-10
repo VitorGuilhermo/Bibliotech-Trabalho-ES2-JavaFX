@@ -2,9 +2,13 @@ package bibliotech;
 
 import bd.entidades.Exemplar;
 import bd.entidades.Titulo;
+import bd.util.Banco;
+import bd.util.Conexao;
 import controller.ControllerRetirarLivroCont;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -63,17 +67,36 @@ public class TelaRetirarLivroContController implements Initializable {
 
     public void setDados(Titulo titulo) {
         codTit = titulo.getCodigo();
-        ControllerRetirarLivroCont.retorna().setDados(tabela, txTitulo, txDtPubl, titulo);
+        txTitulo.setText(titulo.getNome());
+        txDtPubl.setText(""+titulo.getDataReg());
+        
+        carregarTabela("titulo.tit_cod="+codTit);
+    }
+    
+    public void carregarTabela(String filtro){
+        Exemplar ex = new Exemplar();
+        Conexao con = Banco.getCon();
+        
+        List<Exemplar> exemplares = ex.buscaExemplares(con, filtro);
+        tabela.setItems(FXCollections.observableArrayList(exemplares));
     }
 
     @FXML
     private void evtCancelar(ActionEvent event) {
-        ControllerRetirarLivroCont.retorna().cancelar(txTitulo.getScene().getWindow());
+        txTitulo.getScene().getWindow().hide();
     }
 
     @FXML
     private void evtExcluir(ActionEvent event) {
-        ControllerRetirarLivroCont.retorna().excluir(tabela, taMotivo, txTitulo, tabela.getSelectionModel().getSelectedItem(), codTit);
+        if(tabela.getSelectionModel().getSelectedItem() != null && !taMotivo.getText().isEmpty()){
+            int titCod = ControllerRetirarLivroCont.retorna().excluir(tabela.getItems().isEmpty(), taMotivo.getText(), txTitulo.getText(), tabela.getSelectionModel().getSelectedItem(), codTit);
+            if(titCod != -1){
+                //atualiza tabela
+                carregarTabela("titulo.tit_cod=" + titCod);
+                taMotivo.clear();
+            }
+
+        }
     }
 
 }
