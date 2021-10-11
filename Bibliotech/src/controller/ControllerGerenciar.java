@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.IOException;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;

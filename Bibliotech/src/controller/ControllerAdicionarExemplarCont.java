@@ -7,7 +7,6 @@ import bd.util.Conexao;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.Alert;
-import javafx.stage.Window;
 
 /**
  *

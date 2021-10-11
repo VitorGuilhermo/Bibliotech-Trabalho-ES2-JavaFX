@@ -6,14 +6,9 @@ import bd.entidades.Titulo;
 import bd.util.Banco;
 import bd.util.Conexao;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
-import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.stage.Window;
 
 /**
  *

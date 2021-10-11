@@ -1,21 +1,13 @@
 package controller;
 
-import bd.entidades.Titulo;
-import bd.util.Banco;
-import bd.util.Conexao;
 import bibliotech.TelaAdicionarExemplarContController;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  *

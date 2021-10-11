@@ -9,7 +9,7 @@ import javafx.scene.control.Alert;
  *
  * @author Vitor Guilhermo
  */
-public class ControllerCadastrarAutor {
+public class ControllerCadastrarAutor extends ControllerCadastrar {
     private static ControllerCadastrarAutor instancia;
     
     private ControllerCadastrarAutor() {
@@ -25,20 +25,14 @@ public class ControllerCadastrarAutor {
     public static ControllerCadastrarAutor getInstance() {
         return instancia;
     }
-    
-    
-    public static void cadastrar(String txCodigo, String txNome) {
+
+    @Override
+    public void gravarOuAlterar(Conexao con, String txCodigo, String txNome) {
         Autor a = new Autor(txNome);
-        Conexao con = Banco.getCon();
-        if(txNome.isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro: Campo NOME vazio");
-            alert.showAndWait();
-        }
-        else if(txCodigo.isEmpty()){
+        if(txCodigo.isEmpty()){
             if(!a.gravar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
+                alert.setContentText("Erro: ao gravar " +con.getMensagemErro());
                 alert.showAndWait();
             }
         }
@@ -46,7 +40,7 @@ public class ControllerCadastrarAutor {
             a.setCodigo(Integer.parseInt(txCodigo));
             if(!a.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
+                alert.setContentText("Erro: ao alterar " +con.getMensagemErro());
                 alert.showAndWait();
             }
         }

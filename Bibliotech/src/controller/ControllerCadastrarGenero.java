@@ -9,7 +9,7 @@ import javafx.scene.control.Alert;
  *
  * @author Vitor Guilhermo
  */
-public class ControllerCadastrarGenero {
+public class ControllerCadastrarGenero extends ControllerCadastrar {
     private static ControllerCadastrarGenero instancia;
     
     private ControllerCadastrarGenero() {
@@ -26,15 +26,11 @@ public class ControllerCadastrarGenero {
         return instancia;
     }
     
-    public static void cadastrar(String txNome, String txCodigo) {
+
+    @Override
+    public void gravarOuAlterar(Conexao con, String txCod, String txNome) {
         Genero g = new Genero(txNome);
-        Conexao con = Banco.getCon();
-        if(txNome.isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro: Campo NOME vazio");
-            alert.showAndWait();
-        }
-        else if(txCodigo.isEmpty()){
+        if(txCod.isEmpty()){
             if(!g.gravar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
@@ -42,7 +38,7 @@ public class ControllerCadastrarGenero {
             }
         }
         else{  //alterar
-            g.setCodigo(Integer.parseInt(txCodigo));
+            g.setCodigo(Integer.parseInt(txCod));
             if(!g.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());

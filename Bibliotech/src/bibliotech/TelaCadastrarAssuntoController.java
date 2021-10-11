@@ -33,7 +33,7 @@ public class TelaCadastrarAssuntoController implements Initializable {
     @FXML
     private void evtCadastrar(ActionEvent event) {
         ControllerCadastrarAssunto c = ControllerCadastrarAssunto.retorna();
-        c.cadastrar(txCod.getText(), txNome.getText());
+        c.templateMethod(txCod.getText(), txNome.getText());
         
         evtCancelar(event);
     }
