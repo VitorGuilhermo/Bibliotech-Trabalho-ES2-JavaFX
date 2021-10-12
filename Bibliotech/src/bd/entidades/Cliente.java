@@ -107,6 +107,10 @@ public class Cliente implements Observer {
     public Cliente buscarCliente(Conexao con, int codigo) {
         return new ClienteDAO().get(con, codigo);
     }
+    public Cliente buscarCli(Conexao con, String nome){
+        return new ClienteDAO().getCli(con, nome);
+    }
+    
     //Máscaras
     public String formataCpf(String cpf){
         try {

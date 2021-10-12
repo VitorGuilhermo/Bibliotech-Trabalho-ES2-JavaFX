@@ -110,4 +110,16 @@ public class ClienteDAO {
         }
         return aux;
     }
+    public Cliente getCli(Conexao con, String nome){
+        Cliente aux = null;
+        String sql = "select * from cliente where cli_documento like '"+nome+"'";
+        ResultSet rs = con.consultar(sql);
+        try{
+            if(rs.next())
+                aux = new Cliente(rs.getInt("cli_cod"), rs.getString("cli_nome"), rs.getString("cli_documento"), rs.getString("cli_endereco"), rs.getString("cli_telefone"), rs.getString("cli_sexo"), rs.getDate("cli_datanasc").toLocalDate());
+        }
+        catch(Exception e){
+        }
+        return aux;
+    }
 }

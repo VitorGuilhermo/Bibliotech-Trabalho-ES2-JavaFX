@@ -49,4 +49,16 @@ public class GeneroDAO {
         }
         return generos;
     }
+    public Genero getGen(Conexao con, String nome){
+        Genero aux = null;
+        String sql = "select * from genero where upper(gen_nome) like '"+nome+"'";
+        ResultSet rs = con.consultar(sql);
+        try{
+            if(rs.next())
+                aux = new Genero(rs.getInt("gen_cod"), rs.getString("gen_nome"));
+        }
+        catch(Exception e){
+        }
+        return aux;
+    }
 }

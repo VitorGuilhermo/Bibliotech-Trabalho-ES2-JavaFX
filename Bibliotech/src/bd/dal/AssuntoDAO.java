@@ -50,4 +50,16 @@ public class AssuntoDAO {
         }
         return assuntos;
     }
+    public Assunto getAst(Conexao con, String nome){
+        Assunto aux = null;
+        String sql = "select * from assunto where upper(ast_nome) like '"+nome+"'";
+        ResultSet rs = con.consultar(sql);
+        try{
+            if(rs.next())
+                aux = new Assunto(rs.getInt("ast_cod"), rs.getString("ast_nome"));
+        }
+        catch(Exception e){
+        }
+        return aux;
+    }
 }

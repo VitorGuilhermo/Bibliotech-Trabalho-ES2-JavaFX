@@ -59,6 +59,10 @@ public class Editora {
     public List<Editora> buscar(Conexao con, String filtro) {
         return new EditoraDAO().get(con, filtro);
     }
+    public Editora buscarEdt(Conexao con, String nome){
+        return new EditoraDAO().getEdt(con, nome);
+    }
+    
     public String formataCnpj(String cnpj){
         try {
             MaskFormatter mask = new MaskFormatter("##.###.###/####-##");

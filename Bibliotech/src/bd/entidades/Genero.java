@@ -47,6 +47,10 @@ public class Genero {
     public List<Genero> buscar(Conexao con, String filtro) {
         return new GeneroDAO().get(con, filtro);
     }
+    public Genero buscarGen(Conexao con, String nome){
+        return new GeneroDAO().getGen(con, nome);
+    }
+    
     
     @Override
     public String toString() {

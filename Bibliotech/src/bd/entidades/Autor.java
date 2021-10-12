@@ -47,6 +47,10 @@ public class Autor {
     public List<Autor> buscar(Conexao con, String filtro){
         return new AutorDAO().get(con, filtro);
     }
+    public Autor buscarAut(Conexao con, String nome){
+        return new AutorDAO().getAut(con, nome);
+    }
+    
     @Override
     public String toString() {
         return nome;

@@ -51,4 +51,16 @@ public class EditoraDAO {
         }
         return editoras;
     }
+    public Editora getEdt(Conexao con, String nome){
+        Editora aux = null;
+        String sql = "select * from editora where edt_cnpj like '"+nome+"'";
+        ResultSet rs = con.consultar(sql);
+        try{
+            if(rs.next())
+                aux = new Editora(rs.getInt("edt_cod"), rs.getString("edt_nome"), rs.getString("edt_cnpj"));
+        }
+        catch(Exception e){
+        }
+        return aux;
+    }
 }

@@ -1,7 +1,6 @@
 package controller;
 
 import bd.entidades.Autor;
-import bd.util.Banco;
 import bd.util.Conexao;
 import javafx.scene.control.Alert;
 
@@ -30,7 +29,14 @@ public class ControllerCadastrarAutor extends ControllerCadastrar {
     public void gravarOuAlterar(Conexao con, String txCodigo, String txNome) {
         Autor a = new Autor(txNome);
         if(txCodigo.isEmpty()){
-            if(!a.gravar(con)){
+            Autor aux = a.buscarAut(con, txNome.toUpperCase());
+            if(aux!= null)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Erro: ao gravar (Autor já existente) ");//
+                alert.showAndWait();
+            }
+            else if(!a.gravar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +con.getMensagemErro());
                 alert.showAndWait();
@@ -38,7 +44,14 @@ public class ControllerCadastrarAutor extends ControllerCadastrar {
         }
         else{  //alterar
             a.setCodigo(Integer.parseInt(txCodigo));
-            if(!a.alterar(con)){
+            Autor aux = a.buscarAut(con, txNome.toUpperCase());
+            if(aux!= null)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Erro: ao alterar (Autor já existente) ");//
+                alert.showAndWait();
+            }
+            else if(!a.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +con.getMensagemErro());
                 alert.showAndWait();

@@ -49,4 +49,16 @@ public class AutorDAO {
         }
         return autores;
     }
+    public Autor getAut(Conexao con, String nome){
+        Autor aux = null;
+        String sql = "select * from autor where upper(aut_nome) like '"+nome+"'";
+        ResultSet rs = con.consultar(sql);
+        try{
+            if(rs.next())
+                aux = new Autor(rs.getInt("aut_cod"), rs.getString("aut_nome"));
+        }
+        catch(Exception e){
+        }
+        return aux;
+    }
 }

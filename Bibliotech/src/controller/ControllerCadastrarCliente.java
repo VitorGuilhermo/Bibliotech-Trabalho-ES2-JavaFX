@@ -41,7 +41,14 @@ public class ControllerCadastrarCliente {
             alert.showAndWait();
         }
         else if(txCodigo.isEmpty()){
-            if(!c.gravar(con)){
+            Cliente aux = c.buscarCli(con, c.getDocumento());
+            if(aux!= null)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Erro: ao gravar (CPF já cadastrado no sistema) ");//
+                alert.showAndWait();
+            }
+            else if(!c.gravar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -49,7 +56,14 @@ public class ControllerCadastrarCliente {
         }
         else{  //alterar
             c.setCodigo(Integer.parseInt(txCodigo));
-            if(!c.alterar(con)){
+            Cliente aux = c.buscarCli(con, c.getDocumento());
+            if(aux!= null)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Erro: ao alterar (CPF já cadastrado no sistema) ");//
+                alert.showAndWait();
+            }
+            else if(!c.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();

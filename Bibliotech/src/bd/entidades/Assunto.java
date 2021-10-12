@@ -47,6 +47,9 @@ public class Assunto {
     public List<Assunto> buscar(Conexao con, String filtro){
         return new AssuntoDAO().get(con, filtro);
     }
+    public Assunto buscarAst(Conexao con, String nome){
+        return new AssuntoDAO().getAst(con, nome);
+    }
     
     @Override
     public String toString() {

@@ -29,14 +29,21 @@ public class ControllerCadastrarEditora {
     public static void cadastrar(String txCodigo, String txNome, String txCnpj) {
         Editora e = new Editora(txNome, txCnpj);
         Conexao con = Banco.getCon();
-        
+
         if(txNome.isEmpty() || txCnpj.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erro: Campo NOME ou CNPJ vazio");
             alert.showAndWait();
         }
         else if(txCodigo.isEmpty()){
-            if(!e.gravar(con)){
+            Editora aux = e.buscarEdt(con, e.getCnpj());
+            if(aux!= null)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Erro: ao gravar (CNPJ da editora já existente) ");//
+                alert.showAndWait();
+            }
+            else if(!e.gravar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao gravar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -44,7 +51,14 @@ public class ControllerCadastrarEditora {
         }
         else{  //alterar
             e.setCodigo(Integer.parseInt(txCodigo));
-            if(!e.alterar(con)){
+            Editora aux = e.buscarEdt(con, e.getCnpj());
+            if(aux!= null)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Erro: ao alterar (CNPJ da editora já existente) ");//
+                alert.showAndWait();
+            }
+            else if(!e.alterar(con)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro: ao alterar " +Banco.getCon().getMensagemErro());
                 alert.showAndWait();
