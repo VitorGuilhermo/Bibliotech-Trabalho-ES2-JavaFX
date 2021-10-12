@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TituloDAL {
+public class TituloDAO {
     public boolean gravar(Conexao con, Titulo t){
         boolean aux;
         String sql = "insert into titulo values (default, '#1', #2, #3, #4, '#5', '#6')";
@@ -25,7 +25,7 @@ public class TituloDAL {
                 int cod = con.getMaxPK("titulo", "tit_cod");
                 t.setCodigo(cod);
                 Exemplar e = new Exemplar(false, t);
-                aux = new ExemplarDAL().gravar(con, e);
+                aux = new ExemplarDAO().gravar(con, e);
             }
         }
         //retorna true se conseguiu inserir o titulo e seus exemplares
@@ -56,10 +56,10 @@ public class TituloDAL {
         ResultSet rs = con.consultar(sql);
         try{
             if(rs.next())
-                aux = new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAL().get(con, rs.getInt("gen_cod")), 
-                        new EditoraDAL().get(con, rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
+                aux = new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAO().get(con, rs.getInt("gen_cod")), 
+                        new EditoraDAO().get(con, rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
                         rs.getDate("tit_datapublic").toLocalDate(), rs.getDate("tit_datareg").toLocalDate(),
-                        new Autor_TituloDAL().get(con, " titulo_tit_cod="+rs.getInt("tit_cod")),  new Assunto_TituloDAL().get(con, " titulo_tit_cod="+rs.getInt("tit_cod")) );
+                        new Autor_TituloDAO().get(con, " titulo_tit_cod="+rs.getInt("tit_cod")),  new Assunto_TituloDAO().get(con, " titulo_tit_cod="+rs.getInt("tit_cod")) );
         }
         catch(Exception e){
         }
@@ -74,10 +74,10 @@ public class TituloDAL {
         ResultSet rs = con.consultar(sql);
         try{
             while(rs.next())
-                titulos.add( new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAL().get(con, rs.getInt("gen_cod")), 
-                        new EditoraDAL().get(con, rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
+                titulos.add( new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAO().get(con, rs.getInt("gen_cod")), 
+                        new EditoraDAO().get(con, rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
                         rs.getDate("tit_datapublic").toLocalDate(), rs.getDate("tit_datareg").toLocalDate(),
-                        new Autor_TituloDAL().get(con, " titulo_tit_cod="+rs.getInt("tit_cod")),  new Assunto_TituloDAL().get(con," titulo_tit_cod="+rs.getInt("tit_cod"))));
+                        new Autor_TituloDAO().get(con, " titulo_tit_cod="+rs.getInt("tit_cod")),  new Assunto_TituloDAO().get(con," titulo_tit_cod="+rs.getInt("tit_cod"))));
         }
         catch(Exception e){
         }
@@ -92,10 +92,10 @@ public class TituloDAL {
         ResultSet rs = con.consultar(sql);
         try{
             while(rs.next())
-                titulos.add( new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAL().get(con, rs.getInt("gen_cod")), 
-                        new EditoraDAL().get(con, rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
+                titulos.add( new Titulo(rs.getInt("tit_cod"), rs.getString("tit_nome"), new GeneroDAO().get(con, rs.getInt("gen_cod")), 
+                        new EditoraDAO().get(con, rs.getInt("edt_cod")), rs.getInt("tit_qtdeexe"),
                         rs.getDate("tit_datapublic").toLocalDate(), rs.getDate("tit_datareg").toLocalDate(),
-                        new Autor_TituloDAL().get(con, " titulo_tit_cod="+rs.getInt("tit_cod")),  new Assunto_TituloDAL().get(con," titulo_tit_cod="+rs.getInt("tit_cod"))));
+                        new Autor_TituloDAO().get(con, " titulo_tit_cod="+rs.getInt("tit_cod")),  new Assunto_TituloDAO().get(con," titulo_tit_cod="+rs.getInt("tit_cod"))));
         }
         catch(Exception e){
         }

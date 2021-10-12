@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Exemplar_EmprestimoDAL {
+public class Exemplar_EmprestimoDAO {
     public boolean gravar(Conexao con, Exemplar_Emprestimo ee){
         String sql = "insert into exemplar_emprestimo (epe_dt_devol, epe_multa, exe_cod, emp_cod) values ('#1', #2, #3, #4)";
         sql = sql.replace("#1", ""+ee.getDataDevolucaoR());
@@ -34,7 +34,7 @@ public class Exemplar_EmprestimoDAL {
         try{
             while(rs.next())
                 exemplares_emp.add( new Exemplar_Emprestimo(rs.getInt("epe_cod"), rs.getDate("epe_dt_devol").toLocalDate(), new Multa(rs.getDouble("epe_multa")), 
-                        new ExemplarDAL().get(con, rs.getInt("exe_cod")), new EmprestimoDAL().get(con, rs.getInt("emp_cod"))));
+                        new ExemplarDAO().get(con, rs.getInt("exe_cod")), new EmprestimoDAO().get(con, rs.getInt("emp_cod"))));
         }
         catch(Exception e){
         }
@@ -48,7 +48,7 @@ public class Exemplar_EmprestimoDAL {
         ResultSet rs = con.consultar(sql);
         try{
             while(rs.next())
-                exemplares.add( new ExemplarDAL().get(con, rs.getInt("emp_cod")) );
+                exemplares.add( new ExemplarDAO().get(con, rs.getInt("emp_cod")) );
         }
         catch(Exception e){
         }

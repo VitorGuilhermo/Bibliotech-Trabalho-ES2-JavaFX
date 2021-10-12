@@ -1,6 +1,6 @@
 package bd.entidades;
 
-import bd.dal.GeneroDAL;
+import bd.dal.GeneroDAO;
 import bd.util.Conexao;
 import java.util.List;
 
@@ -36,16 +36,16 @@ public class Genero {
     }
     
     public boolean gravar(Conexao con) {
-        return new GeneroDAL().gravar(con, this);
+        return new GeneroDAO().gravar(con, this);
     }
     public boolean alterar(Conexao con) {
-        return new GeneroDAL().alterar(con, this);
+        return new GeneroDAO().alterar(con, this);
     }
     public boolean excluir(Conexao con) {
-        return new GeneroDAL().apagar(con, codigo);
+        return new GeneroDAO().apagar(con, codigo);
     }
     public List<Genero> buscar(Conexao con, String filtro) {
-        return new GeneroDAL().get(con, filtro);
+        return new GeneroDAO().get(con, filtro);
     }
     
     @Override

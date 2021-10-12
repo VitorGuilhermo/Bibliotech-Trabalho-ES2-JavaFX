@@ -5,7 +5,7 @@ import bd.util.Conexao;
 import java.sql.ResultSet;
 
 
-public class BibliotecarioDAL {
+public class BibliotecarioDAO {
     public Bibliotecario get(Conexao con, String documento, String senha){
         Bibliotecario aux = null;
         String sql = "select * from bibliotecario where bib_documento='"+documento+"' and bib_senha='"+senha+"' and bib_ativo=true";

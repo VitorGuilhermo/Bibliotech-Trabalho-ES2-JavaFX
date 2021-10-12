@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GeneroDAL {
+public class GeneroDAO {
     public boolean gravar(Conexao con, Genero g){
         String sql = "insert into genero values (default, '#1')";
         sql = sql.replace("#1", g.getNome());

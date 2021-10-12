@@ -1,6 +1,6 @@
 package bd.entidades;
 
-import bd.dal.Exemplar_EmprestimoDAL;
+import bd.dal.Exemplar_EmprestimoDAO;
 import bd.util.Conexao;
 import java.time.LocalDate;
 import java.util.List;
@@ -62,12 +62,12 @@ public class Exemplar_Emprestimo {
     }
     
     public boolean gravar(Conexao con){
-        return new Exemplar_EmprestimoDAL().gravar(con, this);
+        return new Exemplar_EmprestimoDAO().gravar(con, this);
     }
     public boolean alteraMulta(Conexao con) {
-        return new Exemplar_EmprestimoDAL().alterarMulta(con, this);
+        return new Exemplar_EmprestimoDAO().alterarMulta(con, this);
     } 
     public List<Exemplar_Emprestimo> buscar(Conexao con, String filtro) {
-        return new Exemplar_EmprestimoDAL().get(con, filtro);
+        return new Exemplar_EmprestimoDAO().get(con, filtro);
     }
 }

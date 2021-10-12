@@ -27,7 +27,7 @@ public class ReservaDAO {
         ResultSet rs = con.consultar(sql);
         try{
             while(rs.next())
-                reservas.add( new Reserva(rs.getInt("res_cod"), rs.getDate("res_data").toLocalDate(), new ClienteDAL().get(con, rs.getInt("cli_cod")), new TituloDAL().get(con, rs.getInt("tit_cod")) ) );
+                reservas.add( new Reserva(rs.getInt("res_cod"), rs.getDate("res_data").toLocalDate(), new ClienteDAO().get(con, rs.getInt("cli_cod")), new TituloDAO().get(con, rs.getInt("tit_cod")) ) );
         }
         catch(Exception e){
         }

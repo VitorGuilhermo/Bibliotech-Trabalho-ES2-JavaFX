@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ClienteDAL {
+public class ClienteDAO {
     public boolean gravar(Conexao con, Cliente c){
         String sql = "insert into cliente values (default, '#1', '#2', '#3', '#4', '#5', '#6', true)";
         sql = sql.replace("#1", c.getNome());

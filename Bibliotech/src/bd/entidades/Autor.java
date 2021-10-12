@@ -1,6 +1,6 @@
 package bd.entidades;
 
-import bd.dal.AutorDAL;
+import bd.dal.AutorDAO;
 import bd.util.Conexao;
 import java.util.List;
 
@@ -36,16 +36,16 @@ public class Autor {
     }
     
     public boolean gravar(Conexao con){
-        return new AutorDAL().gravar(con, this);
+        return new AutorDAO().gravar(con, this);
     }
     public boolean alterar(Conexao con){
-        return new AutorDAL().alterar(con, this);
+        return new AutorDAO().alterar(con, this);
     }
     public boolean excluir(Conexao con){
-        return new AutorDAL().apagar(con, codigo);
+        return new AutorDAO().apagar(con, codigo);
     }
     public List<Autor> buscar(Conexao con, String filtro){
-        return new AutorDAL().get(con, filtro);
+        return new AutorDAO().get(con, filtro);
     }
     @Override
     public String toString() {

@@ -1,6 +1,6 @@
  package bd.entidades;
 
-import bd.dal.ClienteDAL;
+import bd.dal.ClienteDAO;
 import bd.util.Conexao;
 import controller.ControllerAdicionarExemplarCont;
 import java.text.ParseException;
@@ -90,22 +90,22 @@ public class Cliente implements Observer {
     }
 
     public boolean gravar(Conexao con) {
-        return new ClienteDAL().gravar(con, this);
+        return new ClienteDAO().gravar(con, this);
     }
     public boolean alterar(Conexao con) {
-        return new ClienteDAL().alterar(con, this);
+        return new ClienteDAO().alterar(con, this);
     }
     public boolean excluir(Conexao con) {
-        return new ClienteDAL().apagar(con, codigo);
+        return new ClienteDAO().apagar(con, codigo);
     }
     public boolean desativar(Conexao con){
-        return new ClienteDAL().desativar(con, codigo);
+        return new ClienteDAO().desativar(con, codigo);
     }
     public List<Cliente> buscar(Conexao con, String filtro) {
-        return new ClienteDAL().get(con, filtro);
+        return new ClienteDAO().get(con, filtro);
     }
     public Cliente buscarCliente(Conexao con, int codigo) {
-        return new ClienteDAL().get(con, codigo);
+        return new ClienteDAO().get(con, codigo);
     }
     //Máscaras
     public String formataCpf(String cpf){
@@ -134,17 +134,17 @@ public class Cliente implements Observer {
         return "I";
     }
     public Cliente getCliente(Conexao con, String filtro){
-        return new ClienteDAL().getClienteEmp(con, filtro);
+        return new ClienteDAO().getClienteEmp(con, filtro);
     }
     public Cliente verificaLogin(Conexao con, String senha){
         if(!senha.equals(""))
             senha = formataCpf(senha.trim());
         if(senha.equals(documento))
-            return new ClienteDAL().validaAcesso(con, documento);
+            return new ClienteDAO().validaAcesso(con, documento);
         return null;
     }
     public int getQtdeLivros(Conexao con){
-        return new ClienteDAL().getNumeroExemplaresCliente(con, codigo);
+        return new ClienteDAO().getNumeroExemplaresCliente(con, codigo);
     }
     @Override
     public String toString() {

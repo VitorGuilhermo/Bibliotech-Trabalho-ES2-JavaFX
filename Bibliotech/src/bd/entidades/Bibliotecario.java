@@ -1,6 +1,6 @@
 package bd.entidades;
 
-import bd.dal.BibliotecarioDAL;
+import bd.dal.BibliotecarioDAO;
 import bd.util.Conexao;
 
 
@@ -52,11 +52,11 @@ public class Bibliotecario {
     }
     
     public Bibliotecario verificaLogin(Conexao con){
-        Bibliotecario aux = new BibliotecarioDAL().get(con, documento, senha);
+        Bibliotecario aux = new BibliotecarioDAO().get(con, documento, senha);
         return aux;
     }
     public String getNomeBibliotecario(Conexao con){
-        return new BibliotecarioDAL().get(con, documento, senha).getNome();
+        return new BibliotecarioDAO().get(con, documento, senha).getNome();
     }
     @Override
     public String toString() {

@@ -1,6 +1,6 @@
 package bd.entidades;
 
-import bd.dal.EmprestimoDAL;
+import bd.dal.EmprestimoDAO;
 import bd.util.Conexao;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -69,10 +69,10 @@ public class Emprestimo {
     }
     
     public boolean gravar(Conexao con){
-        return new EmprestimoDAL().gravar(con, this);
+        return new EmprestimoDAO().gravar(con, this);
     }
     public List<Emprestimo> buscarPorCodigoCliente(Conexao con){
-        return new EmprestimoDAL().getPorCodigoCliente(con, cliente.getCodigo());
+        return new EmprestimoDAO().getPorCodigoCliente(con, cliente.getCodigo());
     }
     
 }

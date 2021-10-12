@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ExemplarDAL {
+public class ExemplarDAO {
     public boolean gravar(Conexao con, Exemplar e){
         String sql = "insert into exemplar values (default, #1, #2)";
         sql = sql.replace("#1", ""+e.isSituacao());
@@ -35,7 +35,7 @@ public class ExemplarDAL {
         ResultSet rs = con.consultar(sql);
         try{
             if(rs.next())
-                aux = new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAL().get(con, rs.getInt("tit_cod")));
+                aux = new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAO().get(con, rs.getInt("tit_cod")));
         }
         catch(Exception e){
         }
@@ -50,7 +50,7 @@ public class ExemplarDAL {
         ResultSet rs = con.consultar(sql);
         try{
             while(rs.next())
-                exemplares.add( new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAL().get(con, rs.getInt("tit_cod"))) );
+                exemplares.add( new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAO().get(con, rs.getInt("tit_cod"))) );
         }
         catch(Exception e){
         }
@@ -71,7 +71,7 @@ public class ExemplarDAL {
         ResultSet rs = con.consultar(sql);
         try{
             while(rs.next())
-                exemplares.add( new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAL().get(con, rs.getInt("tit_cod"))) );
+                exemplares.add( new Exemplar(rs.getInt("exe_cod"), rs.getBoolean("exe_situacao"), new TituloDAO().get(con, rs.getInt("tit_cod"))) );
         }
         catch(Exception e){
         }

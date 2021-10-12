@@ -1,7 +1,7 @@
 package bd.entidades;
 
 import bd.dal.ObservadoresDAO;
-import bd.dal.TituloDAL;
+import bd.dal.TituloDAO;
 import bd.util.Banco;
 import bd.util.Conexao;
 import java.time.LocalDate;
@@ -100,30 +100,30 @@ public class Titulo implements Observable {
     
 
     public boolean gravar(Conexao con){
-        return new TituloDAL().gravar(con, this);
+        return new TituloDAO().gravar(con, this);
     }
     public boolean alterar(Conexao con){
-        return new TituloDAL().alterar(con, this);
+        return new TituloDAO().alterar(con, this);
     }
     public boolean excluir(Conexao con, int cod){
-        return new TituloDAL().apagar(con, cod);
+        return new TituloDAO().apagar(con, cod);
     }
     public List<Titulo> buscarTitulosCompostos(Conexao con, String filtro, String contSql){
-        return new TituloDAL().getTitulosCompostos(con, filtro, contSql);
+        return new TituloDAO().getTitulosCompostos(con, filtro, contSql);
     }
     public Titulo pesquisar(Conexao con){
-        return new TituloDAL().get(con, codigo);
+        return new TituloDAO().get(con, codigo);
     }
     public List<Titulo> pesquisarFiltro(Conexao con, String filtro){
-        return new TituloDAL().get(con, filtro);
+        return new TituloDAO().get(con, filtro);
     }
     public void incrementaQtdeExemplar(Conexao con, int qtde){
         Titulo t = this.pesquisar(con);
-        new TituloDAL().alterarQtdeExemplares(con, t.getCodigo(), t.getQtdeExemplares()+qtde);
+        new TituloDAO().alterarQtdeExemplares(con, t.getCodigo(), t.getQtdeExemplares()+qtde);
     }
     public void decrementaQtdeExemplar(Conexao con){
         Titulo t = this.pesquisar(con);
-        new TituloDAL().alterarQtdeExemplares(con, t.getCodigo(), t.getQtdeExemplares()-1);
+        new TituloDAO().alterarQtdeExemplares(con, t.getCodigo(), t.getQtdeExemplares()-1);
     }
     public String getTodosAssuntos(){
         String ast = "";

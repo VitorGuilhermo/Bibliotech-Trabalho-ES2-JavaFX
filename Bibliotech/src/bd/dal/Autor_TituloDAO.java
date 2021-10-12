@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Autor_TituloDAL {
+public class Autor_TituloDAO {
     public boolean gravar(Conexao con, Autor_Titulo at){
         String sql = "insert into autor_titulo (titulo_tit_cod, autor_aut_cod) values (#1, #2)";
         sql = sql.replace("#1", ""+at.getTitulo().getCodigo());

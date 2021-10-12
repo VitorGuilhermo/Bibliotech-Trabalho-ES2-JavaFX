@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EditoraDAL {
+public class EditoraDAO {
     public boolean gravar(Conexao con, Editora e){
         String sql = "insert into editora values (default, '#1', '#2')";
         sql = sql.replace("#1", e.getNome());

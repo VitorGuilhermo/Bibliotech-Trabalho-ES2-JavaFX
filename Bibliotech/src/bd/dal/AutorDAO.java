@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AutorDAL {
+public class AutorDAO {
     public boolean gravar(Conexao con, Autor a){
         String sql = "insert into autor values (default, '#1')";
         sql = sql.replace("#1", a.getNome());

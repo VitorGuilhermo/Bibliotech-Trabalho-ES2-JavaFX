@@ -1,6 +1,6 @@
 package bd.entidades;
 
-import bd.dal.ExemplarDAL;
+import bd.dal.ExemplarDAO;
 import bd.util.Conexao;
 import java.util.List;
 
@@ -43,19 +43,19 @@ public class Exemplar {
     }
     
     public boolean gravar(Conexao con){
-        return new ExemplarDAL().gravar(con, this);
+        return new ExemplarDAO().gravar(con, this);
     }
     public List<Exemplar> buscaExemplares(Conexao con, String filtro){
-        return new ExemplarDAL().getExemplares(con, filtro);
+        return new ExemplarDAO().getExemplares(con, filtro);
     }
     public List<Exemplar> buscar(Conexao con, String filtro){
-        return new ExemplarDAL().get(con, filtro);
+        return new ExemplarDAO().get(con, filtro);
     }
     public boolean excluir(Conexao con){
-        return new ExemplarDAL().apagar(con, codigo);
+        return new ExemplarDAO().apagar(con, codigo);
     }
     public boolean alteraSituacao(Conexao con){
-        return new ExemplarDAL().alterarSituacao(con, this);
+        return new ExemplarDAO().alterarSituacao(con, this);
     }
     @Override
     public String toString() {

@@ -24,7 +24,7 @@ public class ObservadoresDAO {
         ResultSet rs = con.consultar(sql);
         try{
             while(rs.next())
-                observadores.add( new ClienteDAL().get(con, rs.getInt("cli_cod")) );
+                observadores.add( new ClienteDAO().get(con, rs.getInt("cli_cod")) );
         }
         catch(Exception e){
         }

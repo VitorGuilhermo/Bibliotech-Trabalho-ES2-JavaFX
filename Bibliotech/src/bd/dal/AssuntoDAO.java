@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AssuntoDAL {
+public class AssuntoDAO {
     public boolean gravar(Conexao con, Assunto a){
         String sql = "insert into assunto values (default, '#1')";
         sql = sql.replace("#1", a.getNome());

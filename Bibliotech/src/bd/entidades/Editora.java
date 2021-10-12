@@ -1,6 +1,6 @@
 package bd.entidades;
 
-import bd.dal.EditoraDAL;
+import bd.dal.EditoraDAO;
 import bd.util.Conexao;
 import java.text.ParseException;
 import java.util.List;
@@ -48,16 +48,16 @@ public class Editora {
         this.cnpj = cnpj;
     }
     public boolean gravar(Conexao con) {
-        return new EditoraDAL().gravar(con, this);
+        return new EditoraDAO().gravar(con, this);
     }
     public boolean alterar(Conexao con) {
-        return new EditoraDAL().alterar(con, this);
+        return new EditoraDAO().alterar(con, this);
     }
     public boolean excluir(Conexao con) {
-        return new EditoraDAL().apagar(con, codigo);
+        return new EditoraDAO().apagar(con, codigo);
     }
     public List<Editora> buscar(Conexao con, String filtro) {
-        return new EditoraDAL().get(con, filtro);
+        return new EditoraDAO().get(con, filtro);
     }
     public String formataCnpj(String cnpj){
         try {

@@ -4,7 +4,7 @@ import bd.entidades.Baixa;
 import bd.util.Conexao;
 
 
-public class BaixaDAL {
+public class BaixaDAO {
     public boolean gravar(Conexao con, Baixa b){
         String sql = "insert into baixa values (default, '#1', '#2', '#3', #4)";
         sql = sql.replace("#1", b.getNome());

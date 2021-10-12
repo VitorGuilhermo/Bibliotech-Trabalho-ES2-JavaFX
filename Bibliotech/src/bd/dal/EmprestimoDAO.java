@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EmprestimoDAL {
+public class EmprestimoDAO {
     public boolean gravar(Conexao con, Emprestimo e){
         String sql = "insert into emprestimo values (default, '#1', '#2', #3, #4)";
         sql = sql.replace("#1", ""+e.getData());
@@ -24,7 +24,7 @@ public class EmprestimoDAL {
         try{
             if(rs.next())
                 aux = new Emprestimo(rs.getInt("emp_cod"), rs.getDate("emp_data").toLocalDate(), rs.getDate("emp_dt_devol").toLocalDate(), rs.getInt("emp_qtde"), 
-                        new ClienteDAL().get(con, rs.getInt("cli_cod")), new Exemplar_EmprestimoDAL().getExemplaresDoEmprestimo(con, rs.getInt("emp_cod")));
+                        new ClienteDAO().get(con, rs.getInt("cli_cod")), new Exemplar_EmprestimoDAO().getExemplaresDoEmprestimo(con, rs.getInt("emp_cod")));
         }
         catch(Exception e){
         }
@@ -37,7 +37,7 @@ public class EmprestimoDAL {
         try{
             while(rs.next())
                 aux.add( new Emprestimo(rs.getInt("emp_cod"), rs.getDate("emp_data").toLocalDate(), rs.getDate("emp_dt_devol").toLocalDate(), rs.getInt("emp_qtde"), 
-                        new ClienteDAL().get(con, rs.getInt("cli_cod")), new Exemplar_EmprestimoDAL().getExemplaresDoEmprestimo(con, rs.getInt("emp_cod"))) );
+                        new ClienteDAO().get(con, rs.getInt("cli_cod")), new Exemplar_EmprestimoDAO().getExemplaresDoEmprestimo(con, rs.getInt("emp_cod"))) );
         }
         catch(Exception e){
         }
